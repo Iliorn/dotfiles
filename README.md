@@ -22,7 +22,7 @@ Personal configuration files for my CachyOS / Arch Linux setup, managed with [GN
 | Bluetooth       | Blueman + bluetui |
 | WiFi            | iwd + systemd-resolved |
 | Cloud sync      | Rclone          |
-| Task manager    | Taskwarrior + taskwarrior-tui + Timewarrior |
+| Task manager    | taskmanager (custom Bubbletea TUI)          |
 | AI CLI          | mods            |
 | Resource monitor| Btop            |
 | System info     | Fastfetch       |
@@ -206,25 +206,13 @@ sudo pacman -S ttf-jetbrains-mono-nerd
 > **Note:** `waybar/style.css` uses `JetBrainsMono Nerd Font`. Without this package, Nerd Font icons (Bluetooth, etc.) fall back to Adwaita 3D icons.
 
 ### Task management
-```bash
-sudo pacman -S task timewarrior
-```
 
-After stowing taskwarrior config, install the Timewarrior hook for automatic time tracking:
-```bash
-mkdir -p ~/.task/hooks
-cp /usr/share/doc/timewarrior/ext/on-modify.timewarrior ~/.task/hooks/
-chmod +x ~/.task/hooks/on-modify.timewarrior
-```
-
-This makes `task 1 start` automatically start a Timewarrior timer and `task 1 done`/`task 1 stop` stop it. View with `timew summary`.
-
-#### taskr (custom Taskwarrior TUI)
-
-The Waybar task widget opens `taskr` — a custom Bubbletea TUI built on top of Taskwarrior. Install the latest binary directly from GitHub:
+`taskmanager` is a custom Bubbletea TUI for managing tasks. The repo is private, so installation requires `gh` auth.
 
 ```bash
-sudo curl -L https://github.com/Luciphere/taskr/releases/latest/download/taskr -o /usr/local/bin/taskr && sudo chmod +x /usr/local/bin/taskr
+gh release download --repo luciphere/taskr --pattern 'taskr' --dir /tmp
+sudo mv /tmp/taskr /usr/local/bin/taskr
+sudo chmod +x /usr/local/bin/taskr
 ```
 
 Run with `taskr`.
@@ -257,7 +245,7 @@ cd ~/dotfiles
 
 Apply all configs at once:
 ```bash
-stow --target="$HOME" btop dunst fastfetch fish helix hypr kitty micro mods taskwarrior waybar waypaper
+stow --target="$HOME" btop dunst fastfetch fish helix hypr kitty micro mods waybar waypaper
 ```
 
 Or apply individually, e.g.:
