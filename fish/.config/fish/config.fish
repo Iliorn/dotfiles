@@ -27,6 +27,5 @@ if status is-interactive
         fastfetch
     end
 end
-set -gx EDITOR hx
+set -gx EDITOR helix
 atuin init fish | source
-set -Ux EDITOR /usr/lib/helix/hx

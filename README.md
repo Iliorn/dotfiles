@@ -210,18 +210,11 @@ sudo pacman -S ttf-jetbrains-mono-nerd
 `taskr` is a custom Bubbletea TUI for managing tasks. The repo is private, so installation requires `gh` auth.
 
 ```bash
-gh release download --repo luciphere/taskr --pattern 'taskr' --dir /tmp
-sudo mv /tmp/taskr /usr/local/bin/taskr
-sudo chmod +x /usr/local/bin/taskr
+gh release download --repo luciphere/taskr --pattern 'taskr' --dir ~/.local/bin
+chmod +x ~/.local/bin/taskr
 ```
 
-Run with `taskr`.
-
-`taskr` uses `$EDITOR` for editing notes. Set it permanently in Fish:
-
-```bash
-echo 'set -Ux EDITOR /usr/lib/helix/hx' >> ~/.config/fish/config.fish
-```
+Run with `taskr`. Press `U` inside the app to self-update.
 
 ### AI CLI (mods)
 ```bash
@@ -307,8 +300,8 @@ Terminal interface for BluOS/Bluesound devices.
 
 ```bash
 sudo pacman -S python fzf curl
-sudo cp ~/dotfiles/scripts/mtui.sh /usr/local/bin/mtui
-sudo chmod +x /usr/local/bin/mtui
+cp ~/dotfiles/scripts/mtui.sh ~/.local/bin/mtui
+chmod +x ~/.local/bin/mtui
 ```
 
 Create config:
