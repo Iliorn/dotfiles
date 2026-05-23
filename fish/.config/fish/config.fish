@@ -29,3 +29,4 @@ if status is-interactive
 end
 set -gx EDITOR hx
 atuin init fish | source
+set -Ux EDITOR /usr/lib/helix/hx

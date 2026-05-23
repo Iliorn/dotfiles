@@ -207,7 +207,7 @@ sudo pacman -S ttf-jetbrains-mono-nerd
 
 ### Task management
 
-`taskmanager` is a custom Bubbletea TUI for managing tasks. The repo is private, so installation requires `gh` auth.
+`taskr` is a custom Bubbletea TUI for managing tasks. The repo is private, so installation requires `gh` auth.
 
 ```bash
 gh release download --repo luciphere/taskr --pattern 'taskr' --dir /tmp
@@ -216,6 +216,12 @@ sudo chmod +x /usr/local/bin/taskr
 ```
 
 Run with `taskr`.
+
+`taskr` uses `$EDITOR` for editing notes. Set it permanently in Fish:
+
+```bash
+echo 'set -Ux EDITOR /usr/lib/helix/hx' >> ~/.config/fish/config.fish
+```
 
 ### AI CLI (mods)
 ```bash
