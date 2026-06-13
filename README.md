@@ -210,7 +210,7 @@ sudo pacman -S ttf-jetbrains-mono-nerd
 `taskr` is a custom Bubbletea TUI for managing tasks. The repo is private, so installation requires `gh` auth.
 
 ```bash
-gh release download --repo luciphere/taskr --pattern 'taskr' --dir ~/.local/bin
+gh release download --repo iliorn/taskr --pattern 'taskr' --dir ~/.local/bin
 chmod +x ~/.local/bin/taskr
 ```
 
@@ -238,7 +238,7 @@ sudo pacman -S btop fastfetch micro
 ## 2. Clone and apply with Stow
 
 ```bash
-git clone https://github.com/Luciphere/dotfiles.git ~/dotfiles
+git clone https://github.com/iliorn/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ```
 
