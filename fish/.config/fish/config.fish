@@ -29,3 +29,4 @@ if status is-interactive
 end
 set -gx EDITOR helix
 atuin init fish | source
+fish_add_path ~/.local/bin
