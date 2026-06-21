@@ -66,8 +66,23 @@ chsh -s /usr/bin/fish
 
 ### Editor & file manager
 ```bash
-sudo pacman -S helix yazi
+sudo pacman -S helix yazi codebook-lsp
 ```
+
+Codebook provides local, continuous spell checking in Helix using both Danish
+and US English dictionaries. Its configuration is managed by the `codebook`
+Stow package, while the Helix language-server integration is in
+`helix/.config/helix/languages.toml`.
+
+### Terminal email
+```bash
+sudo pacman -S aerc w3m libsecret
+```
+
+`aerc` uses Gmail over encrypted IMAP/SMTP connections. `w3m` renders HTML
+mail as terminal text, and `secret-tool` from `libsecret` retrieves the Gmail
+app password from the desktop keyring. The app password is never stored in
+this repository.
 
 ### App launcher
 ```bash
@@ -238,13 +253,14 @@ sudo pacman -S btop fastfetch micro
 ## 2. Clone and apply with Stow
 
 ```bash
-git clone https://github.com/iliorn/dotfiles.git ~/dotfiles
+sudo pacman -S git stow
+git clone https://github.com/Luciphere/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ```
 
 Apply all configs at once:
 ```bash
-stow --target="$HOME" btop dunst fastfetch fish helix hypr kitty micro mods waybar waypaper
+stow --target="$HOME" aerc btop codebook dunst fastfetch fish helix hypr kitty micro mods waybar waypaper
 ```
 
 Or apply individually, e.g.:
@@ -254,6 +270,33 @@ stow --target="$HOME" kitty
 ```
 
 > **Note:** Stow creates symlinks from `~/.config/<app>` to the corresponding folder in this repo. If a config already exists, remove or back it up first.
+
+### Finish the aerc Gmail setup
+
+The tracked account file is deliberately only a template. Create a local file
+with restrictive permissions:
+
+```bash
+install -Dm600 ~/dotfiles/aerc/.config/aerc/accounts.conf.example ~/.config/aerc/accounts.conf
+```
+
+Store a dedicated Gmail app password in the local desktop keyring. Enter the
+password at the prompt; do not place it directly in the command:
+
+```bash
+secret-tool store --label="aerc Gmail" service aerc account markbauerruby@gmail.com
+```
+
+This secret must be created separately on each laptop. Verify the account file
+permissions before starting aerc:
+
+```bash
+stat -c '%a %n' ~/.config/aerc/accounts.conf
+aerc
+```
+
+The permissions should be `600`. Never rename the example to `accounts.conf`
+inside this repository or commit an app password.
 
 ### System-level configs (not managed by Stow)
 

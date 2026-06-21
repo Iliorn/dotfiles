@@ -25,3 +25,11 @@ name = "toml"
 language-servers = ["taplo"]
 formatter = { command = "dprint", args = ["fmt", "--stdin", "toml"] }
 auto-format = true
+
+[language-server.codebook]
+command = "codebook-lsp"
+args = ["serve"]
+
+[[language]]
+name = "mail"
+language-servers = ["codebook"]

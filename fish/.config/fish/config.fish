@@ -30,3 +30,7 @@ end
 set -gx EDITOR helix
 atuin init fish | source
 fish_add_path ~/.local/bin
+
+
+# Added by Antigravity CLI installer
+set -gx PATH "/home/mark/.local/bin" $PATH
