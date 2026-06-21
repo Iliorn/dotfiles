@@ -257,7 +257,7 @@ sudo pacman -S btop fastfetch micro
 
 ```bash
 sudo pacman -S git stow
-git clone https://github.com/Luciphere/dotfiles.git ~/dotfiles
+git clone https://github.com/Iliorn/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ```
 
