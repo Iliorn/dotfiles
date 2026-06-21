@@ -66,13 +66,16 @@ chsh -s /usr/bin/fish
 
 ### Editor & file manager
 ```bash
-sudo pacman -S helix yazi codebook-lsp
+sudo pacman -S helix yazi zathura zathura-pdf-mupdf codebook-lsp
 ```
 
 Codebook provides local, continuous spell checking in Helix using both Danish
 and US English dictionaries. Its configuration is managed by the `codebook`
 Stow package, while the Helix language-server integration is in
 `helix/.config/helix/languages.toml`.
+
+Yazi opens PDF files in Zathura through the MIME-specific opener configured in
+`yazi/.config/yazi/yazi.toml`.
 
 ### Terminal email
 ```bash
@@ -260,7 +263,7 @@ cd ~/dotfiles
 
 Apply all configs at once:
 ```bash
-stow --target="$HOME" aerc btop codebook dunst fastfetch fish helix hypr kitty micro mods waybar waypaper
+stow --target="$HOME" aerc btop codebook dunst fastfetch fish helix hypr kitty micro mods waybar waypaper yazi
 ```
 
 Or apply individually, e.g.:
