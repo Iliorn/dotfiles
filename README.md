@@ -261,7 +261,7 @@ cd ~/dotfiles
 
 Apply all configs at once:
 ```bash
-stow --target="$HOME" aerc btop codebook dunst fastfetch fish helix hypr kitty micro mods waybar waypaper yazi
+stow --target="$HOME" aerc autostart btop codebook dunst fastfetch fish helix hypr kitty micro mods waybar waypaper yazi
 ```
 
 Or apply individually, e.g.:
