@@ -10,7 +10,7 @@
 /* Standard størrelse for alt tekst */
 #workspaces,
 #clock,
-#custom-taskwarrior-status,
+#custom-taskr-status,
 #cpu,
 #memory,
 #network,
@@ -177,7 +177,7 @@ window#waybar {
   border-radius: 6px;
 }
 
-#custom-taskwarrior-status {
+#custom-taskr-status {
   color: #cdd6f4;
   padding: 0 6px;
   margin: 4px 2px;

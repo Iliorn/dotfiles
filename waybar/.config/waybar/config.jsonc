@@ -12,7 +12,7 @@
   ],
   "modules-right": [
     "tray",
-    "custom/taskwarrior-status",
+    "custom/taskr-status",
     "pulseaudio",
     "bluetooth",
     "network",
@@ -29,18 +29,14 @@
     }
   },
   
-  "custom/taskwarrior-status": {
-    "format": "{icon}",
-    "format-icons": {
-      "default": "󱃔",
-      "due": "󱃔 !"
-    },
+  "custom/taskr-status": {
+    "format": "󱃔 {}",
     "return-type": "json",
-    "exec": "$HOME/.config/waybar/scripts/taskwarrior-status.sh",
+    "exec": "$HOME/.config/waybar/scripts/taskr-status.sh",
     "interval": 60,
     "tooltip": true,
     "on-click": "alacritty -e taskr",
-    "on-click-right": "alacritty -e bash -c '$HOME/.config/waybar/scripts/taskwarrior-add.sh'"
+    "on-click-right": "alacritty -e bash -c '$HOME/.config/waybar/scripts/taskr-add.sh'"
   },
   "custom/power_profile": {
     "format": "{}",

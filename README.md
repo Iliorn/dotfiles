@@ -22,7 +22,7 @@ Personal configuration files for my CachyOS / Arch Linux setup, managed with [GN
 | Bluetooth       | Blueman + bluetui |
 | WiFi            | iwd + systemd-resolved |
 | Cloud sync      | Rclone          |
-| Task manager    | taskmanager (custom Bubbletea TUI)          |
+| Task manager    | taskr (custom Bubbletea TUI)                |
 | AI CLI          | mods            |
 | Resource monitor| Btop            |
 | System info     | Fastfetch       |
@@ -252,6 +252,10 @@ chmod +x ~/.local/bin/taskr
 
 Run with `taskr`. Press `U` inside the app to self-update.
 
+The Waybar `custom/taskr-status` module displays `taskr stats --format=waybar`
+output (active count + tooltip). Left-click opens the TUI; right-click runs the
+quick-add prompt at `waybar/.config/waybar/scripts/taskr-add.sh`.
+
 ### AI CLI (mods)
 ```bash
 paru -S mods
@@ -281,7 +285,7 @@ cd ~/dotfiles
 
 Apply all configs at once:
 ```bash
-stow --target="$HOME" aerc autostart btop codebook dunst fastfetch fish gtk helix hypr kitty micro mimeapps mods obsidian taskwarrior waybar waypaper yazi
+stow --target="$HOME" aerc autostart btop codebook dunst fastfetch fish gtk helix hypr kitty micro mimeapps mods obsidian waybar waypaper yazi
 ```
 
 Or apply individually, e.g.:
