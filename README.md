@@ -270,7 +270,7 @@ sudo pacman -S spotify-launcher
 
 ### Utilities
 ```bash
-sudo pacman -S btop fastfetch micro
+sudo pacman -S btop fastfetch micro 7zip
 ```
 
 ---
