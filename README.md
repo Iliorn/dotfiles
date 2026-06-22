@@ -8,10 +8,10 @@ Personal configuration files for my CachyOS / Arch Linux setup, managed with [GN
 |----------------|-----------------|
 | Browser         | Zen Browser     |
 | Window manager  | Hyprland        |
-| Terminal        | Kitty           |
+| Terminal        | Alacritty       |
 | Shell           | Fish            |
 | Editor          | Helix           |
-| File manager    | Yazi (in Kitty) |
+| File manager    | Yazi (in Alacritty) |
 | App launcher    | Rofi            |
 | Status bar      | Waybar          |
 | Notifications   | Dunst           |
@@ -60,7 +60,7 @@ Ly picks up Wayland sessions from `/usr/share/wayland-sessions/`, so Hyprland wi
 
 ### Terminal & shell
 ```bash
-sudo pacman -S kitty fish
+sudo pacman -S alacritty fish
 chsh -s /usr/bin/fish
 ```
 
@@ -285,13 +285,13 @@ cd ~/dotfiles
 
 Apply all configs at once:
 ```bash
-stow --target="$HOME" aerc autostart btop codebook dunst fastfetch fish gtk helix hypr kitty micro mimeapps mods obsidian waybar waypaper yazi
+stow --target="$HOME" aerc alacritty autostart btop codebook dunst fastfetch fish gtk helix hypr kitty micro mimeapps mods obsidian waybar waypaper yazi
 ```
 
 Or apply individually, e.g.:
 ```bash
 stow --target="$HOME" hypr
-stow --target="$HOME" kitty
+stow --target="$HOME" alacritty
 ```
 
 > **Note:** Stow creates symlinks from `~/.config/<app>` to the corresponding folder in this repo. If a config already exists, remove or back it up first.
