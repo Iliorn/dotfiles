@@ -180,13 +180,11 @@ rclone mount dropbox: ~/Dropbox --vfs-cache-mode full --daemon
 rclone mount onedrive: ~/OneDrive --vfs-cache-mode full --daemon
 ```
 
-### Power management (TLP)
-```bash
-sudo pacman -S tlp tlp-rdw
-sudo systemctl enable --now tlp
-```
+### Power management (power-profiles-daemon)
 
-TLP handles battery optimization and power saving automatically on laptops.
+CachyOS ships `power-profiles-daemon` active by default — nothing to install. The Waybar power-profile picker (`hypr/.config/hypr/scripts/power_profile.sh`) and `powerprofilesctl` both rely on it.
+
+Do **not** install `tlp` alongside it: TLP and power-profiles-daemon are mutually exclusive, and installing TLP would silently break the Waybar profile picker.
 
 ### Performance (ananicy-cpp)
 ```bash
