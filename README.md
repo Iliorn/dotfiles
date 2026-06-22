@@ -79,13 +79,17 @@ Yazi opens PDF files in Zathura through the MIME-specific opener configured in
 
 ### Terminal email
 ```bash
-sudo pacman -S aerc w3m libsecret
+sudo pacman -S aerc w3m libsecret gnome-keyring
 ```
 
 `aerc` uses Gmail over encrypted IMAP/SMTP connections. `w3m` renders HTML
 mail as terminal text, and `secret-tool` from `libsecret` retrieves the Gmail
 app password from the desktop keyring. The app password is never stored in
 this repository.
+
+> **Note:** `gnome-keyring` is the keyring provider that backs `secret-tool`.
+> Without it, `secret-tool` errors with `The name is not activatable` and aerc
+> can't authenticate. Hyprland starts the daemon via PAM on next login.
 
 ### App launcher
 ```bash
@@ -221,6 +225,22 @@ sudo pacman -S ttf-jetbrains-mono-nerd
 
 > **Note:** `waybar/style.css` uses `JetBrainsMono Nerd Font`. Without this package, Nerd Font icons (Bluetooth, etc.) fall back to Adwaita 3D icons.
 
+### Icon theme (BeautyLine)
+
+Tray icons (Blueman applet, etc.) use the GTK icon theme — not the Nerd Font. Without an override, GTK falls back to Adwaita 3D. The `gtk` stow package pins the icon theme to `BeautyLine` in `gtk-3.0/settings.ini`.
+
+```bash
+paru -S beautyline
+```
+
+`gsettings` (dconf) takes precedence over `settings.ini` for many GTK apps, so set it there too — this is per-user state and isn't tracked by the repo:
+
+```bash
+gsettings set org.gnome.desktop.interface icon-theme 'BeautyLine'
+```
+
+Restart waybar (or log out/in) to pick it up.
+
 ### Task management
 
 `taskr` is a custom Bubbletea TUI for managing tasks. The repo is private, so installation requires `gh` auth.
@@ -261,7 +281,7 @@ cd ~/dotfiles
 
 Apply all configs at once:
 ```bash
-stow --target="$HOME" aerc autostart btop codebook dunst fastfetch fish helix hypr kitty micro mods waybar waypaper yazi
+stow --target="$HOME" aerc autostart btop codebook dunst fastfetch fish gtk helix hypr kitty micro mimeapps mods obsidian taskwarrior waybar waypaper yazi
 ```
 
 Or apply individually, e.g.:
