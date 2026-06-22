@@ -60,9 +60,13 @@ Ly picks up Wayland sessions from `/usr/share/wayland-sessions/`, so Hyprland wi
 
 ### Terminal & shell
 ```bash
-sudo pacman -S alacritty fish
+sudo pacman -S alacritty fish fzf zoxide ripgrep fd bat eza atuin starship direnv lazygit
 chsh -s /usr/bin/fish
 ```
+
+Fish integrates FZF for file selection (`Ctrl+T`) and directory navigation
+(`Alt+C`), while Atuin owns `Ctrl+R` for shell history. Lazygit is available as
+`lg` and opens files in Helix.
 
 ### Editor & file manager
 ```bash
@@ -285,13 +289,14 @@ cd ~/dotfiles
 
 Apply all configs at once:
 ```bash
-stow --target="$HOME" aerc alacritty autostart btop codebook dunst fastfetch fish gtk helix hypr kitty micro mimeapps mods obsidian waybar waypaper yazi
+stow --target="$HOME" aerc alacritty autostart btop codebook dunst fastfetch fish gtk helix hypr kitty lazygit micro mimeapps mods obsidian waybar waypaper yazi
 ```
 
 Or apply individually, e.g.:
 ```bash
 stow --target="$HOME" hypr
 stow --target="$HOME" alacritty
+stow --target="$HOME" lazygit
 ```
 
 > **Note:** Stow creates symlinks from `~/.config/<app>` to the corresponding folder in this repo. If a config already exists, remove or back it up first.
