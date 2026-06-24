@@ -1,0 +1,17 @@
+# Fish writes universal vars here; regenerated per machine.
+fish/.config/fish/fish_variables
+
+# Hyprland host-local overrides (monitor + workspace layout per machine).
+hypr/.config/hypr/host.conf
+
+# Claude config: only settings.json is tracked. Everything else under
+# claude/.claude/ is runtime state or secrets and must never be committed.
+claude/.claude/*
+!claude/.claude/settings.json
+!claude/.claude/CLAUDE.md
+!claude/.claude/commands/
+!claude/.claude/agents/
+!claude/.claude/keybindings.json
+
+# aerc local account file (built from .example, contains app-password setup)
+aerc/.config/aerc/accounts.conf

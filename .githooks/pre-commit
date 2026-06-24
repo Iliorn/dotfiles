@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Pre-commit guardrails for this dotfiles repo.
+#   - fish -n: syntax-check staged .fish files
+#   - bash -n: syntax-check staged .sh files
+#   - refuse staged /home/<user>/ literals (use $HOME or ~ instead)
+#
+# Activated via `git config core.hooksPath .githooks` — install.sh does this.
+
+set -euo pipefail
+
+fail() { printf '\033[1;31mpre-commit:\033[0m %s\n' "$*" >&2; exit 1; }
+note() { printf '\033[1;33mpre-commit:\033[0m %s\n' "$*" >&2; }
+
+staged_files() {
+    git diff --cached --name-only --diff-filter=ACM -z | tr '\0' '\n'
+}
+
+# Fish syntax
+if command -v fish >/dev/null 2>&1; then
+    while IFS= read -r f; do
+        [[ -z "$f" ]] && continue
+        case "$f" in *.fish)
+            fish -n "$f" || fail "fish syntax error in $f"
+            ;;
+        esac
+    done < <(staged_files)
+else
+    note "fish not installed — skipping fish syntax check"
+fi
+
+# Bash syntax
+while IFS= read -r f; do
+    [[ -z "$f" ]] && continue
+    case "$f" in *.sh)
+        bash -n "$f" || fail "bash syntax error in $f"
+        ;;
+    esac
+done < <(staged_files)
+
+# Hardcoded /home/<user>/ literals — host.example.conf is allowed to mention
+# them in comments, so it's whitelisted.
+violations=$(
+    git diff --cached -U0 -- ':(exclude).githooks/pre-commit' \
+                           ':(exclude)hypr/.config/hypr/host.example.conf' \
+        | grep -E '^\+[^+].*/home/[a-z][a-z0-9_-]+/' || true
+)
+if [[ -n "$violations" ]]; then
+    note "hardcoded /home/<user>/ paths detected — use \$HOME or ~ instead:"
+    printf '%s\n' "$violations" >&2
+    exit 1
+fi
+
+exit 0

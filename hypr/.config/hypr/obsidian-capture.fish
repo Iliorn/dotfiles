@@ -3,7 +3,7 @@ read --prompt-str "→ " note
 if test -n "$note"
     set today (date +%Y-%m-%d)
     set path "A. Personligt/0 - Generelt/Daglige noter/$today.md"
-    set fullpath "/home/mark/Documents/Obsidian Vault/$path"
+    set fullpath "$HOME/Documents/Obsidian Vault/$path"
     if not test -f $fullpath
         obsidian create path="$path"
     end

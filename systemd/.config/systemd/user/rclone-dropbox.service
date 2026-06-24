@@ -1,0 +1,18 @@
+[Unit]
+Description=Mount Dropbox via rclone
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=notify
+ExecStartPre=/usr/bin/mkdir -p %h/Dropbox
+ExecStart=/usr/bin/rclone mount dropbox: %h/Dropbox \
+    --vfs-cache-mode=full \
+    --umask=0022 \
+    --log-level=INFO
+ExecStop=/bin/fusermount -uz %h/Dropbox
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target

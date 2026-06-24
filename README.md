@@ -2,6 +2,95 @@
 
 Personal configuration files for my CachyOS / Arch Linux setup, managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
+## From zero on a fresh CachyOS install
+
+Goal: log in, open one terminal, run one command. Three minutes later you have
+the full Hyprland environment, Danish keyboard everywhere, fish as login shell,
+rclone services, and every config stowed.
+
+### 1. Fix the keyboard first (saves a lot of typing pain)
+
+A fresh install often boots with a US keymap even if the physical keyboard is
+Danish. Run this *before* anything else — it's pure letters + spaces, so it's
+easy to type with the wrong keymap:
+
+```
+sudo loadkeys dk
+```
+
+Now `/`, `.`, `-`, `:` etc. land where you expect.
+(In a Wayland desktop instead of TTY: set keyboard to Danish in system settings,
+or `setxkbmap dk` on X11.)
+
+### 2. Get online
+
+If you're not online yet, connect via WiFi from the TTY:
+```bash
+iwctl
+[iwd] station wlan0 scan
+[iwd] station wlan0 get-networks
+[iwd] station wlan0 connect "Your Network"
+[iwd] exit
+```
+
+### 3. Run the bootstrap
+
+Two short commands — no pipes, no `bash <(...)`, no `https://`:
+
+```
+curl -LO github.com/iliorn/dotfiles/raw/main/i
+sh i
+```
+
+`i` is the bootstrap script: it installs `git` + `stow`, clones this repo to
+`~/dotfiles`, and runs `install.sh`. It asks for your sudo password once at
+the start and keeps it warm for the rest of the run.
+
+### 3. After it finishes — three things only you can do
+
+The script prints these at the end too:
+
+1. **Reboot once.** Picks up the new TTY keymap (`KEYMAP=dk`) and Ly login manager.
+2. **`rclone config`** to set up the `dropbox` and `onedrive` remotes (OAuth flow
+   needs a browser). Then `systemctl --user restart rclone-{dropbox,onedrive}.service`.
+3. **aerc Gmail password** in the keyring:
+   ```bash
+   install -Dm600 ~/dotfiles/aerc/.config/aerc/accounts.conf.example \
+                  ~/.config/aerc/accounts.conf
+   secret-tool store --label="aerc Gmail" service aerc \
+                     account markbauerruby@gmail.com
+   ```
+
+That's it. The rest of this README is reference for what `install.sh` did and
+for partial / manual install paths.
+
+### What `install.sh` automates for you
+
+- `/etc/vconsole.conf` set to `KEYMAP=dk` — fixes the **US-keyboard-at-login** trap on fresh installs.
+- Every pacman package below, then `paru` bootstrap if missing, then AUR packages (`beautyline`, `mods`).
+- All stow packages applied with `--restow`.
+- `~/.config/hypr/host.conf` seeded from `host.example.conf` (gitignored, edit per machine).
+- `iwd/main.conf` copied to `/etc/iwd/`.
+- `mtui` installed to `~/.local/bin/`.
+- `taskr` downloaded via `gh` (if authenticated; otherwise skipped with a hint).
+- `gsettings` GTK icon theme set to `BeautyLine`.
+- Login shell changed to `fish` via `chsh`.
+- System services enabled: `bluetooth`, `iwd`, `systemd-resolved`, `ananicy-cpp`, `ufw`, `avahi-daemon`, `ly@tty2`.
+- User services enabled: `rclone-dropbox.service`, `rclone-onedrive.service`.
+- Pre-commit hook activated via `core.hooksPath`.
+
+### Flags
+
+```bash
+./install.sh --dry-run                 # show every action, change nothing
+./install.sh --no-packages             # configs only, no pacman/paru
+./install.sh --skip keymap --skip taskr  # skip specific steps (repeatable)
+```
+
+Step names accepted by `--skip`: `keymap packages paru aur stow host iwd mtui taskr claude-code gsettings sysd-user sysd-system shell hooks`.
+
+---
+
 ## Setup overview
 
 | Component       | Program          |
@@ -58,15 +147,15 @@ Ly picks up Wayland sessions from `/usr/share/wayland-sessions/`, so Hyprland wi
 
 > **Note:** `ly` only ships `ly@.service` (a templated unit). `systemctl enable ly` will fail — always use `ly@tty2`.
 
-### Terminal & shell
+### Terminal, multiplexer & shell
 ```bash
-sudo pacman -S alacritty fish fzf zoxide ripgrep fd bat eza atuin starship direnv lazygit
+sudo pacman -S alacritty zellij fish fzf zoxide ripgrep fd bat eza atuin starship direnv lazygit
 chsh -s /usr/bin/fish
 ```
 
 Fish integrates FZF for file selection (`Ctrl+T`) and directory navigation
 (`Alt+C`), while Atuin owns `Ctrl+R` for shell history. Lazygit is available as
-`lg` and opens files in Helix.
+`lg` and opens files in Helix. Zellij is the terminal multiplexer.
 
 ### Editor & file manager
 ```bash
@@ -182,10 +271,19 @@ For **Dropbox**: choose `n` (new remote), name it `dropbox`, type `dropbox`, fol
 
 For **OneDrive**: choose `n` (new remote), name it `onedrive`, type `onedrive`, follow the OAuth flow.
 
-The mounts are launched automatically by Hyprland on login (see `hyprland.conf` autostart). To test them manually:
+The mounts run as systemd user services (`rclone-dropbox.service` and
+`rclone-onedrive.service`) from the `systemd` stow package. `install.sh`
+enables them; manually that's:
+
 ```bash
-rclone mount dropbox: ~/Dropbox --vfs-cache-mode full --daemon
-rclone mount onedrive: ~/OneDrive --vfs-cache-mode full --daemon
+systemctl --user daemon-reload
+systemctl --user enable --now rclone-dropbox.service rclone-onedrive.service
+```
+
+Logs and restarts are managed by systemd:
+```bash
+systemctl --user status rclone-dropbox.service
+journalctl --user -u rclone-dropbox.service -f
 ```
 
 ### Power management (power-profiles-daemon)
@@ -289,7 +387,7 @@ cd ~/dotfiles
 
 Apply all configs at once:
 ```bash
-stow --target="$HOME" aerc alacritty autostart btop codebook dunst fastfetch fish gtk helix hypr kitty lazygit micro mimeapps mods obsidian waybar waypaper yazi
+stow --target="$HOME" aerc alacritty autostart btop claude codebook dunst fastfetch fish gtk helix hypr lazygit micro mimeapps mods obsidian systemd waybar waypaper yazi
 ```
 
 Or apply individually, e.g.:
@@ -297,6 +395,19 @@ Or apply individually, e.g.:
 stow --target="$HOME" hypr
 stow --target="$HOME" alacritty
 stow --target="$HOME" lazygit
+```
+
+### Host-local Hyprland config
+
+Monitor layout and workspace pinning live in `~/.config/hypr/host.conf`, which
+is gitignored. The shared `hyprland.conf` sources it via `source = ./host.conf`.
+
+On a new machine, copy the template and edit for the local hardware (install.sh
+does this automatically the first time):
+
+```bash
+cp hypr/.config/hypr/host.example.conf ~/.config/hypr/host.conf
+$EDITOR ~/.config/hypr/host.conf
 ```
 
 > **Note:** Stow creates symlinks from `~/.config/<app>` to the corresponding folder in this repo. If a config already exists, remove or back it up first.
@@ -344,7 +455,7 @@ sudo systemctl restart iwd
 
 | Shortcut             | Action                        |
 |---------------------|-------------------------------|
-| `Super + Q`         | Open terminal (Kitty)         |
+| `Super + Q`         | Open terminal (Alacritty)     |
 | `Super + W`         | Open browser (Zen Browser)    |
 | `Super + E`         | Open file manager (Yazi)      |
 | `Super + Space`     | App launcher (Rofi)           |
