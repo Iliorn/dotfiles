@@ -1,6 +1,6 @@
 [opener]
 pdf = [
-  { run = "zathura %s1", orphan = true, desc = "Zathura" },
+  { run = 'zathura "$@"', orphan = true, desc = "Zathura" },
 ]
 
 [open]
