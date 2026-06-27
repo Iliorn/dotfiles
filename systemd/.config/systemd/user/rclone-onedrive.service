@@ -5,12 +5,15 @@ Wants=network-online.target
 
 [Service]
 Type=notify
-ExecStartPre=/usr/bin/mkdir -p %h/OneDrive
+ExecStartPre=/usr/bin/mkdir -p %h/OneDrive %h/.cache/rclone
 ExecStart=/usr/bin/rclone mount onedrive: %h/OneDrive \
     --vfs-cache-mode=full \
     --vfs-cache-max-size=4G \
     --vfs-cache-max-age=168h \
+    --dir-cache-time=5m \
+    --poll-interval=1m \
     --umask=0022 \
+    --log-file=%h/.cache/rclone/onedrive-mount.log \
     --log-level=INFO
 ExecStop=/bin/fusermount -uz %h/OneDrive
 Restart=on-failure
