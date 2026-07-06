@@ -159,13 +159,15 @@ Fish integrates FZF for file selection (`Ctrl+T`) and directory navigation
 
 ### Editor & file manager
 ```bash
-sudo pacman -S helix superfile zathura zathura-pdf-mupdf codebook-lsp
+sudo pacman -S helix superfile zathura zathura-pdf-mupdf codebook-lsp marksman dprint
 ```
 
 Codebook provides local, continuous spell checking in Helix using both Danish
 and US English dictionaries. Its configuration is managed by the `codebook`
 Stow package, while the Helix language-server integration is in
 `helix/.config/helix/languages.toml`.
+Marksman provides Markdown navigation, completions, and backlinks in Helix;
+dprint is the configured Markdown formatter.
 
 Superfile launches as `spf`. It uses Helix as the editor, changes the shell to
 the last directory on quit through the Fish wrapper, supports zoxide jumping,

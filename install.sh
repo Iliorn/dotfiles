@@ -76,7 +76,7 @@ PACMAN_PACKAGES=(
     # Terminal / shell / CLI ergonomics
     alacritty zellij fish fzf zoxide ripgrep fd bat eza atuin starship direnv lazygit
     # Editor + file manager
-    helix superfile zathura zathura-pdf-mupdf codebook-lsp
+    helix superfile zathura zathura-pdf-mupdf codebook-lsp marksman dprint
     # Email
     aerc w3m libsecret gnome-keyring
     # Launcher / bar / notifications

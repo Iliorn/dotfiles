@@ -61,6 +61,7 @@ if status is-interactive
     end
 end
 set -gx EDITOR helix
+set -gx VISUAL helix
 fish_add_path ~/.local/bin
 
 alias lg='lazygit'
