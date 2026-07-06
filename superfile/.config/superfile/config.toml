@@ -1,0 +1,25 @@
+##############################################
+#                                            #
+#           Superfile Configuration          #
+#                                            #
+##############################################
+
+editor = "helix"
+dir_editor = "helix"
+auto_check_update = true
+cd_on_quit = true
+ignore_missing_fields = true
+
+default_open_file_preview = true
+show_image_preview = true
+show_panel_footer_info = true
+default_directory = "."
+
+code_previewer = "bat"
+nerdfont = true
+transparent_background = true
+
+zoxide_support = true
+
+[open_with]
+pdf = "zathura"

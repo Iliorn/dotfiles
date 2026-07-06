@@ -76,7 +76,7 @@ PACMAN_PACKAGES=(
     # Terminal / shell / CLI ergonomics
     alacritty zellij fish fzf zoxide ripgrep fd bat eza atuin starship direnv lazygit
     # Editor + file manager
-    helix yazi zathura zathura-pdf-mupdf codebook-lsp
+    helix superfile zathura zathura-pdf-mupdf codebook-lsp
     # Email
     aerc w3m libsecret gnome-keyring
     # Launcher / bar / notifications
@@ -172,13 +172,28 @@ set_keyboard_layout() {
 #--- stow ----------------------------------------------------------------------
 STOW_PACKAGES=(
     aerc alacritty autostart btop claude codebook dunst fastfetch fish gtk
-    helix hypr lazygit micro mimeapps mods obsidian systemd waybar waypaper yazi
+    helix hypr lazygit micro mimeapps mods obsidian systemd waybar waypaper superfile
 )
+
+cleanup_retired_yazi_stow() {
+    local old_config="$HOME/.config/yazi/yazi.toml"
+    local target
+
+    if [[ -L "$old_config" ]]; then
+        target="$(readlink "$old_config")"
+        if [[ "$target" == "$DOTFILES_DIR/yazi/"* || "$target" == "$DOTFILES_DIR"/yazi/* ]]; then
+            log "Removing retired Yazi stow symlink"
+            run rm "$old_config"
+            run rmdir "$HOME/.config/yazi" 2>/dev/null || true
+        fi
+    fi
+}
 
 apply_stow() {
     if skipped stow; then log "Skipping stow"; return; fi
     log "Applying stow packages (restow)"
     cd "$DOTFILES_DIR"
+    cleanup_retired_yazi_stow
     for pkg in "${STOW_PACKAGES[@]}"; do
         if [[ ! -d "$pkg" ]]; then
             warn "stow package '$pkg' not found — skipping"
