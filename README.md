@@ -100,7 +100,7 @@ Step names accepted by `--skip`: `keymap packages paru aur stow host iwd mtui ta
 | Terminal        | Alacritty       |
 | Shell           | Fish            |
 | Editor          | Helix           |
-| File manager    | Yazi (in Alacritty) |
+| File manager    | Superfile (in Alacritty) |
 | App launcher    | Rofi            |
 | Status bar      | Waybar          |
 | Notifications   | Dunst           |
@@ -458,7 +458,7 @@ sudo systemctl restart iwd
 |---------------------|-------------------------------|
 | `Super + Q`         | Open terminal (Alacritty)     |
 | `Super + W`         | Open browser (Zen Browser)    |
-| `Super + E`         | Open file manager (Yazi)      |
+| `Super + E`         | Open file manager (Superfile) |
 | `Super + Space`     | App launcher (Rofi)           |
 | `Super + C`         | Close active window           |
 | `Super + F`         | Fullscreen                    |
