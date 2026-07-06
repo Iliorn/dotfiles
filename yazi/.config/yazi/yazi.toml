@@ -1,9 +1,0 @@
-[opener]
-pdf = [
-  { run = 'zathura "$@"', orphan = true, desc = "Zathura" },
-]
-
-[open]
-prepend_rules = [
-  { mime = "application/pdf", use = "pdf" },
-]

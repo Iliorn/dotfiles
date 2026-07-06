@@ -76,7 +76,7 @@ PACMAN_PACKAGES=(
     # Terminal / shell / CLI ergonomics
     alacritty zellij fish fzf zoxide ripgrep fd bat eza atuin starship direnv lazygit
     # Editor + file manager
-    helix yazi zathura zathura-pdf-mupdf codebook-lsp
+    helix superfile zathura zathura-pdf-mupdf codebook-lsp
     # Email
     aerc w3m libsecret gnome-keyring
     # Launcher / bar / notifications
@@ -105,6 +105,9 @@ AUR_PACKAGES=(
     beautyline
     mods
     zen-browser-bin
+    # Seafile virtual drive (mounts libraries on demand at ~/SeaDrive).
+    # Pulls in seadrive-daemon as a dependency. Autostarted via hyprland.conf.
+    seadrive-gui
 )
 
 install_packages() {
@@ -172,13 +175,28 @@ set_keyboard_layout() {
 #--- stow ----------------------------------------------------------------------
 STOW_PACKAGES=(
     aerc alacritty autostart btop claude codebook dunst fastfetch fish gtk
-    helix hypr lazygit micro mimeapps mods obsidian systemd waybar waypaper yazi
+    helix hypr lazygit micro mimeapps mods obsidian systemd waybar waypaper superfile
 )
+
+cleanup_retired_yazi_stow() {
+    local old_config="$HOME/.config/yazi/yazi.toml"
+    local target
+
+    if [[ -L "$old_config" ]]; then
+        target="$(readlink "$old_config")"
+        if [[ "$target" == "$DOTFILES_DIR/yazi/"* || "$target" == "$DOTFILES_DIR"/yazi/* ]]; then
+            log "Removing retired Yazi stow symlink"
+            run rm "$old_config"
+            run rmdir "$HOME/.config/yazi" 2>/dev/null || true
+        fi
+    fi
+}
 
 apply_stow() {
     if skipped stow; then log "Skipping stow"; return; fi
     log "Applying stow packages (restow)"
     cd "$DOTFILES_DIR"
+    cleanup_retired_yazi_stow
     for pkg in "${STOW_PACKAGES[@]}"; do
         if [[ ! -d "$pkg" ]]; then
             warn "stow package '$pkg' not found — skipping"
@@ -314,11 +332,17 @@ set_login_shell_to_fish() {
 enable_user_services() {
     if skipped sysd-user; then log "Skipping user services"; return; fi
     local services=(rclone-dropbox.service rclone-onedrive.service)
+    local paths=(taskr-waybar-refresh.path)
     log "Enabling systemd user services: ${services[*]}"
     run systemctl --user daemon-reload || true
     for svc in "${services[@]}"; do
         run systemctl --user enable --now "$svc" \
             || warn "  $svc failed — run 'rclone config' to set up the remote, then re-enable"
+    done
+    log "Enabling systemd user paths: ${paths[*]}"
+    for path in "${paths[@]}"; do
+        run systemctl --user enable --now "$path" \
+            || warn "  $path failed — enable it manually after logging into a user session"
     done
 }
 
@@ -379,6 +403,10 @@ main() {
   • rclone: configure the dropbox + onedrive remotes (one time per machine):
         rclone config
         systemctl --user restart rclone-dropbox.service rclone-onedrive.service
+  • SeaDrive: launch it once and log into the Seafile server (one time per
+    machine — the account lives in ~/.seadrive and is NOT tracked in dotfiles):
+        seadrive-gui   # or just log out/in; it autostarts via hyprland.conf
+    Then right-click the waybar tray icon for sync status and settings.
   • Hyprland: review ~/.config/hypr/host.conf and adjust monitor names for
     this machine's hardware (`hyprctl monitors` shows the connector names).
   • Reboot once to pick up the new vconsole keymap and Ly login manager.

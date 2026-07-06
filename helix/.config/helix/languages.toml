@@ -1,6 +1,6 @@
 [language-server.tinymist]
 command = "tinymist"
-config = { exportPdf = "onSave", preview.background.enabled = true }
+config = { exportPdf = "onSave" }
 
 [[language]]
 name = "typst"

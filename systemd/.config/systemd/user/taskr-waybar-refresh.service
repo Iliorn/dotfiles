@@ -1,0 +1,6 @@
+[Unit]
+Description=Signal Waybar to refresh taskr status
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/waybar/scripts/taskr-refresh.sh

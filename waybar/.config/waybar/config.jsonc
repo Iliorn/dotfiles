@@ -33,7 +33,8 @@
     "format": "{}",
     "return-type": "json",
     "exec": "$HOME/.config/waybar/scripts/taskr-status.sh",
-    "interval": 60,
+    "interval": 300,
+    "signal": 8,
     "tooltip": true,
     "on-click": "alacritty -e taskr",
     "on-click-right": "alacritty -e bash -c '$HOME/.config/waybar/scripts/taskr-add.sh'"

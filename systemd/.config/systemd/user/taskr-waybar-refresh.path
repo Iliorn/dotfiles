@@ -1,0 +1,12 @@
+[Unit]
+Description=Refresh Waybar taskr status when taskr data changes
+
+[Path]
+PathModified=%h/.taskr/tasks.db
+PathModified=%h/.taskr/tasks.db-wal
+MakeDirectory=true
+DirectoryMode=0755
+Unit=taskr-waybar-refresh.service
+
+[Install]
+WantedBy=default.target

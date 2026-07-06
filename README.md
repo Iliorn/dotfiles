@@ -100,7 +100,7 @@ Step names accepted by `--skip`: `keymap packages paru aur stow host iwd mtui ta
 | Terminal        | Alacritty       |
 | Shell           | Fish            |
 | Editor          | Helix           |
-| File manager    | Yazi (in Alacritty) |
+| File manager    | Superfile (in Alacritty) |
 | App launcher    | Rofi            |
 | Status bar      | Waybar          |
 | Notifications   | Dunst           |
@@ -159,7 +159,7 @@ Fish integrates FZF for file selection (`Ctrl+T`) and directory navigation
 
 ### Editor & file manager
 ```bash
-sudo pacman -S helix yazi zathura zathura-pdf-mupdf codebook-lsp
+sudo pacman -S helix superfile zathura zathura-pdf-mupdf codebook-lsp
 ```
 
 Codebook provides local, continuous spell checking in Helix using both Danish
@@ -167,8 +167,9 @@ and US English dictionaries. Its configuration is managed by the `codebook`
 Stow package, while the Helix language-server integration is in
 `helix/.config/helix/languages.toml`.
 
-Yazi opens PDF files in Zathura through the MIME-specific opener configured in
-`yazi/.config/yazi/yazi.toml`.
+Superfile launches as `spf`. It uses Helix as the editor, changes the shell to
+the last directory on quit through the Fish wrapper, supports zoxide jumping,
+and opens PDF files in Zathura through `superfile/.config/superfile/config.toml`.
 
 ### Terminal email
 ```bash
@@ -387,7 +388,7 @@ cd ~/dotfiles
 
 Apply all configs at once:
 ```bash
-stow --target="$HOME" aerc alacritty autostart btop claude codebook dunst fastfetch fish gtk helix hypr lazygit micro mimeapps mods obsidian systemd waybar waypaper yazi
+stow --target="$HOME" aerc alacritty autostart btop claude codebook dunst fastfetch fish gtk helix hypr lazygit micro mimeapps mods obsidian systemd waybar waypaper superfile
 ```
 
 Or apply individually, e.g.:
@@ -457,7 +458,7 @@ sudo systemctl restart iwd
 |---------------------|-------------------------------|
 | `Super + Q`         | Open terminal (Alacritty)     |
 | `Super + W`         | Open browser (Zen Browser)    |
-| `Super + E`         | Open file manager (Yazi)      |
+| `Super + E`         | Open file manager (Superfile) |
 | `Super + Space`     | App launcher (Rofi)           |
 | `Super + C`         | Close active window           |
 | `Super + F`         | Fullscreen                    |

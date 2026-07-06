@@ -33,6 +33,27 @@ if status is-interactive
         alias ls='eza --icons --group-directories-first -1'
     end
 
+    # Superfile wrapper: return to the last Superfile directory on quit.
+    if type -q spf
+        function spf
+            set os (uname -s)
+            set spf_last_dir ""
+
+            if test "$os" = "Linux"
+                set spf_last_dir "$HOME/.local/state/superfile/lastdir"
+            else if test "$os" = "Darwin"
+                set spf_last_dir "$HOME/Library/Application Support/superfile/lastdir"
+            end
+
+            command spf $argv
+
+            if test -n "$spf_last_dir"; and test -f "$spf_last_dir"
+                source "$spf_last_dir"
+                rm -f -- "$spf_last_dir" >/dev/null
+            end
+        end
+    end
+
     # Fastfetch: small greeting every terminal
     if type -q fastfetch
         echo
