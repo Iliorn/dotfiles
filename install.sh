@@ -332,11 +332,17 @@ set_login_shell_to_fish() {
 enable_user_services() {
     if skipped sysd-user; then log "Skipping user services"; return; fi
     local services=(rclone-dropbox.service rclone-onedrive.service)
+    local paths=(taskr-waybar-refresh.path)
     log "Enabling systemd user services: ${services[*]}"
     run systemctl --user daemon-reload || true
     for svc in "${services[@]}"; do
         run systemctl --user enable --now "$svc" \
             || warn "  $svc failed — run 'rclone config' to set up the remote, then re-enable"
+    done
+    log "Enabling systemd user paths: ${paths[*]}"
+    for path in "${paths[@]}"; do
+        run systemctl --user enable --now "$path" \
+            || warn "  $path failed — enable it manually after logging into a user session"
     done
 }
 
