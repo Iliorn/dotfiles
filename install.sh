@@ -105,6 +105,9 @@ AUR_PACKAGES=(
     beautyline
     mods
     zen-browser-bin
+    # Seafile virtual drive (mounts libraries on demand at ~/SeaDrive).
+    # Pulls in seadrive-daemon as a dependency. Autostarted via hyprland.conf.
+    seadrive-gui
 )
 
 install_packages() {
@@ -394,6 +397,10 @@ main() {
   • rclone: configure the dropbox + onedrive remotes (one time per machine):
         rclone config
         systemctl --user restart rclone-dropbox.service rclone-onedrive.service
+  • SeaDrive: launch it once and log into the Seafile server (one time per
+    machine — the account lives in ~/.seadrive and is NOT tracked in dotfiles):
+        seadrive-gui   # or just log out/in; it autostarts via hyprland.conf
+    Then right-click the waybar tray icon for sync status and settings.
   • Hyprland: review ~/.config/hypr/host.conf and adjust monitor names for
     this machine's hardware (`hyprctl monitors` shows the connector names).
   • Reboot once to pick up the new vconsole keymap and Ly login manager.

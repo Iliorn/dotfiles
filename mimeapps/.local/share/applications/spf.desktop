@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Superfile
+GenericName=File Manager
+Comment=Open folder in superfile (alacritty)
+TryExec=spf
+Exec=alacritty -e spf %f
+Terminal=false
+Categories=Utility;FileManager;
+MimeType=inode/directory;
+Keywords=file;manager;browser;explore;
