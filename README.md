@@ -71,7 +71,8 @@ for partial / manual install paths.
 - All stow packages applied with `--restow`.
 - `~/.config/hypr/host.conf` seeded from `host.example.conf` (gitignored, edit per machine).
 - `iwd/main.conf` copied to `/etc/iwd/`.
-- `mtui` installed to `~/.local/bin/`.
+- `NetworkManager` disabled if present — every host here uses iwd for wifi, never both.
+- `/etc/resolv.conf` pointed at systemd-resolved's stub (fixes a stale, unmanaged file NetworkManager leaves behind, which also trips a false Tailscale DNS health warning).
 - `taskr` downloaded via `gh` (if authenticated; otherwise skipped with a hint).
 - `gsettings` GTK icon theme set to `BeautyLine`.
 - Login shell changed to `fish` via `chsh`.
@@ -88,7 +89,7 @@ for partial / manual install paths.
 ./install.sh --skip keymap --skip taskr  # skip specific steps (repeatable)
 ```
 
-Step names accepted by `--skip`: `keymap packages paru aur stow host iwd mtui taskr claude-code gsettings sysd-user sysd-system shell hooks`.
+Step names accepted by `--skip`: `keymap packages paru aur stow host iwd network taskr claude-code gsettings sysd-user sysd-system shell hooks`.
 
 ---
 
@@ -481,40 +482,6 @@ sudo systemctl restart iwd
 | `Print`             | Screenshot (full screen)      |
 | `Shift + Print`     | Screenshot (select area)      |
 | `Ctrl + Shift + Print` | Screenshot to clipboard    |
-
----
-
-## mtui — Music TUI for BluOS
-
-Terminal interface for BluOS/Bluesound devices.
-
-**Requirements:** `python`, `fzf`, `curl`
-
-```bash
-sudo pacman -S python fzf curl
-cp ~/dotfiles/scripts/mtui.sh ~/.local/bin/mtui
-chmod +x ~/.local/bin/mtui
-```
-
-Create config:
-```bash
-mkdir -p ~/.config/mtui
-nano ~/.config/mtui/config
-```
-
-```bash
-NODE_IP="192.168.x.x:11000"     # Your BluOS device IP
-SERVER_IP="YOUR_COMPUTER_IP:8000"
-MUSIC_DIR="/home/YOUR_USERNAME/Music"
-PLAYLIST_DIR="/tmp/mtui-playlists"
-```
-
-Allow firewall access from the BluOS device:
-```bash
-sudo ufw allow from 192.168.x.x to any port 8000
-```
-
-Run: `mtui`
 
 ---
 
