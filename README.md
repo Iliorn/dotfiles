@@ -77,6 +77,7 @@ for partial / manual install paths.
 - Login shell changed to `fish` via `chsh`.
 - System services enabled: `bluetooth`, `iwd`, `systemd-resolved`, `ananicy-cpp`, `ufw`, `avahi-daemon`, `ly@tty2`.
 - User services enabled: `rclone-dropbox.service`, `rclone-onedrive.service`.
+- User paths enabled: `taskr-waybar-refresh.path`.
 - Pre-commit hook activated via `core.hooksPath`.
 
 ### Flags
@@ -360,6 +361,10 @@ Run with `taskr`. Press `U` inside the app to self-update.
 The Waybar `custom/taskr-status` module displays `taskr stats --format=waybar`
 output (active count + tooltip). Left-click opens the TUI; right-click runs the
 quick-add prompt at `waybar/.config/waybar/scripts/taskr-add.sh`.
+
+Waybar refreshes taskr status event-first: `taskr-waybar-refresh.path` watches
+`~/.taskr/tasks.db` and `~/.taskr/tasks.db-wal`, then signals only the taskr
+module. The Waybar module keeps a 5-minute interval as a fallback.
 
 ### AI CLI (mods)
 ```bash
