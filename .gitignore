@@ -15,3 +15,9 @@ claude/.claude/*
 
 # aerc local account file (built from .example, contains app-password setup)
 aerc/.config/aerc/accounts.conf
+
+# systemd --user enable skriver aktiverings-symlinks hertil, fordi stow
+# symlinker hele ~/.config/systemd/user ind i dette repo. Det er maskin-
+# tilstand, ikke konfiguration — og uden dette stopper Ansibles dotfiles-
+# rolle ved hver koersel, fordi arbejdstraeet er beskidt.
+systemd/.config/systemd/user/*.target.wants/
