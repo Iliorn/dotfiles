@@ -1,4 +1,17 @@
 #!/usr/bin/env bash
+
+# ═══════════════════════════════════════════════════════════════════════════
+# RETIRED (2026-08-01). This script has been replaced by Ansible:
+#   github.com/Iliorn/ansible  (private repo)
+# Machine setup now runs from there — see its ONBOARDING.md. The script body
+# below is kept for reference while the remaining pieces (keymap, network,
+# services, shell, AUR, taskr) are migrated into Ansible roles, and will be
+# deleted once that migration is complete.
+# ═══════════════════════════════════════════════════════════════════════════
+echo "RETIRED: install.sh has been replaced by Ansible (github.com/Iliorn/ansible)." >&2
+echo "See the Ansible repo's ONBOARDING.md for machine setup." >&2
+exit 1
+
 # Idempotent end-to-end bootstrap for this dotfiles repo on CachyOS / Arch.
 #
 # Designed so that on a brand-new install you can:
