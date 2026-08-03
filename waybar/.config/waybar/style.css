@@ -3,8 +3,12 @@
    ========================= */
 * {
   font-family: "JetBrainsMono Nerd Font", sans-serif;
+  font-weight: 400;
   border: none;
   border-radius: 0px;
+  /* Let bogstavafstand: gør en tæt linje lettere at læse uden at
+     fylde mere. Del af "flad og stram"-retningen, valgt 2026-08-03. */
+  letter-spacing: 0.3px;
 }
 
 /* Standard størrelse for alt tekst */
@@ -66,18 +70,20 @@ window#waybar {
 
 /* Uret står uden boble — kun afstand, ingen baggrund. */
 #clock {
-  padding: 0 12px;
-  margin: 4px 2px;
+  padding: 0 10px;
+  margin: 4px 6px;
 }
 
+/* Afstand er det eneste der adskiller modulerne nu — ingen bobler,
+   ingen streger. Derfor mere padding end den gamle boble-stil havde. */
 #pulseaudio,
 #cpu,
 #memory,
 #network,
 #custom-battery-t480,
 #custom-power_profile {
-  padding: 0 12px;
-  margin: 4px 2px;
+  padding: 0 10px;
+  margin: 4px 6px;
 }
 
 #bluetooth {
@@ -106,9 +112,9 @@ window#waybar {
    ========================= */
 /* Sluk-ikonet står uden boble — kun afstand, ingen baggrund. */
 #custom-power {
-  padding-left: 10px;
-  padding-right: 16px;
-  margin: 4px 2px;
+  padding-left: 12px;
+  padding-right: 12px;
+  margin: 4px 10px 4px 2px;
 }
 
 /* =========================
