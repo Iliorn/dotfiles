@@ -61,12 +61,15 @@
       "mode-mon-col": 1,
       "weeks-pos": "right",
       "on-scroll": 1,
+      // Minimalistisk: én accentfarve (i dag), resten en dæmpet gråskala
+      // fra linjens egen palet. Hierarki via lysstyrke, ikke kulør — og
+      // fed skrift kun ét sted, ellers betyder fremhævningen ingenting.
       "format": {
-        "months": "<span color='#ffead3'><b>{}</b></span>",
-        "days": "<span color='#ecc6d9'><b>{}</b></span>",
-        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
-        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
-        "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+        "months": "<span color='#cdd6f4'>{}</span>",
+        "days": "<span color='#cdd6f4'>{}</span>",
+        "weeks": "<span color='#45475a'>{}</span>",
+        "weekdays": "<span color='#6c7086'>{}</span>",
+        "today": "<span color='#89b4fa'><b>{}</b></span>"
       }
     },
     "actions": {
