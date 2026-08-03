@@ -123,7 +123,11 @@ window#waybar {
 /* =========================
    TRAY - Øget side-padding her
    ========================= */
+/* Bakken skal have samme luft som de faste moduler. Uden margin klistrer
+   den op ad naboen til højre — 'spacing' i config.jsonc gælder kun mellem
+   bakkens egne ikoner, ikke omkring selve blokken. */
 #tray {
+  margin: 4px 6px;
   background: none;
 }
 
@@ -193,4 +197,23 @@ window#waybar {
   color: #cdd6f4;
   padding: 0 6px;
   margin: 4px 2px;
+}
+
+/* =========================
+   TOOLTIPS (kalenderen ved hover)
+   ========================= */
+/* Uden disse regler arver tooltips GTK's standardudseende — lys baggrund,
+   fremmed skrift — og passer derfor ikke til resten af linjen. Farverne
+   herunder er de samme Catppuccin-toner som baren selv bruger. */
+tooltip {
+  background: rgba(20, 20, 30, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+}
+
+tooltip label {
+  color: #cdd6f4;
+  font-family: "JetBrainsMono Nerd Font", sans-serif;
+  font-size: 12px;
+  padding: 6px;
 }
