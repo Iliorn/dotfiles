@@ -110,8 +110,11 @@ window#waybar {
 /* =========================
    CUSTOM POWER (minimal fix)
    ========================= */
-/* Sluk-ikonet står uden boble — kun afstand, ingen baggrund. */
+/* Sluk-ikonet står uden boble — kun afstand, ingen baggrund.
+   Én pixel mindre end resten (13px): glyffen fylder optisk mere end
+   tal og tekst, så den skal være lidt mindre for at veje det samme. */
 #custom-power {
+  font-size: 12px;
   padding-left: 12px;
   padding-right: 12px;
   margin: 4px 10px 4px 2px;
