@@ -72,8 +72,10 @@
         "today": "<span color='#89b4fa'><b>{}</b></span>"
       }
     },
+    // 'mode' er bevidst IKKE bundet: den skifter til årsvisning, som er
+    // bredere end skærmen på en 1366x768-panel. Scroll flytter måned frem
+    // og tilbage, hvilket dækker samme behov uden at sprænge vinduet.
     "actions": {
-      "on-click-right": "mode",
       "on-scroll-up": "shift_up",
       "on-scroll-down": "shift_down"
     }
