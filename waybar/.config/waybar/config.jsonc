@@ -81,9 +81,10 @@
     }
   },
   "bluetooth": {
-    "format": "",
-    // {num_connections} vises kun i format-connected — er intet tilsluttet,
-    // falder modulet tilbage til "format" og står som et rent ikon uden 0.
+    // Tallet er skrevet fast som 0 her: "format" bruges netop naar intet er
+    // tilsluttet, saa antallet kan ikke vaere andet. Modulet beholder samme
+    // bredde i alle tilstande og hopper derfor ikke naar en enhed forbinder.
+    "format": " 0",
     "format-connected": "󰂱 {num_connections}",
     "format-disabled": "󰂲",
     "on-click": "alacritty -e bluetui",
