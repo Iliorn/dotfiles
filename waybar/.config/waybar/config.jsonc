@@ -53,7 +53,7 @@
     "on-click": "~/.config/hypr/scripts/powermenu.sh"
   },
   "clock": {
-    "format": "   {:L%H:%M | %A %d. %B}",
+    "format": "{:L%H:%M | %A %d. %B}",
     "locale": "da_DK.UTF-8",
     "tooltip-format": "<tt><small>{calendar}</small></tt>",
     "calendar": {

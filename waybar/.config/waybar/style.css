@@ -58,12 +58,17 @@ window#waybar {
 /* =========================
    Fælles Boble-stil
    ========================= */
-#workspaces,
-#clock {
+#workspaces {
   padding: 0 12px;
   margin: 4px 2px;
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 6px;
+}
+
+/* Uret står uden boble — kun afstand, ingen baggrund. */
+#clock {
+  padding: 0 12px;
+  margin: 4px 2px;
 }
 
 #pulseaudio,
@@ -100,12 +105,11 @@ window#waybar {
 /* =========================
    CUSTOM POWER (minimal fix)
    ========================= */
+/* Sluk-ikonet står uden boble — kun afstand, ingen baggrund. */
 #custom-power {
   padding-left: 10px;
   padding-right: 16px;
   margin: 4px 2px;
-  background-color: rgba(255, 255, 255, 0.05);
-  border-radius: 6px;
 }
 
 /* =========================
