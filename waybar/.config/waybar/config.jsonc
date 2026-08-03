@@ -82,7 +82,9 @@
   },
   "bluetooth": {
     "format": "",
-    "format-connected": "󰂱",
+    // {num_connections} vises kun i format-connected — er intet tilsluttet,
+    // falder modulet tilbage til "format" og står som et rent ikon uden 0.
+    "format-connected": "󰂱 {num_connections}",
     "format-disabled": "󰂲",
     "on-click": "alacritty -e bluetui",
     "tooltip-format": "{controller_alias}\t{controller_address}",
