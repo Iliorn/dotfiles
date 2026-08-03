@@ -205,15 +205,18 @@ window#waybar {
 /* Uden disse regler arver tooltips GTK's standardudseende — lys baggrund,
    fremmed skrift — og passer derfor ikke til resten af linjen. Farverne
    herunder er de samme Catppuccin-toner som baren selv bruger. */
+/* 'background-color', ikke stenografien 'background': GTK3 er upålidelig
+   med den sidste. Padding ligger på selve tooltip'en, ikke kun på label,
+   ellers klistrer indholdet til kanten. */
 tooltip {
-  background: rgba(20, 20, 30, 0.96);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  background-color: rgba(20, 20, 30, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 10px;
+  padding: 10px 12px;
 }
 
 tooltip label {
   color: #cdd6f4;
   font-family: "JetBrainsMono Nerd Font", sans-serif;
   font-size: 12px;
-  padding: 6px;
 }
