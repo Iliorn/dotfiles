@@ -58,11 +58,10 @@ window#waybar {
 /* =========================
    Fælles Boble-stil
    ========================= */
+/* Arbejdsområderne står uden boble — kun afstand, ingen baggrund. */
 #workspaces {
   padding: 0 12px;
   margin: 4px 2px;
-  background-color: rgba(255, 255, 255, 0.05);
-  border-radius: 6px;
 }
 
 /* Uret står uden boble — kun afstand, ingen baggrund. */
