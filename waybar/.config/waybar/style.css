@@ -14,6 +14,7 @@
 /* Standard størrelse for alt tekst */
 #workspaces,
 #clock,
+#pulseaudio,
 #custom-taskr-status,
 #cpu,
 #memory,
@@ -46,8 +47,11 @@ window#waybar {
 /* =========================
    Bluetooth - STØRRELSE
    ========================= */
+/* 13px som alle andre moduler, saa TALLET matcher "0%" i lyd og batteri.
+   Selve ikonet forstoerres i stedet via <span size='large'> i config.jsonc
+   — ellers arver tallet ikonets stoerrelse og skiller sig ud. */
 #bluetooth {
-  font-size: 16px;
+  font-size: 13px;
   color: #89b4fa;
 }
 

@@ -84,8 +84,8 @@
     // Tallet er skrevet fast som 0 her: "format" bruges netop naar intet er
     // tilsluttet, saa antallet kan ikke vaere andet. Modulet beholder samme
     // bredde i alle tilstande og hopper derfor ikke naar en enhed forbinder.
-    "format": " <span size='small'>0</span>",
-    "format-connected": "󰂱 <span size='small'>{num_connections}</span>",
+    "format": "<span size='large'></span> 0",
+    "format-connected": "<span size='large'>󰂱</span> {num_connections}",
     "format-disabled": "󰂲",
     "on-click": "alacritty -e bluetui",
     "tooltip-format": "{controller_alias}\t{controller_address}",
