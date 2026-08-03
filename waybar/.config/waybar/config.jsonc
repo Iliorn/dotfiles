@@ -57,8 +57,8 @@
     "locale": "da_DK.UTF-8",
     "tooltip-format": "<tt><small>{calendar}</small></tt>",
     "calendar": {
-      "mode": "year",
-      "mode-mon-col": 3,
+      "mode": "month",
+      "mode-mon-col": 1,
       "weeks-pos": "right",
       "on-scroll": 1,
       "format": {
