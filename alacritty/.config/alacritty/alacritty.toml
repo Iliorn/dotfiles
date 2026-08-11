@@ -160,6 +160,14 @@ key = "Key0"
 mods = "Control"
 action = "ResetFontSize"
 
+[[hints.enabled]]
+regex = "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^ \t\n\r<>\"'\\\\]+"
+command = { program = "xdg-open", args = [] }
+post_processing = true
+[hints.enabled.mouse]
+enabled = true
+mods = "None"
+
 [general]
 live_config_reload = true
 working_directory = "None"
