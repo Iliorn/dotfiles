@@ -162,7 +162,7 @@ action = "ResetFontSize"
 
 [[hints.enabled]]
 regex = "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^ \t\n\r<>\"'\\\\]+"
-command = { program = "xdg-open", args = [] }
+command = { program = "flatpak", args = ["run", "app.zen_browser.zen"] }
 post_processing = true
 [hints.enabled.mouse]
 enabled = true
