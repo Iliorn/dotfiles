@@ -7,3 +7,4 @@ x-scheme-handler/about=zen.desktop
 x-scheme-handler/unknown=zen.desktop
 x-scheme-handler/claude-cli=claude-code-url-handler.desktop
 inode/directory=spf.desktop
+application/x-rew=install4j_15buxna-roomeqwizard.desktop
