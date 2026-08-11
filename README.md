@@ -396,7 +396,7 @@ cd ~/dotfiles
 
 Apply all configs at once:
 ```bash
-stow --target="$HOME" aerc alacritty autostart btop claude codebook dunst fastfetch fish gtk helix hypr lazygit micro mimeapps mods obsidian systemd waybar waypaper superfile
+stow --target="$HOME" aerc alacritty autostart btop claude codebook dunst fastfetch fish gtk helix hypr lazygit micro mimeapps mods obsidian starship systemd waybar waypaper superfile
 ```
 
 Or apply individually, e.g.:

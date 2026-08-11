@@ -188,7 +188,7 @@ set_keyboard_layout() {
 #--- stow ----------------------------------------------------------------------
 STOW_PACKAGES=(
     aerc alacritty autostart btop claude codebook dunst fastfetch fish gtk
-    helix hypr lazygit micro mimeapps mods obsidian systemd waybar waypaper superfile
+    helix hypr lazygit micro mimeapps mods obsidian starship systemd waybar waypaper superfile
 )
 
 cleanup_retired_yazi_stow() {

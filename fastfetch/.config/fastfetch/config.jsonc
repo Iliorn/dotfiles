@@ -54,7 +54,7 @@
     {
       "type": "memory",
       "key": "RAM",
-      "format": "{used} / {total} ({percentage}%)"
+      "format": "{used} / {total} ({percentage})"
     }
   ]
 }

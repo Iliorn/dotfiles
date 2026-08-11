@@ -1,0 +1,5 @@
+# Minimal overrides; everything else uses starship defaults.
+
+[python]
+# The default 🐍 emoji renders badly in the generic "monospace" font.
+symbol = ""
