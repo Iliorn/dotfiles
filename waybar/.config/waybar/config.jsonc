@@ -55,30 +55,14 @@
   "clock": {
     "format": "{:L%H:%M | %A %d. %B}",
     "locale": "da_DK.UTF-8",
-    "tooltip-format": "{calendar}",
-    "calendar": {
-      "mode": "month",
-      "mode-mon-col": 1,
-      "weeks-pos": "right",
-      "on-scroll": 1,
-      // Minimalistisk: én accentfarve (i dag), resten en dæmpet gråskala
-      // fra linjens egen palet. Hierarki via lysstyrke, ikke kulør — og
-      // fed skrift kun ét sted, ellers betyder fremhævningen ingenting.
-      "format": {
-        "months": "<span color='#cdd6f4'>{}</span>",
-        "days": "<span color='#cdd6f4'>{}</span>",
-        "weeks": "<span color='#45475a'>{}</span>",
-        "weekdays": "<span color='#6c7086'>{}</span>",
-        "today": "<span color='#89b4fa'><b>{}</b></span>"
-      }
-    },
-    // 'mode' er bevidst IKKE bundet: den skifter til årsvisning, som er
-    // bredere end skærmen på en 1366x768-panel. Scroll flytter måned frem
-    // og tilbage, hvilket dækker samme behov uden at sprænge vinduet.
-    "actions": {
-      "on-scroll-up": "shift_up",
-      "on-scroll-down": "shift_down"
-    }
+    // Uret er bevidst passivt: ingen tooltip ved hover, ingen handling ved
+    // klik. Waybars indbyggede kalender var et GTK-tooltip, og GTK placerer
+    // tooltips efter musemarkoeren — vinduet landede derfor et nyt sted alt
+    // efter hvor paa uret man holdt musen, og det kan Waybar ikke styre.
+    // gsimplecal blev proevet som erstatning (rigtigt vindue, som Hyprland
+    // kan placere), men det placerede sig selv midt paa skaermen, saa hele
+    // kalenderen er droppet. Dato og klokkeslaet staar i "format" ovenfor.
+    "tooltip": false
   },
   "bluetooth": {
     // Tallet er skrevet fast som 0 her: "format" bruges netop naar intet er
