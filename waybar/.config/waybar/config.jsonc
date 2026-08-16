@@ -77,8 +77,10 @@
     "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
   },
   "custom/battery-t480": {
+    // Ingen "interval": scriptet koerer vedvarende og skriver en linje pr.
+    // UPower-event, saa ladeikonet skifter med det samme.
     "exec": "~/.config/waybar/battery-t480.sh",
-    "interval": 10,
+    "restart-interval": 5,
     "format": "{}",
     "markup": "none",
     "on-click": "alacritty -e sh -c 'upower -d; read'"

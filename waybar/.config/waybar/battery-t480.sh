@@ -3,53 +3,98 @@
 BAT1="/org/freedesktop/UPower/devices/battery_BAT1"
 BAT0="/org/freedesktop/UPower/devices/battery_BAT0"
 
+# Ladeikoner har lynet indbygget, saa ikonet skifter helt naar strommen er sat
+# til -- i stedet for at faa et lyn limet bagpaa. Indeks = pct / 10.
+ICONS_DISCHARGING=(󰂎 󰁺 󰁻 󰁼 󰁽 󰁾 󰁿 󰂀 󰂁 󰂂 󰁹)
+ICONS_CHARGING=(󰢛 󰢜 󰂆 󰢝 󰂇 󰢞 󰂈 󰢟 󰂉 󰂊 󰂅)
+
 get_info() {
   upower -i "$1"
 }
 
-HAS_BAT1=$(get_info "$BAT1" 2>/dev/null | grep -c "state:" || true)
+# Stikkontakten, ikke batteriets state: line_power-enheder er de eneste med
+# "online", og den flipper med det samme naar opladeren tilsluttes. BAT1 kan
+# ligge i "pending-charge" laenge efter, og det var det, der gav lag.
+on_ac() {
+  grep -qsx 1 /sys/class/power_supply/*/online
+}
 
-if [ "$HAS_BAT1" -gt 0 ]; then
-  # T480: dual battery — show whichever is discharging, prefer BAT1 otherwise
-  if get_info "$BAT1" 2>/dev/null | grep -q "state:\s*discharging"; then
-    BAT="$BAT1"
-    LABEL="BAT1"
-  elif get_info "$BAT0" 2>/dev/null | grep -q "state:\s*discharging"; then
-    BAT="$BAT0"
-    LABEL="BAT0"
+render() {
+  local has_bat1 bat label info percent state p idx icon
+
+  has_bat1=$(get_info "$BAT1" 2>/dev/null | grep -c "state:" || true)
+
+  if [ "$has_bat1" -gt 0 ]; then
+    # T480: dual battery — show whichever is discharging, prefer BAT1 otherwise
+    if get_info "$BAT1" 2>/dev/null | grep -q "state:\s*discharging"; then
+      bat="$BAT1"
+      label="BAT1"
+    elif get_info "$BAT0" 2>/dev/null | grep -q "state:\s*discharging"; then
+      bat="$BAT0"
+      label="BAT0"
+    else
+      bat="$BAT1"
+      label="BAT1"
+    fi
   else
-    BAT="$BAT1"
-    LABEL="BAT1"
+    # Single battery (e.g. X220)
+    bat="$BAT0"
+    label=""
   fi
-else
-  # Single battery (e.g. X220)
-  BAT="$BAT0"
-  LABEL=""
-fi
 
-INFO=$(get_info "$BAT")
+  info=$(get_info "$bat")
 
-PERCENT=$(echo "$INFO" | awk '/percentage/ {print $2}')
-STATE=$(echo "$INFO" | awk '/state/ {print $2}')
+  percent=$(echo "$info" | awk '/percentage/ {print $2}')
+  state=$(echo "$info" | awk '/state/ {print $2}')
 
-ICON=""
-P=${PERCENT%\%}
+  p=${percent%\%}
+  idx=$((p / 10))
+  [ "$idx" -gt 10 ] && idx=10
 
-if [ "$P" -le 10 ]; then
-  ICON=""
-elif [ "$P" -le 25 ]; then
-  ICON=""
-elif [ "$P" -le 50 ]; then
-  ICON=""
-elif [ "$P" -le 75 ]; then
-  ICON=""
-fi
+  if on_ac; then
+    icon="${ICONS_CHARGING[$idx]}"
+  else
+    icon="${ICONS_DISCHARGING[$idx]}"
+  fi
 
-if [ "$STATE" = "charging" ]; then ICON="${ICON} "; fi
-if [ "$STATE" = "fully-charged" ]; then ICON=""; PERCENT="100%"; fi
+  if [ "$state" = "fully-charged" ]; then
+    icon="󰂅"
+    percent="100%"
+  fi
 
-if [ -n "$LABEL" ]; then
-  echo "$ICON $PERCENT ($LABEL)"
-else
-  echo "$ICON $PERCENT"
-fi
+  if [ -n "$label" ]; then
+    printf '%s %s (%s)\n' "$icon" "$percent" "$label" || exit 0
+  else
+    printf '%s %s\n' "$icon" "$percent" || exit 0
+  fi
+}
+
+# Waybar laeser linjer lobende (modulet har ingen "interval"). Vi lytter paa
+# EN langtlevende UPower-monitor og tegner paa hver event -- dvs. i samme
+# oejeblik opladeren gaar i -- og ellers mindst hvert 30. sekund, saa
+# procenten ogsaa folger med af sig selv.
+#
+# stdbuf -oL er ikke pynt. Uden den blokbuffrer upower sin stdout naar den
+# skriver til et pipe, og saa ses en event foerst naar der er samlet 4 KB
+# (~60 linjer) op. Det var praecis den forsinkelse paa 10-30 sekunder, det
+# hele her handler om at fjerne -- maalt paa x220-1: udev og upower melder
+# selv AC-skiftet paa under et halvt sekund.
+render
+exec 3< <(stdbuf -oL upower --monitor 2>/dev/null)
+while :; do
+  if read -r -t 30 -u 3 line; then
+    # Alt andet end en "[tidsstempel] ..."-linje er velkomstteksten.
+    case "$line" in
+      \[*) ;;
+      *) continue ;;
+    esac
+    # Events kommer i byger; toem resten, saa en bruger-handling giver en
+    # gentegning og ikke fem.
+    while read -r -t 0.25 -u 3 _; do :; done
+  else
+    # >128 = timeout (gentegn); alt andet = monitoren doede, saa lad
+    # waybar starte os forfra via restart-interval.
+    [ "$?" -le 128 ] && break
+  fi
+  render
+done
