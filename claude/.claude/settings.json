@@ -1,4 +1,7 @@
 {
+  "permissions": {
+    "defaultMode": "auto"
+  },
   "model": "opus",
   "hooks": {
     "SessionStart": [
@@ -17,7 +20,5 @@
   "theme": "dark",
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "permissions": {
-    "defaultMode": "auto"
-  }
+  "effortLevel": "xhigh"
 }
