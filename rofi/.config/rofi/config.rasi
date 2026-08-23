@@ -1,0 +1,28 @@
+/**
+ * rofi config. The only caller that reads this file for its LOOK is
+ * `rofi -show drun` (super+space, $menu in hypr/.config/hypr/hyprland.conf).
+ * powermenu.sh and power_profile.sh pass `-dmenu` plus their own
+ * `-theme-str`, so they override what matters to them and are unaffected by
+ * the drun-specific settings below.
+ *
+ * `@theme` takes a BARE NAME, not a path: rofi resolves it against its theme
+ * search path, which includes ~/.local/share/rofi/themes (where the stow
+ * package puts nord-minimal.rasi). A path with `~` in it does NOT work here
+ * — rofi does not expand the tilde, fails to find the file, and falls back to
+ * its default theme with only a warning. An absolute /home/mark/... path
+ * works but hardcodes the username, so: bare name.
+ */
+
+configuration {
+    modes:               "drun";
+    /* the two settings that actually remove the clutter: no icon column, and
+       "Firefox" instead of "Firefox Web Browser (firefox %u)" */
+    show-icons:          false;
+    drun-display-format: "{name}";
+    display-drun:        "";
+    hover-select:        true;
+    me-select-entry:     "";
+    me-accept-entry:     "MousePrimary";
+}
+
+@theme "nord-minimal"

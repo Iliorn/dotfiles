@@ -1,0 +1,102 @@
+/**
+ * nord-minimal — launcher theme for `rofi -show drun` (super+space).
+ *
+ * Nord palette, to match alacritty (background #2E3440) and the rest of the
+ * desktop. Deliberately NOT Catppuccin, which is what the two -theme-str
+ * blocks in hypr/.config/hypr/scripts/{powermenu,power_profile}.sh still
+ * use — those two are self-contained overrides that never read this file's
+ * colours, so the fleet is currently two palettes. Not unified here.
+ *
+ * IMPORTANT — do NOT set `children:` on `window`. rofi's default hierarchy
+ * is window > mainbox > [inputbar, message, listview], and powermenu.sh
+ * hides its search field with `mainbox { children: [listview]; }`. Moving
+ * the children list up to `window` makes that override a no-op and the
+ * powermenu grows a search bar it never wanted. Style mainbox instead —
+ * that keeps every `-theme-str` caller working exactly as before.
+ *
+ * IMPORTANT — `highlight` will NOT take a variable reference on rofi 2.0
+ * (the version on this fleet): `highlight: bold @accent;` makes rofi fail
+ * to parse the WHOLE theme and silently fall back to its default, with
+ * nothing but a warning on stderr. Literal colour only. Verified on
+ * x220-1, 2026-08-23.
+ */
+
+* {
+    bg:      #2E3440;
+    bg-alt:  #3B4252;
+    fg:      #D8DEE9;
+    muted:   #6B7688;
+    accent:  #88C0D0;
+
+    background-color: transparent;
+    text-color:       @fg;
+    font:             "Fira Code 11";
+}
+
+window {
+    width:            560px;
+    location:         center;
+    anchor:           center;
+    y-offset:         -8%;
+    background-color: @bg;
+    border:           1px;
+    border-color:     #434C5E;
+    border-radius:    12px;
+    padding:          8px;
+}
+
+mainbox {
+    spacing: 0px;
+    padding: 0px;
+}
+
+inputbar {
+    padding:  10px 14px;
+    spacing:  10px;
+    children: [ prompt, entry ];
+}
+
+prompt {
+    str:            "";
+    text-color:     @accent;
+    vertical-align: 0.5;
+}
+
+entry {
+    placeholder:       "Search…";
+    placeholder-color: @muted;
+    cursor:            text;
+    vertical-align:    0.5;
+}
+
+listview {
+    lines:        8;
+    columns:      1;
+    fixed-height: false;
+    scrollbar:    false;
+    padding:      6px 0px 2px 0px;
+    spacing:      2px;
+}
+
+element {
+    padding:       9px 14px;
+    border-radius: 8px;
+    spacing:       10px;
+}
+
+element normal.normal    { text-color: @fg; }
+element alternate.normal { text-color: @fg; }
+
+element selected.normal {
+    background-color: @bg-alt;
+    text-color:       @accent;
+}
+
+element-text {
+    vertical-align: 0.5;
+    /* literal, not @accent — see the header */
+    highlight:      bold #88C0D0;
+}
+
+message { padding: 8px 14px; }
+textbox { text-color: @muted; }
