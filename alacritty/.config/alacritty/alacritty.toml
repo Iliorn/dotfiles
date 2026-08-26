@@ -164,6 +164,8 @@ action = "ResetFontSize"
 regex = "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^ \t\n\r<>\"'\\\\]+"
 command = { program = "flatpak", args = ["run", "app.zen_browser.zen"] }
 post_processing = true
+# Aktiverer OSC 8-hyperlinks (fx "Google Maps" i shelter), hvor URL'en ikke står som synlig tekst.
+hyperlinks = true
 [hints.enabled.mouse]
 enabled = true
 mods = "None"
