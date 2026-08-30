@@ -3,10 +3,14 @@
 BAT1="/org/freedesktop/UPower/devices/battery_BAT1"
 BAT0="/org/freedesktop/UPower/devices/battery_BAT0"
 
-# Ladeikoner har lynet indbygget, saa ikonet skifter helt naar strommen er sat
-# til -- i stedet for at faa et lyn limet bagpaa. Indeks = pct / 10.
+# Ét ikonsaet, uanset om der lades eller ej. Ladeikonerne (󰢛 󰢜 󰂆 ...) har
+# lynet indbygget, og lynet er fravalgt: det siger kun det samme som
+# stikkontakten allerede gor, og paa en T480 -- hvor de to batterier lades
+# sekventielt -- kom det tit til at sidde paa et BAT1 der stod paa 5%, hvilket
+# lignede en fejl mere end en oplysning. Procenten staar der stadig.
+# Indeks = pct / 10.
 ICONS_DISCHARGING=(󰂎 󰁺 󰁻 󰁼 󰁽 󰁾 󰁿 󰂀 󰂁 󰂂 󰁹)
-ICONS_CHARGING=(󰢛 󰢜 󰂆 󰢝 󰂇 󰢞 󰂈 󰢟 󰂉 󰂊 󰂅)
+ICONS_CHARGING=("${ICONS_DISCHARGING[@]}")
 
 get_info() {
   upower -i "$1"
