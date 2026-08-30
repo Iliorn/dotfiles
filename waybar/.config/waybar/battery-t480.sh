@@ -3,14 +3,14 @@
 BAT1="/org/freedesktop/UPower/devices/battery_BAT1"
 BAT0="/org/freedesktop/UPower/devices/battery_BAT0"
 
-# Ét ikonsaet, uanset om der lades eller ej. Ladeikonerne (󰢛 󰢜 󰂆 ...) har
-# lynet indbygget, og lynet er fravalgt: det siger kun det samme som
-# stikkontakten allerede gor, og paa en T480 -- hvor de to batterier lades
-# sekventielt -- kom det tit til at sidde paa et BAT1 der stod paa 5%, hvilket
-# lignede en fejl mere end en oplysning. Procenten staar der stadig.
+# ET ikonsaet til batteriet, plus et SELVSTAENDIGT lyn ved siden af naar der
+# lades. Tidligere brugtes md-battery-charging-glyfferne (󰢛 󰢜 󰢝 ...), som har
+# lynet skaaret ind i selve batteriet -- ved lav opladning er batteriet naesten
+# tomt, og det der blev tilbage lignede en ambolt frem for et batteri. Lynet
+# skal vaere der, men som sit eget tegn ved siden af, ikke inde i ikonet.
 # Indeks = pct / 10.
-ICONS_DISCHARGING=(󰂎 󰁺 󰁻 󰁼 󰁽 󰁾 󰁿 󰂀 󰂁 󰂂 󰁹)
-ICONS_CHARGING=("${ICONS_DISCHARGING[@]}")
+ICONS=(󰂎 󰁺 󰁻 󰁼 󰁽 󰁾 󰁿 󰂀 󰂁 󰂂 󰁹)
+BOLT=󱐋
 
 get_info() {
   upower -i "$1"
@@ -55,21 +55,25 @@ render() {
   idx=$((p / 10))
   [ "$idx" -gt 10 ] && idx=10
 
-  if on_ac; then
-    icon="${ICONS_CHARGING[$idx]}"
-  else
-    icon="${ICONS_DISCHARGING[$idx]}"
-  fi
+  icon="${ICONS[$idx]}"
+
+  # Lynet haenger paa stikkontakten, ikke paa batteriets state -- samme grund
+  # som on_ac() selv: BAT1 kan staa i "pending-charge" laenge efter at
+  # opladeren er sat i.
+  bolt=""
+  on_ac && bolt="$BOLT"
 
   if [ "$state" = "fully-charged" ]; then
-    icon="󰂅"
+    # Fuldt batteri, ikke md-battery-charging-100: sidstnaevnte er en af de
+    # glyffer med indbygget lyn som skulle vaek.
+    icon="󰁹"
     percent="100%"
   fi
 
   if [ -n "$label" ]; then
-    printf '%s %s (%s)\n' "$icon" "$percent" "$label" || exit 0
+    printf '%s%s %s (%s)\n' "$icon" "$bolt" "$percent" "$label" || exit 0
   else
-    printf '%s %s\n' "$icon" "$percent" || exit 0
+    printf '%s%s %s\n' "$icon" "$bolt" "$percent" || exit 0
   fi
 }
 
