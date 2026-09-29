@@ -1,0 +1,6 @@
+[Unit]
+Description=Signal Waybar to refresh tjek status
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/waybar/scripts/tjek-refresh.sh

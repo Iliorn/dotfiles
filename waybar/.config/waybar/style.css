@@ -15,7 +15,7 @@
 #workspaces,
 #clock,
 #pulseaudio,
-#custom-taskr-status,
+#custom-tjek-status,
 #cpu,
 #memory,
 #network,
@@ -197,7 +197,7 @@ window#waybar {
   border-radius: 6px;
 }
 
-#custom-taskr-status {
+#custom-tjek-status {
   color: #cdd6f4;
   padding: 0 6px;
   margin: 4px 2px;

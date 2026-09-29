@@ -1,0 +1,18 @@
+[Unit]
+Description=Refresh Waybar tjek status when tjek data changes
+
+[Path]
+PathModified=%h/.tjek/tasks.db
+PathModified=%h/.tjek/tasks.db-wal
+
+# MakeDirectory=true was REMOVED on 2026-08-05. It creates the watched
+# paths if they are missing -- and since these paths are FILES, systemd
+# created them as empty DIRECTORIES. On a machine where this unit was
+# enabled before tjek had ever run, tasks.db was therefore a directory,
+# SQLite could not open it ("unable to open database file (14)"), and the
+# waybar module silently vanished because its command failed. tjek
+# creates ~/.tjek itself on first run, so nothing needs to pre-create it.
+Unit=tjek-waybar-refresh.service
+
+[Install]
+WantedBy=default.target

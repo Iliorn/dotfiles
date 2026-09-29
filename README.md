@@ -73,12 +73,12 @@ for partial / manual install paths.
 - `iwd/main.conf` copied to `/etc/iwd/`.
 - `NetworkManager` disabled if present — every host here uses iwd for wifi, never both.
 - `/etc/resolv.conf` pointed at systemd-resolved's stub (fixes a stale, unmanaged file NetworkManager leaves behind, which also trips a false Tailscale DNS health warning).
-- `taskr` downloaded via `gh` (if authenticated; otherwise skipped with a hint).
+- `tjek` downloaded via `gh` (if authenticated; otherwise skipped with a hint).
 - `gsettings` GTK icon theme set to `BeautyLine`.
 - Login shell changed to `fish` via `chsh`.
 - System services enabled: `bluetooth`, `iwd`, `systemd-resolved`, `ananicy-cpp`, `ufw`, `avahi-daemon`, `ly@tty2`.
 - User services enabled: `rclone-dropbox.service`, `rclone-onedrive.service`.
-- User paths enabled: `taskr-waybar-refresh.path`.
+- User paths enabled: `tjek-waybar-refresh.path`.
 - Pre-commit hook activated via `core.hooksPath`.
 
 ### Flags
@@ -86,10 +86,10 @@ for partial / manual install paths.
 ```bash
 ./install.sh --dry-run                 # show every action, change nothing
 ./install.sh --no-packages             # configs only, no pacman/paru
-./install.sh --skip keymap --skip taskr  # skip specific steps (repeatable)
+./install.sh --skip keymap --skip tjek  # skip specific steps (repeatable)
 ```
 
-Step names accepted by `--skip`: `keymap packages paru aur stow host iwd network taskr claude-code gsettings sysd-user sysd-system shell hooks`.
+Step names accepted by `--skip`: `keymap packages paru aur stow host iwd network tjek claude-code gsettings sysd-user sysd-system shell hooks`.
 
 ---
 
@@ -113,7 +113,7 @@ Step names accepted by `--skip`: `keymap packages paru aur stow host iwd network
 | Bluetooth       | Blueman + bluetui |
 | WiFi            | iwd + systemd-resolved |
 | Cloud sync      | Rclone          |
-| Task manager    | taskr (custom Bubbletea TUI)                |
+| Task manager    | tjek (custom Bubbletea TUI)                |
 | AI CLI          | mods            |
 | Resource monitor| Btop            |
 | System info     | Fastfetch       |
@@ -350,21 +350,21 @@ Restart waybar (or log out/in) to pick it up.
 
 ### Task management
 
-`taskr` is a custom Bubbletea TUI for managing tasks. The repo is private, so installation requires `gh` auth.
+`tjek` is a custom Bubbletea TUI for managing tasks. The repo is private, so installation requires `gh` auth.
 
 ```bash
-gh release download --repo iliorn/taskr --pattern 'taskr' --dir ~/.local/bin
-chmod +x ~/.local/bin/taskr
+gh release download --repo iliorn/tjek --pattern 'tjek' --dir ~/.local/bin
+chmod +x ~/.local/bin/tjek
 ```
 
-Run with `taskr`. Press `U` inside the app to self-update.
+Run with `tjek`. Press `U` inside the app to self-update.
 
-The Waybar `custom/taskr-status` module displays `taskr stats --format=waybar`
+The Waybar `custom/tjek-status` module displays `tjek stats --format=waybar`
 output (active count + tooltip). Left-click opens the TUI; right-click runs the
-quick-add prompt at `waybar/.config/waybar/scripts/taskr-add.sh`.
+quick-add prompt at `waybar/.config/waybar/scripts/tjek-add.sh`.
 
-Waybar refreshes taskr status event-first: `taskr-waybar-refresh.path` watches
-`~/.taskr/tasks.db` and `~/.taskr/tasks.db-wal`, then signals only the taskr
+Waybar refreshes tjek status event-first: `tjek-waybar-refresh.path` watches
+`~/.tjek/tasks.db` and `~/.tjek/tasks.db-wal`, then signals only the tjek
 module. The Waybar module keeps a 5-minute interval as a fallback.
 
 ### AI CLI (mods)

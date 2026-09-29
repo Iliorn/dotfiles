@@ -5,7 +5,7 @@
 #   github.com/Iliorn/ansible  (private repo)
 # Machine setup now runs from there — see its ONBOARDING.md. The script body
 # below is kept for reference while the remaining pieces (keymap, network,
-# services, shell, AUR, taskr) are migrated into Ansible roles, and will be
+# services, shell, AUR, tjek) are migrated into Ansible roles, and will be
 # deleted once that migration is complete.
 # ═══════════════════════════════════════════════════════════════════════════
 echo "RETIRED: install.sh has been replaced by Ansible (github.com/Iliorn/ansible)." >&2
@@ -27,7 +27,7 @@ exit 1
 #   ./install.sh --dry-run       # print what would happen, do nothing
 #   ./install.sh --skip <name>   # skip a named step (repeatable). Step names:
 #                                #   keymap packages paru aur stow host iwd
-#                                #   network taskr gsettings sysd-user
+#                                #   network tjek gsettings sysd-user
 #                                #   sysd-system shell hooks
 #
 # Safe to re-run: pacman uses --needed, stow is restow, systemctl enable is
@@ -108,7 +108,7 @@ PACMAN_PACKAGES=(
     ananicy-cpp ufw avahi snapper ttf-jetbrains-mono-nerd btop fastfetch micro 7zip
     # Music + Node (for Claude Code npm install)
     spotify-launcher nodejs npm
-    # GitHub CLI (used to fetch taskr) + base-devel (used to build paru if missing)
+    # GitHub CLI (used to fetch tjek) + base-devel (used to build paru if missing)
     github-cli base-devel
     # Stow + git for everything else
     stow git
@@ -297,27 +297,27 @@ fix_resolv_conf() {
     run sudo ln -sf "$stub" /etc/resolv.conf
 }
 
-# taskr is a private release; we can only fetch it if gh is authenticated.
-install_taskr() {
-    if skipped taskr; then log "Skipping taskr"; return; fi
+# tjek is a private release; we can only fetch it if gh is authenticated.
+install_tjek() {
+    if skipped tjek; then log "Skipping tjek"; return; fi
     if ! command -v gh >/dev/null 2>&1; then
-        warn "gh not installed — taskr install skipped"
+        warn "gh not installed — tjek install skipped"
         return
     fi
     if ! gh auth status >/dev/null 2>&1; then
         warn "gh not authenticated — run 'gh auth login', then re-run install.sh"
         return
     fi
-    if [[ -x "$HOME/.local/bin/taskr" ]]; then
-        ok "taskr already installed (run 'U' inside the TUI to self-update)"
+    if [[ -x "$HOME/.local/bin/tjek" ]]; then
+        ok "tjek already installed (run 'U' inside the TUI to self-update)"
         return
     fi
-    log "Downloading taskr release via gh"
+    log "Downloading tjek release via gh"
     run mkdir -p "$HOME/.local/bin"
-    run gh release download --repo iliorn/taskr --pattern 'taskr' \
+    run gh release download --repo iliorn/tjek --pattern 'tjek' \
         --dir "$HOME/.local/bin" --clobber \
-        || { warn "taskr download failed"; return; }
-    run chmod +x "$HOME/.local/bin/taskr"
+        || { warn "tjek download failed"; return; }
+    run chmod +x "$HOME/.local/bin/tjek"
 }
 
 #--- Claude Code (npm global install in user prefix) --------------------------
@@ -378,7 +378,7 @@ set_login_shell_to_fish() {
 enable_user_services() {
     if skipped sysd-user; then log "Skipping user services"; return; fi
     local services=(rclone-dropbox.service rclone-onedrive.service)
-    local paths=(taskr-waybar-refresh.path)
+    local paths=(tjek-waybar-refresh.path)
     log "Enabling systemd user services: ${services[*]}"
     run systemctl --user daemon-reload || true
     for svc in "${services[@]}"; do
@@ -429,7 +429,7 @@ main() {
     install_iwd_config
     disable_networkmanager
     cleanup_retired_mtui
-    install_taskr
+    install_tjek
     install_claude_code
     apply_gsettings
     set_login_shell_to_fish
