@@ -1,5 +1,11 @@
 [Unit]
 Description=Signal Waybar to refresh tjek status
+# One tjek save touches tasks.db and tasks.db-wal several times within a
+# second, so the .path unit fires this 4-5 times in a burst. With systemd's
+# default start limit (5 in 10s) that tripped 'start-limit-hit' and took the
+# .path unit down with it until someone ran reset-failed. Sending a signal to
+# waybar is cheap, so no limit is needed.
+StartLimitIntervalSec=0
 
 [Service]
 Type=oneshot
