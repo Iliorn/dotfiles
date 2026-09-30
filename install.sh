@@ -187,7 +187,7 @@ set_keyboard_layout() {
 
 #--- stow ----------------------------------------------------------------------
 STOW_PACKAGES=(
-    aerc alacritty autostart btop claude codebook dunst fastfetch fish gtk
+    aerc alacritty autostart btop codebook dunst fastfetch fish gtk
     helix hypr lazygit micro mimeapps mods obsidian starship systemd waybar waypaper superfile
     wireplumber
 )
