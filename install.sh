@@ -248,6 +248,23 @@ seed_host_conf() {
     run cp "$template" "$host_conf"
 }
 
+# hyprland.conf sources state/screens.conf, and a sourced file that does not
+# exist is an error at parse time — before anything can generate it. So the
+# empty file is part of the install, and scripts/screens.sh fills it in at
+# login. Never seeded with content: its content is a fact about the screens
+# plugged in right now, not a default.
+seed_screens_state() {
+    if skipped host; then log "Skipping screen state"; return; fi
+    local state_dir="$HOME/.config/hypr/state"
+    run mkdir -p "$state_dir"
+    if [[ -f "$state_dir/screens.conf" ]]; then
+        ok "screens.conf already present"
+        return
+    fi
+    log "Creating empty $state_dir/screens.conf (scripts/screens.sh fills it)"
+    run touch "$state_dir/screens.conf"
+}
+
 #--- system-level configs ------------------------------------------------------
 install_iwd_config() {
     if skipped iwd; then log "Skipping iwd"; return; fi
@@ -426,6 +443,7 @@ main() {
     set_keyboard_layout
     apply_stow
     seed_host_conf
+    seed_screens_state
     install_iwd_config
     disable_networkmanager
     cleanup_retired_mtui

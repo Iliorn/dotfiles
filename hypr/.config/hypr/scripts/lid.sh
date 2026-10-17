@@ -1,34 +1,26 @@
 #!/bin/sh
-# Closing the lid hands the session to the external screen instead of
-# stranding half the workspaces on a panel nobody can see.
+# Remember whether the lid is shut, then let screens.sh act on it.
 #
-# Hyprland leaves the internal panel ENABLED when the lid shuts, so every
-# workspace living there just goes dark and stays put — the workspaces
-# look "missing". Disabling the panel makes Hyprland migrate them to the
-# remaining monitor; re-enabling it brings back the ones host.conf pins to
-# it.
+# This script used to do the work itself with `hyprctl keyword monitor
+# <panel>, disable`, which lived only in the running config: the next
+# `hyprctl reload` re-enabled the panel and pulled the pinned workspaces back
+# onto a closed lid. The lid state is now a file, and screens.sh writes a
+# config file from it, so a reload keeps the truth.
 #
-# The panel's name differs per machine (eDP-1 on the T480, LVDS-1 on the
-# Sandy Bridge X220s), so it is DETECTED, not configured. That keeps this
-# script identical on every laptop.
-#
-# With no second monitor this does nothing: disabling the only output
-# would leave the session nowhere to draw. logind then handles the lid as
-# it always has (HandleLidSwitch=suspend). With an external screen
-# attached logind already treats the machine as docked and does not
-# suspend, which is why this script is needed at all.
+# With no second screen this still does nothing visible: screens.sh refuses to
+# disable the only output, and logind handles the lid as it always has
+# (HandleLidSwitch=suspend). Docked, logind does not suspend, which is the
+# whole reason this exists.
+set -eu
 
-internal=$(hyprctl monitors all | awk '/^Monitor (eDP|LVDS|DSI)/ { print $2; exit }')
-[ -n "$internal" ] || exit 0
+state_dir="${XDG_CONFIG_HOME:-$HOME/.config}/hypr/state"
+lid_flag="$state_dir/lid-closed"
+mkdir -p "$state_dir"
 
 case "${1:-}" in
-close)
-    # Hand over only if something else is actually lit.
-    enabled=$(hyprctl monitors | grep -c '^Monitor ')
-    [ "${enabled:-0}" -gt 1 ] || exit 0
-    hyprctl keyword monitor "$internal, disable"
-    ;;
-open)
-    hyprctl keyword monitor "$internal, preferred, auto, 1"
-    ;;
+close) : > "$lid_flag" ;;
+open)  rm -f "$lid_flag" ;;
+*)     echo "usage: lid.sh close|open" >&2; exit 2 ;;
 esac
+
+exec "${XDG_CONFIG_HOME:-$HOME/.config}/hypr/scripts/screens.sh"
