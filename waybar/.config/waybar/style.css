@@ -1,4 +1,12 @@
-/* =========================
+/* Nord, the same palette as alacritty, rofi and the two powermenus. It was
+   Catppuccin until 2026-10-18, which made the bar the odd one out on a Nord
+   desktop. The mapping was done per module rather than by name, so the
+   distinctions survive: the clock keeps its purple, the special workspace
+   moved to yellow so it does not collide with it, and the bar itself is now
+   solid #2E3440 instead of a 25% wash — a terminal has a background, not a
+   tint.
+
+   =========================
    Grundindstillinger
    ========================= */
 * {
@@ -30,18 +38,18 @@
    Selve baren
    ========================= */
 window#waybar {
-  background: rgba(20, 20, 30, 0.25);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  color: #cdd6f4;
+  background: #2E3440;
+  border-bottom: 1px solid #4C566A;
+  color: #D8DEE9;
 }
 
 #Pulseaudio {
-  color: #74c7ec;
+  color: #88C0D0;
 }
 
 #pulseaudio.muted {
-  background-color: #f38ba8;
-  color: #11111b;
+  background-color: #BF616A;
+  color: #2E3440;
 }
 
 /* =========================
@@ -52,15 +60,15 @@ window#waybar {
    — ellers arver tallet ikonets stoerrelse og skiller sig ud. */
 #bluetooth {
   font-size: 13px;
-  color: #89b4fa;
+  color: #81A1C1;
 }
 
 #bluetooth.connected {
-  color: #b4befe;
+  color: #8FBCBB;
 }
 
 #bluetooth.disabled {
-  color: #6c7086;
+  color: #4C566A;
 }
 
 /* =========================
@@ -99,16 +107,16 @@ window#waybar {
    POWER PROFILE (Den nye raket/blad boble)
    ========================= */
 #custom-power_profile.performance {
-  color: #f38ba8;
+  color: #BF616A;
 }
 
 #custom-power_profile.balanced {
-  color: #89b4fa;
+  color: #81A1C1;
   /* Blålig for balanceret */
 }
 
 #custom-power_profile.power-saver {
-  color: #a6e3a1;
+  color: #A3BE8C;
 }
 
 /* =========================
@@ -148,19 +156,19 @@ window#waybar {
    Modul-farver
    ========================= */
 #network {
-  color: #94e2d5;
+  color: #8FBCBB;
 }
 
 #cpu {
-  color: #89b4fa;
+  color: #81A1C1;
 }
 
 #memory {
-  color: #fab387;
+  color: #D08770;
 }
 
 #clock {
-  color: #cba6f7;
+  color: #B48EAD;
 }
 
 /* =========================
@@ -169,20 +177,20 @@ window#waybar {
 #workspaces button {
   padding: 0 4px;
   margin: 0 2px;
-  color: #9399b2;
+  color: #6B7688;
   border-radius: 6px;
   transition: background-color 0.2s ease;
 }
 
 #workspaces button.active {
-  color: #89b4fa;
-  background-color: rgba(137, 180, 250, 0.15);
+  color: #81A1C1;
+  background-color: rgba(129, 161, 193, 0.18);
   border-radius: 6px;
 }
 
 /* --- MAGIC DESKTOP STYLING --- */
 #workspaces button.special {
-  color: #f5c2e7;
+  color: #EBCB8B;
   /* En flot pink/lilla farve */
   margin-left: 12px;
   /* Plads til Power-ikonet til venstre */
@@ -193,12 +201,12 @@ window#waybar {
 }
 
 #workspaces button.special.active {
-  background-color: rgba(245, 194, 231, 0.2);
+  background-color: rgba(235, 203, 139, 0.2);
   border-radius: 6px;
 }
 
 #custom-tjek-status {
-  color: #cdd6f4;
+  color: #D8DEE9;
   padding: 0 6px;
   margin: 4px 2px;
 }
@@ -213,14 +221,14 @@ window#waybar {
    med den sidste. Padding ligger på selve tooltip'en, ikke kun på label,
    ellers klistrer indholdet til kanten. */
 tooltip {
-  background-color: rgba(20, 20, 30, 0.96);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  background-color: #2E3440;
+  border: 1px solid #4C566A;
   border-radius: 10px;
   padding: 10px 12px;
 }
 
 tooltip label {
-  color: #cdd6f4;
+  color: #D8DEE9;
   font-family: "JetBrainsMono Nerd Font", sans-serif;
   font-size: 12px;
 }
