@@ -17,8 +17,11 @@
 # THE POLICY, which is the part worth arguing about:
 #   - 1-3 live on the laptop panel, 4-9 on the external screen. Fixed, so
 #     super+1..9 always lands the same place.
-#   - Docked, the external is primary: new windows open there (workspace 4 is
-#     its default) and that is where the session starts.
+#   - Docked, the external is primary: new windows open there, because
+#     workspace 4 is its default.
+#   - The session always STARTS on workspace 1, docked or not, so logging in
+#     puts you in the same place every time. Shut and docked that is the
+#     external screen anyway, since 1-3 move across with the panel disabled.
 #   - Lid shut while docked: the panel is disabled, so Hyprland moves 1-3
 #     across. Opening the lid brings them home, because the pinning is still
 #     declared. This is the one thing that must survive a reload.
@@ -101,9 +104,5 @@ fi
 
 # Startup only: begin where the eyes are. Docked that is the external screen.
 if [ "${1:-}" = "startup" ]; then
-    if [ -n "$ext" ]; then
-        hyprctl dispatch workspace 4 >/dev/null
-    else
-        hyprctl dispatch workspace 1 >/dev/null
-    fi
+    hyprctl dispatch workspace 1 >/dev/null
 fi
