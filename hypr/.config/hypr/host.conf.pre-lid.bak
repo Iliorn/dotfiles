@@ -1,0 +1,17 @@
+# Host-lokal Hyprland-konfiguration (skærmlayout + workspace-pinning).
+#
+# Seedet af Ansible (roles/dotfiles) første gang filen ikke findes på
+# maskinen — se rollens kommentar for hvorfor den aldrig overskrives
+# bagefter. Historisk gjorde install.sh's seed_host_conf() det samme ved
+# at kopiere hypr/.config/hypr/host.example.conf fra dotfiles-repoet.
+#
+# Standard er ét indbygget laptop-panel. Har maskinen flere skærme, så
+# tilføj deres `monitor =`-linjer og evt. workspace-pinning her direkte i
+# den lokale host.conf på maskinen — hold multi-monitor-specifikt ude af
+# det delte hyprland.conf.
+
+################
+### MONITORS ###
+################
+monitor = eDP-1, preferred, auto, 1
+monitor = , highres, auto, 1
