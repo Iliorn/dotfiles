@@ -50,4 +50,19 @@ if [[ -n "$violations" ]]; then
     exit 1
 fi
 
+# Machine state and backups. .gitignore keeps these out of `git add -A`, but a
+# path that is already tracked ignores .gitignore entirely — which is how one
+# machine's screen layout and two host.conf backups reached main. Stow links
+# them into $HOME, so the repo then goes dirty whenever the machine writes its
+# own state, and Ansible's dotfiles role stops on a change nobody made.
+state=$(
+    staged_files | grep -E '(^|/)hypr/\.config/hypr/state/|\.(bak|orig|old-[^/]*)$|~$' || true
+)
+if [[ -n "$state" ]]; then
+    note "machine state or backup files staged — these must not be committed:"
+    printf '%s\n' "$state" >&2
+    note "untrack with: git rm --cached <path>"
+    exit 1
+fi
+
 exit 0

@@ -21,3 +21,18 @@ aerc/.config/aerc/accounts.conf
 # tilstand, ikke konfiguration — og uden dette stopper Ansibles dotfiles-
 # rolle ved hver koersel, fordi arbejdstraeet er beskidt.
 systemd/.config/systemd/user/*.target.wants/
+
+# Machine state, not configuration. scripts/screens.sh rewrites screens.conf
+# from the outputs that are actually connected, and scripts/lid.sh creates and
+# removes lid-closed. stow links this directory into the repo, so a tracked
+# copy makes the working tree dirty on every screen or lid change — which
+# stops Ansible's dotfiles role, by design, on a change nobody made. Ansible
+# seeds an empty screens.conf instead (roles/dotfiles).
+hypr/.config/hypr/state/
+
+# Backups of host-local files belong on the machine that made them, not on
+# every machine that clones this repo.
+*.bak
+*.orig
+*.old-*
+*~
