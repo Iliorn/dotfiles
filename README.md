@@ -42,17 +42,37 @@ curl -LO github.com/iliorn/dotfiles/raw/main/i
 sh i
 ```
 
-`i` is the bootstrap script: it installs `git` + `stow`, clones this repo to
-`~/dotfiles`, and runs `install.sh`. It asks for your sudo password once at
-the start and keeps it warm for the rest of the run.
+`i` installs the handful of packages Ansible needs in order to reach this
+machine (`git`, `stow`, `python`, `tailscale`, `ansible-core`), clones this
+repo to `~/dotfiles`, and activates the pre-commit hook. It then prints the
+three steps only you can do: name the machine, join the tailnet, and add it
+to the inventory.
 
-### 3. After it finishes — three things only you can do
+### 4. Let Ansible do the rest
 
-The script prints these at the end too:
+Everything else is Ansible's, in the private `Iliorn/ansible` repo: the
+packages, the stow run, the TTY keymap, `iwd` and `resolv.conf`, `tjek`,
+Claude Code, the GTK theme, the login shell, the system and user services,
+and the git hook. Its `ONBOARDING.md` is the procedure — read it there rather
+than here, so there is one copy.
 
-1. **Reboot once.** Picks up the new TTY keymap (`KEYMAP=dk`) and Ly login manager.
-2. **`rclone config`** to set up the `dropbox` and `onedrive` remotes (OAuth flow
-   needs a browser). Then `systemctl --user restart rclone-{dropbox,onedrive}.service`.
+From hoth:
+
+```bash
+ansible-playbook site.yml --limit <name> --check --diff -K   # look first
+ansible-playbook site.yml --limit <name> --tags packages -K  # then one tag at a time
+```
+
+Once a `--check` run reports `changed=0`, hoth's fleet-push keeps the safe
+parts (dotfiles, settings, tjek, package report) current on its own whenever
+the laptop is online.
+
+### Three things only you can do
+
+1. **Reboot once.** Picks up the TTY keymap (`KEYMAP=dk`) and the greeter.
+2. **`rclone config`** to set up the `dropbox` and `onedrive` remotes (the
+   OAuth flow needs a browser). Then
+   `systemctl --user restart rclone-{dropbox,onedrive}.service`.
 3. **aerc Gmail password** in the keyring:
    ```bash
    install -Dm600 ~/dotfiles/aerc/.config/aerc/accounts.conf.example \
@@ -61,35 +81,26 @@ The script prints these at the end too:
                      account markbauerruby@gmail.com
    ```
 
-That's it. The rest of this README is reference for what `install.sh` did and
-for partial / manual install paths.
+### AUR packages
 
-### What `install.sh` automates for you
-
-- `/etc/vconsole.conf` set to `KEYMAP=dk` — fixes the **US-keyboard-at-login** trap on fresh installs.
-- Every pacman package below, then `paru` bootstrap if missing, then AUR packages (`beautyline`, `mods`).
-- All stow packages applied with `--restow`.
-- `~/.config/hypr/host.conf` seeded from `host.example.conf` (gitignored, edit per machine).
-- `iwd/main.conf` copied to `/etc/iwd/`.
-- `NetworkManager` disabled if present — every host here uses iwd for wifi, never both.
-- `/etc/resolv.conf` pointed at systemd-resolved's stub (fixes a stale, unmanaged file NetworkManager leaves behind, which also trips a false Tailscale DNS health warning).
-- `tjek` downloaded via `gh` (if authenticated; otherwise skipped with a hint).
-- `gsettings` GTK icon theme set to `BeautyLine`.
-- Login shell changed to `fish` via `chsh`.
-- System services enabled: `bluetooth`, `iwd`, `systemd-resolved`, `ananicy-cpp`, `ufw`, `avahi-daemon`, `ly@tty2`.
-- User services enabled: `rclone-dropbox.service`, `rclone-onedrive.service`.
-- User paths enabled: `tjek-waybar-refresh.path`.
-- Pre-commit hook activated via `core.hooksPath`.
-
-### Flags
+Ansible never builds these: `paru` runs its own interactive sudo, which it
+cannot answer. The list lives in the Ansible repo as `packages_aur`, and
+Ansible's job is the part `pacman -Syu` cannot do — it checks on every run
+whether a build is behind and says so. Building stays a supervised act:
 
 ```bash
-./install.sh --dry-run                 # show every action, change nothing
-./install.sh --no-packages             # configs only, no pacman/paru
-./install.sh --skip keymap --skip tjek  # skip specific steps (repeatable)
+paru -S libsearpc seafile seafile-client
 ```
 
-Step names accepted by `--skip`: `keymap packages paru aur stow host iwd network tjek claude-code gsettings sysd-user sysd-system shell hooks`.
+On a machine without `paru` at all, it bootstraps itself once from the AUR:
+
+```bash
+git clone --depth=1 https://aur.archlinux.org/paru.git /tmp/paru
+cd /tmp/paru && makepkg -si
+```
+
+The rest of this README is reference: what each program is for, and the
+manual path for a single piece.
 
 ---
 
@@ -277,8 +288,8 @@ For **Dropbox**: choose `n` (new remote), name it `dropbox`, type `dropbox`, fol
 For **OneDrive**: choose `n` (new remote), name it `onedrive`, type `onedrive`, follow the OAuth flow.
 
 The mounts run as systemd user services (`rclone-dropbox.service` and
-`rclone-onedrive.service`) from the `systemd` stow package. `install.sh`
-enables them; manually that's:
+`rclone-onedrive.service`) from the `systemd` stow package. Ansible's
+`roles/services` enables them; manually that's:
 
 ```bash
 systemctl --user daemon-reload
@@ -411,8 +422,8 @@ stow --target="$HOME" lazygit
 Monitor layout and workspace pinning live in `~/.config/hypr/host.conf`, which
 is gitignored. The shared `hyprland.conf` sources it via `source = ./host.conf`.
 
-On a new machine, copy the template and edit for the local hardware (install.sh
-does this automatically the first time):
+On a new machine Ansible seeds it from `hypr_host_conf` in its own
+`group_vars`, and never overwrites it afterwards. By hand:
 
 ```bash
 cp hypr/.config/hypr/host.example.conf ~/.config/hypr/host.conf

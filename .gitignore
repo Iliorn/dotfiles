@@ -4,22 +4,13 @@ fish/.config/fish/fish_variables
 # Hyprland host-local overrides (monitor + workspace layout per machine).
 hypr/.config/hypr/host.conf
 
-# Claude config: only settings.json is tracked. Everything else under
-# claude/.claude/ is runtime state or secrets and must never be committed.
-claude/.claude/*
-!claude/.claude/settings.json
-!claude/.claude/CLAUDE.md
-!claude/.claude/commands/
-!claude/.claude/agents/
-!claude/.claude/keybindings.json
-
 # aerc local account file (built from .example, contains app-password setup)
 aerc/.config/aerc/accounts.conf
 
-# systemd --user enable skriver aktiverings-symlinks hertil, fordi stow
-# symlinker hele ~/.config/systemd/user ind i dette repo. Det er maskin-
-# tilstand, ikke konfiguration — og uden dette stopper Ansibles dotfiles-
-# rolle ved hver koersel, fordi arbejdstraeet er beskidt.
+# systemd --user enable writes its activation symlinks here, because stow
+# links the whole of ~/.config/systemd/user into this repo. That is machine
+# state, not configuration — and without this rule Ansible's dotfiles role
+# stops on every run, on a dirty working tree nobody made dirty.
 systemd/.config/systemd/user/*.target.wants/
 
 # Machine state, not configuration. scripts/screens.sh rewrites screens.conf
