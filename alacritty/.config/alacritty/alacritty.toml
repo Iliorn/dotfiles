@@ -4,6 +4,7 @@ WINIT_X11_SCALE_FACTOR = "1"
 
 [window]
 dynamic_padding = true
+padding = { x = 8, y = 8 }
 decorations = "full"
 title = "Alacritty@CachyOS"
 # Window opacity is controlled centrally by Hyprland.
@@ -53,19 +54,19 @@ white = "0xECEFF4"
 size = 12
 
 [font.normal]
-family = "monospace"
+family = "JetBrainsMono Nerd Font"
 style = "Regular"
 
 [font.bold]
-family = "monospace"
+family = "JetBrainsMono Nerd Font"
 style = "Bold"
 
 [font.italic]
-family = "monospace"
+family = "JetBrainsMono Nerd Font"
 style = "Italic"
 
 [font.bold_italic]
-family = "monospace"
+family = "JetBrainsMono Nerd Font"
 style = "Bold Italic"
 
 [selection]
@@ -93,11 +94,6 @@ action = "Paste"
 [[keyboard.bindings]]
 key = "Copy"
 action = "Copy"
-
-[[keyboard.bindings]]
-key = "L"
-mods = "Control"
-action = "ClearLogNotice"
 
 [[keyboard.bindings]]
 key = "L"
@@ -156,13 +152,18 @@ mode = "Vi"
 action = "ClearSelection"
 
 [[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"
+
+[[keyboard.bindings]]
 key = "Key0"
 mods = "Control"
 action = "ResetFontSize"
 
 [[hints.enabled]]
 regex = "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^ \t\n\r<>\"'\\\\]+"
-command = { program = "flatpak", args = ["run", "app.zen_browser.zen"] }
+command = "xdg-open"
 post_processing = true
 # Aktiverer OSC 8-hyperlinks (fx "Google Maps" i shelter), hvor URL'en ikke står som synlig tekst.
 hyperlinks = true
@@ -173,8 +174,3 @@ mods = "None"
 [general]
 live_config_reload = true
 working_directory = "None"
-
-[[keyboard.bindings]]
-key = "Return"
-mods = "Shift"
-chars = "\u001B\r"

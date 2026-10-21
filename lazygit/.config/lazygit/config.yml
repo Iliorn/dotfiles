@@ -2,3 +2,24 @@
 
 os:
   editPreset: helix
+
+gui:
+  theme:
+    activeBorderColor:
+      - "#88C0D0"
+      - bold
+    inactiveBorderColor:
+      - "#4C566A"
+    optionsTextColor:
+      - "#81A1C1"
+    selectedLineBgColor:
+      - "#3B4252"
+    cherryPickedCommitBgColor:
+      - "#434C5E"
+    cherryPickedCommitFgColor:
+      - "#88C0D0"
+    unstagedChangesColor:
+      - "#BF616A"
+  nerdFontsVersion: "3"
+  showCommandLog: false
+  mainPanelSplitMode: flexible

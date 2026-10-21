@@ -10,14 +10,14 @@
   "display": {
     "separator": "  ",
     "color": {
-      "keys": "magenta",
-      "values": "white"
+      "keys": "38;2;129;161;193",
+      "values": "38;2;216;222;233"
     }
   },
   "modules": [
     {
       "type": "title",
-      "color": "38;2;26;26;26"
+      "color": "38;2;136;192;208"
     },
     {
       "type": "os",
@@ -44,6 +44,14 @@
       "key": "Term"
     },
     {
+      "type": "shell",
+      "key": "Shell"
+    },
+    {
+      "type": "display",
+      "key": "Disp"
+    },
+    {
       "type": "break"
     },
     {
@@ -55,6 +63,11 @@
       "type": "memory",
       "key": "RAM",
       "format": "{used} / {total} ({percentage})"
+    },
+    {
+      "type": "disk",
+      "key": "Disk",
+      "format": "{size-used} / {size-total} ({size-percentage})"
     }
   ]
 }

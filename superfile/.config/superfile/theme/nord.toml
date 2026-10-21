@@ -1,0 +1,58 @@
+# Nord theme for superfile
+code_syntax_highlight = "nord"
+
+# Border
+file_panel_border = "#4C566A"
+sidebar_border = "#4C566A"
+footer_border = "#4C566A"
+
+# Border active
+file_panel_border_active = "#88C0D0"
+sidebar_border_active = "#81A1C1"
+footer_border_active = "#8FBCBB"
+modal_border_active = "#88C0D0"
+
+# Background (bg)
+full_screen_bg = "#2E3440"
+file_panel_bg = "#2E3440"
+sidebar_bg = "#2E3440"
+footer_bg = "#2E3440"
+modal_bg = "#2E3440"
+
+# Foreground (fg)
+full_screen_fg = "#D8DEE9"
+file_panel_fg = "#D8DEE9"
+sidebar_fg = "#D8DEE9"
+footer_fg = "#D8DEE9"
+modal_fg = "#D8DEE9"
+
+# Special items
+cursor = "#88C0D0"
+correct = "#A3BE8C"
+error = "#BF616A"
+hint = "#8FBCBB"
+cancel = "#D08770"
+gradient_color = ["#88C0D0", "#B48EAD"]
+
+# File panel
+file_panel_top_directory_icon = "#A3BE8C"
+file_panel_top_path = "#81A1C1"
+file_panel_item_selected_fg = "#88C0D0"
+file_panel_item_selected_bg = "#2E3440"
+
+# Sidebar
+sidebar_title = "#EBCB8B"
+sidebar_item_selected_fg = "#88C0D0"
+sidebar_item_selected_bg = "#2E3440"
+sidebar_divider = "#4C566A"
+
+# Modal
+modal_cancel_fg = "#2E3440"
+modal_cancel_bg = "#D08770"
+modal_confirm_fg = "#2E3440"
+modal_confirm_bg = "#A3BE8C"
+
+# Footer
+footer_directory_icon = "#A3BE8C"
+footer_filter_fg = "#D8DEE9"
+footer_filter_bg = "#2E3440"

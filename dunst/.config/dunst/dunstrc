@@ -15,10 +15,15 @@
     horizontal_padding = 10
     text_icon_padding = 0
     frame_width = 2
-    frame_color = "#5e81ac"  # Den klassiske Nordic blå
+    frame_color = "#81A1C1"  # Samme blå som baren
     separator_color = frame
-    font = Sans 10
-    corner_radius = 10
+    font = JetBrainsMono Nerd Font 10
+    corner_radius = 8
+    icon_theme = BeautyLine
+    enable_recursive_icon_lookup = true
+    highlight = "#88C0D0"
+    progress_bar_frame_width = 1
+    progress_bar_corner_radius = 4
 
 [urgency_low]
     background = "#2e3440" # Mørk Nordic Grey

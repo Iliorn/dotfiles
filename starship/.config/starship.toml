@@ -1,5 +1,76 @@
-# Minimal overrides; everything else uses starship defaults.
+"$schema" = 'https://starship.rs/config-schema.json'
 
+palette = "nord"
+
+format = """
+$directory$git_branch$git_status$python$nodejs$rust$golang$lua$cmd_duration
+$character"""
+
+[palettes.nord]
+bg = "#2E3440"
+bg-alt = "#3B4252"
+bg-sel = "#434C5E"
+muted = "#4C566A"
+dim = "#6B7688"
+fg = "#D8DEE9"
+fg-bright = "#ECEFF4"
+fg-soft = "#E5E9F0"
+red = "#BF616A"
+orange = "#D08770"
+yellow = "#EBCB8B"
+green = "#A3BE8C"
+teal = "#8FBCBB"
+cyan = "#88C0D0"
+blue = "#81A1C1"
+deep-blue = "#5E81AC"
+purple = "#B48EAD"
+
+[directory]
+style = "bold cyan"
+truncation_length = 3
+truncation_symbol = "…/"
+read_only = " 󰌾"
+
+[git_branch]
+symbol = " "
+style = "purple"
+format = "[$symbol$branch]($style) "
+
+[git_status]
+style = "yellow"
+format = '([\[$all_status$ahead_behind\]]($style) )'
+
+# Language modules appear only inside a matching project.
 [python]
-# The default 🐍 emoji renders badly in the generic "monospace" font.
-symbol = ""
+symbol = " "
+style = "yellow"
+format = "[$symbol$version]($style) "
+
+[nodejs]
+symbol = " "
+style = "green"
+format = "[$symbol$version]($style) "
+
+[rust]
+symbol = " "
+style = "orange"
+format = "[$symbol$version]($style) "
+
+[golang]
+symbol = " "
+style = "cyan"
+format = "[$symbol$version]($style) "
+
+[lua]
+symbol = " "
+style = "blue"
+format = "[$symbol$version]($style) "
+
+[cmd_duration]
+min_time = 2000
+style = "yellow"
+format = "[ $duration]($style)"
+
+[character]
+success_symbol = "[❯](bold blue)"
+error_symbol = "[❯](bold red)"

@@ -1,11 +1,11 @@
 /**
- * nord-minimal — launcher theme for `rofi -show drun` (super+space).
+ * nord-minimal — the one rofi theme, for `rofi -show drun` (super+space) and
+ * for every dmenu run.
  *
  * Nord palette, to match alacritty (background #2E3440) and the rest of the
- * desktop. Deliberately NOT Catppuccin, which is what the two -theme-str
- * blocks in hypr/.config/hypr/scripts/{powermenu,power_profile}.sh still
- * use — those two are self-contained overrides that never read this file's
- * colours, so the fleet is currently two palettes. Not unified here.
+ * desktop. config.rasi loads this theme for every run, so
+ * hypr/.config/hypr/scripts/{powermenu,power_profile}.sh inherit the colours
+ * and pass only layout (width, lines, hidden input bar) in -theme-str.
  *
  * IMPORTANT — do NOT set `children:` on `window`. rofi's default hierarchy
  * is window > mainbox > [inputbar, message, listview], and powermenu.sh
@@ -30,7 +30,7 @@
 
     background-color: transparent;
     text-color:       @fg;
-    font:             "monospace 12";
+    font:             "JetBrainsMono Nerd Font 12";
 }
 
 window {
@@ -41,7 +41,7 @@ window {
     background-color: @bg;
     border:           1px;
     border-color:     #4C566A;
-    border-radius:    0px;
+    border-radius:    8px;
     padding:          0px;
 }
 
@@ -51,6 +51,7 @@ mainbox {
 }
 
 inputbar {
+    background-color: @bg-alt;
     padding:  4px 14px;
     spacing:  10px;
     children: [ prompt, entry ];

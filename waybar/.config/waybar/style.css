@@ -1,10 +1,7 @@
-/* Nord, the same palette as alacritty, rofi and the two powermenus. It was
-   Catppuccin until 2026-10-18, which made the bar the odd one out on a Nord
-   desktop. The mapping was done per module rather than by name, so the
-   distinctions survive: the clock keeps its purple, the special workspace
-   moved to yellow so it does not collide with it, and the bar itself is now
-   solid #2E3440 instead of a 25% wash — a terminal has a background, not a
-   tint.
+/* Nord, the same palette as alacritty, rofi and the two powermenus. Each
+   module keeps its own colour so they stay told apart: the clock is purple,
+   the special workspace yellow so it does not collide with it, and the bar
+   itself is solid #2E3440 — a terminal has a background, not a tint.
 
    =========================
    Grundindstillinger
@@ -43,13 +40,12 @@ window#waybar {
   color: #D8DEE9;
 }
 
-#Pulseaudio {
+#pulseaudio {
   color: #88C0D0;
 }
 
 #pulseaudio.muted {
-  background-color: #BF616A;
-  color: #2E3440;
+  color: #4C566A;
 }
 
 /* =========================
@@ -216,14 +212,14 @@ window#waybar {
    ========================= */
 /* Uden disse regler arver tooltips GTK's standardudseende — lys baggrund,
    fremmed skrift — og passer derfor ikke til resten af linjen. Farverne
-   herunder er de samme Catppuccin-toner som baren selv bruger. */
+   herunder er de samme Nord-toner som baren selv bruger. */
 /* 'background-color', ikke stenografien 'background': GTK3 er upålidelig
    med den sidste. Padding ligger på selve tooltip'en, ikke kun på label,
    ellers klistrer indholdet til kanten. */
 tooltip {
   background-color: #2E3440;
   border: 1px solid #4C566A;
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 10px 12px;
 }
 
