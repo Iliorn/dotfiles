@@ -13,6 +13,8 @@
   "modules-right": [
     "tray",
     "custom/tjek-status",
+    "cpu",
+    "memory",
     "pulseaudio",
     "bluetooth",
     "network",
@@ -84,6 +86,18 @@
     "format": "{}",
     "markup": "none",
     "on-click": "alacritty -e sh -c 'upower -d; read'"
+  },
+  "cpu": {
+    "format": "󰻠 {usage}%",
+    "interval": 5,
+    "tooltip-format": "CPU {usage}%\nGennemsnit {avg_frequency} GHz",
+    "on-click": "alacritty -e btop"
+  },
+  "memory": {
+    "format": "󰍛 {percentage}%",
+    "interval": 5,
+    "tooltip-format": "{used:0.1f} GiB af {total:0.1f} GiB\nSwap {swapUsed:0.1f} GiB",
+    "on-click": "alacritty -e btop"
   },
   "network": {
     "format-wifi": "  {signalStrength}%",
