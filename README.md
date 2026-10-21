@@ -95,6 +95,8 @@ Facts that are easy to trip over when doing a piece by hand:
   seafile-client`. Without `paru`, build it once from the AUR:
   `git clone --depth=1 https://aur.archlinux.org/paru.git /tmp/paru`, then
   `cd /tmp/paru && makepkg -si`.
+- **cliphist** records nothing by itself: its two `wl-paste --watch`
+  processes are started from Hyprland's autostart, so history begins at login.
 - **`ly`** ships only the templated `ly@.service`, so `systemctl enable ly`
   fails; the unit is `ly@tty2`.
 - **TLP must not be installed** beside `power-profiles-daemon`, which CachyOS
@@ -133,7 +135,10 @@ Facts that are easy to trip over when doing a piece by hand:
 | Wallpaper        | awww + waypaper          |
 | Login manager    | Ly                       |
 | Screen locker    | Hyprlock + Hypridle      |
-| Screenshots      | Grim + Slurp             |
+| Screenshots      | Grim + Slurp + Satty     |
+| Clipboard        | wl-clipboard + cliphist  |
+| OSD              | SwayOSD                  |
+| Colour picker    | Hyprpicker               |
 | Bluetooth        | Blueman + bluetui        |
 | WiFi             | iwd + systemd-resolved   |
 | Cloud sync       | Rclone                   |
@@ -177,7 +182,7 @@ Ansible does this for you; by hand:
 ```bash
 git clone https://github.com/Iliorn/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-stow --target="$HOME" aerc alacritty autostart btop codebook dunst fastfetch fish gtk helix hypr lazygit micro mimeapps mods obsidian rofi starship superfile systemd waybar waypaper wireplumber
+stow --target="$HOME" aerc alacritty autostart btop codebook dunst fastfetch fish gtk helix hypr lazygit micro mimeapps mods obsidian rofi satty starship superfile swayosd systemd waybar waypaper wireplumber
 ```
 
 or one package at a time, e.g. `stow --target="$HOME" hypr`. Stow symlinks
@@ -221,3 +226,6 @@ $EDITOR ~/.config/hypr/host.conf
 | `Print`                   | Screenshot (full screen)               |
 | `Shift + Print`           | Screenshot (select area)               |
 | `Ctrl + Shift + Print`    | Screenshot to clipboard                |
+| `Super + Print`           | Screenshot, select area and annotate   |
+| `Super + Shift + V`       | Clipboard history (Alt+Delete removes) |
+| `Super + Shift + C`       | Pick a colour to the clipboard         |

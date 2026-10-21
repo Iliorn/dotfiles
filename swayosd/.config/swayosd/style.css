@@ -1,0 +1,35 @@
+/* Nord, matching the rest of the desktop (see README, "Palette and font"). */
+
+window {
+  background: #2E3440;
+  border: 1px solid #4C566A;
+  border-radius: 8px;
+}
+
+#container {
+  margin: 16px;
+}
+
+image {
+  color: #D8DEE9;
+}
+
+label {
+  color: #D8DEE9;
+  font-family: "JetBrainsMono Nerd Font";
+}
+
+progressbar {
+  min-height: 6px;
+  border-radius: 8px;
+}
+
+trough {
+  background: #3B4252;
+  border-radius: 8px;
+}
+
+progress {
+  background: #88C0D0;
+  border-radius: 8px;
+}

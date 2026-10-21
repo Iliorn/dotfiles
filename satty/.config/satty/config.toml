@@ -1,0 +1,24 @@
+# Nord, matching the rest of the desktop (see README, "Palette and font").
+
+[general]
+early-exit = true
+initial-tool = "arrow"
+copy-command = "wl-copy"
+corner-roundness = 8
+
+[color-palette]
+palette = [
+  "#BF616Aff",
+  "#D08770ff",
+  "#EBCB8Bff",
+  "#A3BE8Cff",
+  "#88C0D0ff",
+  "#81A1C1ff",
+  "#B48EADff",
+  "#ECEFF4ff",
+]
+
+# The desktop's one font, for the text tool.
+[font]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
