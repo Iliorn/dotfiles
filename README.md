@@ -214,7 +214,7 @@ $EDITOR ~/.config/hypr/host.conf
 | `Super + C`               | Close active window                    |
 | `Super + F`               | Fullscreen                             |
 | `Super + V`               | Toggle floating                        |
-| `Super + Escape`          | Lock screen + suspend                  |
+| `Super + Shift + Escape`  | Lock screen + suspend                  |
 | `Super + Shift + M`       | Exit Hyprland                          |
 | `Super + Shift + N`       | Obsidian quick capture                 |
 | `Super + H/J/K/L`         | Move focus (vim-style; arrow keys too) |
