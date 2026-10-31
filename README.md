@@ -152,9 +152,8 @@ Facts that are easy to trip over when doing a piece by hand:
 
 Nord is the default palette, set in JetBrainsMono Nerd Font, with a corner
 radius of 8. Anything added later should match these rather than bring a new
-colour scheme. GTK apps get the same colours from `gtk/.config/gtk-3.0/gtk.css`
-and `gtk/.config/gtk-4.0/gtk.css`; those, hyprlock and the other programs not
-listed under Themes below stay Nord whatever theme is chosen.
+colour scheme. The programs listed under Themes below follow the chosen
+palette; any other stays Nord whatever theme is chosen.
 
 | Role                  | Hex       |
 |-----------------------|-----------|
@@ -178,16 +177,16 @@ listed under Themes below stay Nord whatever theme is chosen.
 
 ## Themes
 
-Waybar, rofi, dunst, alacritty, helix, btop and the Hyprland window borders
-follow one palette, chosen with `hypr/.config/hypr/scripts/theme.sh`. Nord,
+Waybar, rofi, dunst, alacritty, helix, btop, hyprlock, GTK 3/4 apps and the
+Hyprland window borders follow one palette, chosen with `hypr/.config/hypr/scripts/theme.sh`. Nord,
 Gruvbox Dark, Catppuccin Mocha, Tokyo Night and Everforest Dark are included;
 Nord is the default and looks as it did before themes existed.
 
 A palette is a file in `hypr/.config/hypr/themes/`: shell `KEY="#rrggbb"`
-lines for the UI roles (`BG`, `LINE`, `ACCENT`, `RED`, ...) and the 16
+lines for the UI roles (`BG`, `BG_SEL`, `LINE`, `ACCENT`, `RED`, ...) and the 16
 terminal colours (`ANSI0`..`ANSI15`), plus `HELIX`, which is a name and not a
-colour (see below). `theme.sh` renders it into seven generated, gitignored
-files, one per program, each of which the tracked config reads:
+colour (see below). `theme.sh` renders it into nine generated, gitignored
+files, one per program (two for GTK), each of which the tracked config reads:
 
 | Program   | Generated file                                    |
 |-----------|---------------------------------------------------|
@@ -198,6 +197,9 @@ files, one per program, each of which the tracked config reads:
 | Hyprland  | `~/.config/hypr/state/theme.lua`                  |
 | helix     | `~/.config/helix/themes/current.toml`             |
 | btop      | `~/.config/btop/themes/current.theme`             |
+| hyprlock  | `~/.config/hypr/state/hyprlock-colors.conf`       |
+| GTK 3     | `~/.config/gtk-3.0/theme.css`                     |
+| GTK 4     | `~/.config/gtk-4.0/theme.css`                     |
 
 The choice is saved in `~/.local/state/theme/current`, per machine.
 
@@ -220,6 +222,16 @@ line, `inherits = "<HELIX>"`, naming the built-in helix theme that suits the
 palette (`nord`, `gruvbox`, `catppuccin_mocha`, `tokyonight`,
 `everforest_dark`). btop's `current.theme` is built from the palette roles.
 The tracked configs say `theme = "current"` and `color_theme = "current"`.
+
+hyprlock and GTK are not signalled either. hyprlock reads its colours each time
+it starts: `hyprlock.conf` does `source = ./state/hyprlock-colors.conf`
+(relative to the config file), which defines `$fg`, `$fg_bright`, `$accent` and
+`$red`; the wallpaper and its blur are not themed. A missing file is only a
+logged error and hyprlock falls back to its own colours, so `ensure` matters
+here. For GTK, the tracked `gtk.css` in each directory is just
+`@import url("theme.css");` (resolved next to it), and the generated file holds
+the `@define-color` lines that adw-gtk3 and libadwaita read. Running GTK apps
+keep their old colours until they are restarted.
 
 To add a palette, copy a file in `themes/`, give it a new lowercase id as the
 file name, change `NAME` and the colours, and that is all:

@@ -33,6 +33,9 @@ alacritty/.config/alacritty/theme.toml
 hypr/.config/hypr/state/theme.lua
 helix/.config/helix/themes/current.toml
 btop/.config/btop/themes/current.theme
+hypr/.config/hypr/state/hyprlock-colors.conf
+gtk/.config/gtk-3.0/theme.css
+gtk/.config/gtk-4.0/theme.css
 
 # Backups of host-local files belong on the machine that made them, not on
 # every machine that clones this repo.

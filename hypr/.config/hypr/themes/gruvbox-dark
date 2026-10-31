@@ -9,6 +9,8 @@ HELIX="gruvbox"
 
 BG="#282828"
 BG_ALT="#3C3836"
+# Between BG_ALT and LINE; Gruvbox has no step of its own there.
+BG_SEL="#46413E"
 LINE="#504945"
 FG="#EBDBB2"
 FG_SOFT="#EBDBB2"

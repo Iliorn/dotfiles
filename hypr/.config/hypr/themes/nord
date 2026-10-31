@@ -9,6 +9,8 @@ HELIX="nord"
 
 BG="#2E3440"
 BG_ALT="#3B4252"
+# A step above BG_ALT, below LINE: selection and the borders GTK draws.
+BG_SEL="#434C5E"
 LINE="#4C566A"
 FG="#D8DEE9"
 FG_SOFT="#E5E9F0"

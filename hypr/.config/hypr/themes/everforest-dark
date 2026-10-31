@@ -9,6 +9,8 @@ HELIX="everforest_dark"
 
 BG="#2D353B"
 BG_ALT="#343F44"
+# Everforest bg2; the step between BG_ALT and LINE.
+BG_SEL="#3D484D"
 LINE="#475258"
 FG="#D3C6AA"
 FG_SOFT="#D3C6AA"

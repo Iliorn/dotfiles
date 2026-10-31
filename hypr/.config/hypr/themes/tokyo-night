@@ -9,6 +9,8 @@ HELIX="tokyonight"
 
 BG="#1A1B26"
 BG_ALT="#292E42"
+# Between BG_ALT and LINE; Tokyo Night has no step of its own there.
+BG_SEL="#323852"
 LINE="#3B4261"
 FG="#C0CAF5"
 FG_SOFT="#C0CAF5"

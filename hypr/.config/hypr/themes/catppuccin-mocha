@@ -9,6 +9,8 @@ HELIX="catppuccin_mocha"
 
 BG="#1E1E2E"
 BG_ALT="#313244"
+# Between BG_ALT and LINE; Mocha has no step of its own there.
+BG_SEL="#3B3D4F"
 LINE="#45475A"
 FG="#CDD6F4"
 FG_SOFT="#CDD6F4"
