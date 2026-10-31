@@ -170,18 +170,17 @@ window#waybar {
 /* =========================
    Workspaces
    ========================= */
+/* The active workspace is a block cursor: reverse video, square, no fade —
+   the same look as the selected line in rofi. */
 #workspaces button {
   padding: 0 4px;
   margin: 0 2px;
   color: #6B7688;
-  border-radius: 6px;
-  transition: background-color 0.2s ease;
 }
 
 #workspaces button.active {
-  color: #81A1C1;
-  background-color: rgba(129, 161, 193, 0.18);
-  border-radius: 6px;
+  color: #2E3440;
+  background-color: #88C0D0;
 }
 
 /* --- MAGIC DESKTOP STYLING --- */
@@ -197,8 +196,8 @@ window#waybar {
 }
 
 #workspaces button.special.active {
-  background-color: rgba(235, 203, 139, 0.2);
-  border-radius: 6px;
+  color: #2E3440;
+  background-color: #EBCB8B;
 }
 
 #custom-tjek-status {
@@ -219,7 +218,7 @@ window#waybar {
 tooltip {
   background-color: #2E3440;
   border: 1px solid #4C566A;
-  border-radius: 8px;
+  border-radius: 0px;
   padding: 10px 12px;
 }
 

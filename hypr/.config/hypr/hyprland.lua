@@ -82,31 +82,30 @@ hl.env("EDITOR", "helix")
 -----------------------
 ---- LOOK AND FEEL ----
 -----------------------
+-- TUI flavour: windows are panes, not cards. Square corners, a flat one-pixel
+-- rule instead of a gradient, no shadow, and only enough gap to tell two
+-- panes apart.
 hl.config({
     general = {
         layout = "dwindle",
-        gaps_in = 5,
-        gaps_out = 20,
-        border_size = 2,
+        gaps_in = 4,
+        gaps_out = 8,
+        border_size = 1,
         col = {
-            active_border   = { colors = { "rgba(88c0d0ee)", "rgba(81a1c1ee)" }, angle = 45 },
-            inactive_border = "rgba(4c566aaa)",
+            active_border   = "rgb(88c0d0)",
+            inactive_border = "rgb(4c566a)",
         },
         resize_on_border = true,
         allow_tearing = false,
     },
 
     decoration = {
-        rounding = 8,
-        rounding_power = 2,
+        rounding = 0,
         active_opacity = 1.0,
         inactive_opacity = 1.0,
 
         shadow = {
-            enabled = true,
-            range = 4,
-            render_power = 3,
-            color = "rgba(2e3440aa)",
+            enabled = false,
         },
 
         blur = {
@@ -119,16 +118,16 @@ hl.config({
     },
 })
 
+-- Nothing moves: windows and layers (bar, launcher, notifications) appear in
+-- place, and only a short fade keeps a change from looking like a glitch.
+-- Speed is in tenths of a second, so 2 is 200 ms.
 hl.curve("easeOut", { type = "bezier", points = { {0.0, 0.9}, {0.1, 1.0} } })
--- y1 above 1 overshoots the target slightly before settling.
-hl.curve("overshoot", { type = "bezier", points = { {0.05, 0.9}, {0.1, 1.05} } })
 
-hl.animation({ leaf = "windows",          enabled = true, speed = 6, bezier = "overshoot", style = "popin 85%" })
-hl.animation({ leaf = "windowsIn",        enabled = true, speed = 3, bezier = "easeOut",   style = "slide" })
-hl.animation({ leaf = "windowsOut",       enabled = true, speed = 3, bezier = "easeOut",   style = "slide" })
-hl.animation({ leaf = "workspaces",       enabled = true, speed = 6, bezier = "easeOut",   style = "slide" })
-hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 4, bezier = "easeOut",   style = "slidevert" })
-hl.animation({ leaf = "layers",           enabled = true, speed = 4, bezier = "easeOut",   style = "fade" })
+hl.animation({ leaf = "windows",          enabled = false })
+hl.animation({ leaf = "layers",           enabled = false })
+hl.animation({ leaf = "fade",             enabled = true, speed = 2, bezier = "easeOut" })
+hl.animation({ leaf = "workspaces",       enabled = true, speed = 2, bezier = "easeOut", style = "fade" })
+hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 2, bezier = "easeOut", style = "fade" })
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
