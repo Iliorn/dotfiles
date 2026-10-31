@@ -23,6 +23,7 @@
 #workspaces,
 #clock,
 #pulseaudio,
+#custom-hoth,
 #custom-tjek-status,
 #cpu,
 #memory,
@@ -89,6 +90,7 @@ window#waybar {
    ingen streger. Derfor mere padding end den gamle boble-stil havde. */
 #pulseaudio,
 #bluetooth,
+#custom-hoth,
 #custom-tjek-status,
 #cpu,
 #memory,
@@ -206,6 +208,19 @@ window#waybar {
 
 #custom-tjek-status {
   color: @fg;
+}
+
+/* hoth: the whole module takes the state colour, like a status light. */
+#custom-hoth {
+  color: @muted;
+}
+
+#custom-hoth.ok {
+  color: @green;
+}
+
+#custom-hoth.broken {
+  color: @red;
 }
 
 /* =========================

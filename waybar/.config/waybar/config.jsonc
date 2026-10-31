@@ -12,6 +12,7 @@
   ],
   "modules-right": [
     "tray",
+    "custom/hoth",
     "custom/tjek-status",
     "cpu",
     "memory",
@@ -36,6 +37,16 @@
     }
   },
   
+  // hoth's health (scripts/hoth-status.sh): green, red with a count, or grey
+  // when hoth cannot be reached. Click for the list.
+  "custom/hoth": {
+    "format": "󰒋 {}",
+    "return-type": "json",
+    "exec": "$HOME/.config/waybar/scripts/hoth-status.sh",
+    "interval": 60,
+    "tooltip": true,
+    "on-click": "alacritty -e $HOME/.config/waybar/scripts/hoth-status.sh view"
+  },
   "custom/tjek-status": {
     "format": "  {}",
     "return-type": "json",
