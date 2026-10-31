@@ -105,6 +105,10 @@ hl.config({
         rounding = 0,
         active_opacity = 1.0,
         inactive_opacity = 1.0,
+        -- The pane with focus stands out because the others step back, not
+        -- because it gets more decoration.
+        dim_inactive = true,
+        dim_strength = 0.15,
 
         shadow = {
             enabled = false,
@@ -153,6 +157,9 @@ hl.window_rule({
     match = { class = "^(dropterm)$" },
     workspace = "special:dropterm silent",
     float = true,
+    -- Its own colour, so the dropdown reads as something laid over the
+    -- panes, not as one of them. Nord yellow; theme.sh overrides it.
+    border_color = "rgb(ebcb8b)",
     -- Tables, as Hyprland's own tests write expressions: a single string is
     -- not checked when the config loads.
     size  = { "monitor_w * 0.8", "monitor_h * 0.45" },
