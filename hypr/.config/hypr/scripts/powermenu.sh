@@ -32,7 +32,7 @@ case "$valgt" in
   hyprlock & systemctl suspend
   ;;
 *"Log ud"*)
-  hyprctl dispatch exit
+  ~/.config/hypr/scripts/dispatch.sh 'hl.dsp.exit()' exit
   ;;
 *"Genstart"*)
   systemctl reboot

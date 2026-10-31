@@ -1,0 +1,42 @@
+-- Host-local Hyprland config: this machine's screen TASTE, nothing else.
+--
+-- Copy to host.lua on each machine (install.sh does it on first run).
+-- host.lua is gitignored — never commit it.
+--
+-- What used to live here — the panel's name, the workspace pinning, the lid
+-- handover — is now worked out at runtime by scripts/screens.sh and written to
+-- state/screens.lua, which hyprland.lua loads last. The panel is detected
+-- (eDP-1 on the T480, LVDS-1 on the Sandy Bridge X220s) and so is the external,
+-- whichever port it happens to be on, so none of it needs saying per machine.
+--
+-- What is left is the one thing no script can know: where the external screen
+-- physically stands.
+
+----------------
+---- MONITORS ----
+----------------
+-- ONE line, and it is for the external screen. The built-in panel is not named
+-- here: scripts/screens.sh detects it and writes its rule into
+-- state/screens.lua, which is read after this file. That is what lets this
+-- rule stay nameless — a nameless rule is a catch-all, and without the panel
+-- having a rule of its own it would swallow the panel too.
+--
+-- Placed relative to the laptop. Change the direction to match the desk you
+-- are sitting at:
+--
+--   auto-up     the external stands behind/above the laptop  (a stand)
+--   auto-down   the external sits below the laptop
+--   auto-left   side by side, external on the left
+--   auto-right  side by side, external on the right
+--
+-- `highres` takes the external's best mode rather than its preferred one,
+-- which on a 165 Hz panel is the difference that is actually visible.
+hl.monitor({ output = "", mode = "highres", position = "auto-up", scale = 1 })
+
+--------------------
+---- WORKSPACES ----
+--------------------
+-- Nothing here on purpose. 1-3 follow the laptop panel and 4-9 the external,
+-- decided in scripts/screens.sh so every machine behaves the same way. Pin a
+-- workspace here only to override that, and remember this file is read BEFORE
+-- state/screens.lua, so screens.sh has the last word.

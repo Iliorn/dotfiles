@@ -191,15 +191,20 @@ aside first, or stow refuses.
 
 ### Host-local Hyprland config
 
-Monitor layout and workspace pinning live in `~/.config/hypr/host.conf`, which
-is gitignored because it differs per laptop. `hyprland.conf` sources it. On a
-new machine Ansible seeds it from `hypr_host_conf` in its own `group_vars` and
-never overwrites it afterwards. By hand:
+Monitor layout lives in `~/.config/hypr/host.lua`, which is gitignored because
+it differs per laptop. `hyprland.lua` loads it. On a new machine Ansible seeds
+it from `hypr_host_lua` in its own `group_vars` and never overwrites it
+afterwards. By hand:
 
 ```bash
-cp hypr/.config/hypr/host.example.conf ~/.config/hypr/host.conf
-$EDITOR ~/.config/hypr/host.conf
+cp hypr/.config/hypr/host.example.lua ~/.config/hypr/host.lua
+$EDITOR ~/.config/hypr/host.lua
 ```
+
+Hyprland reads `hyprland.lua` whenever it exists (0.55 onwards; 0.57 reads
+nothing else). `hyprland.conf`, `host.conf` and `state/screens.conf` are the
+old format and stay only until every laptop has restarted onto the Lua config.
+Until then a change to the config goes into both.
 
 ## Keybindings
 

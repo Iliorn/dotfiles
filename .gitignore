@@ -3,6 +3,7 @@ fish/.config/fish/fish_variables
 
 # Hyprland host-local overrides (monitor + workspace layout per machine).
 hypr/.config/hypr/host.conf
+hypr/.config/hypr/host.lua
 
 # aerc local account file (built from .example, contains app-password setup)
 aerc/.config/aerc/accounts.conf
