@@ -1,8 +1,11 @@
 # Palette for scripts/theme.sh. Plain KEY="#rrggbb", sourced by sh: no code.
 # Roles are what the UI asks for; ANSI0..15 are what the terminal asks for.
 # Add a palette by copying a file here and changing the values — every key
-# must be present, theme.sh refuses a file that misses one.
+# must be present, theme.sh refuses a file that misses one or has a bad value.
 NAME="Tokyo Night"
+# Not a colour: the helix theme to inherit (theme.sh writes helix's current.toml
+# from it). Helix brings its own colours, so pick the closest built-in one.
+HELIX="tokyonight"
 
 BG="#1A1B26"
 BG_ALT="#292E42"

@@ -31,6 +31,8 @@ rofi/.local/share/rofi/themes/theme-colors.rasi
 dunst/.config/dunst/dunstrc.d/90-theme.conf
 alacritty/.config/alacritty/theme.toml
 hypr/.config/hypr/state/theme.lua
+helix/.config/helix/themes/current.toml
+btop/.config/btop/themes/current.theme
 
 # Backups of host-local files belong on the machine that made them, not on
 # every machine that clones this repo.

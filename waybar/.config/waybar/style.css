@@ -88,6 +88,8 @@ window#waybar {
 /* Afstand er det eneste der adskiller modulerne nu — ingen bobler,
    ingen streger. Derfor mere padding end den gamle boble-stil havde. */
 #pulseaudio,
+#bluetooth,
+#custom-tjek-status,
 #cpu,
 #memory,
 #network,
@@ -97,10 +99,8 @@ window#waybar {
   margin: 4px 6px;
 }
 
-#bluetooth {
-  padding: 0 4px;
-  margin: 4px 2px;
-}
+/* Same spacing as every other module on the right; bluetooth and tjek used
+   to sit tighter, which read as uneven gaps (2026-10-31). */
 
 /* =========================
    POWER PROFILE (Den nye raket/blad boble)
@@ -206,8 +206,6 @@ window#waybar {
 
 #custom-tjek-status {
   color: @fg;
-  padding: 0 6px;
-  margin: 4px 2px;
 }
 
 /* =========================

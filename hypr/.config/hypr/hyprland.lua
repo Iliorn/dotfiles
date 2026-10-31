@@ -141,8 +141,22 @@ hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 2, bezier = "e
 --------------------------------
 hl.window_rule({
     name  = "alacritty-opacity",
-    match = { class = "^(Alacritty)$" },
+    match = { class = "^(Alacritty|dropterm)$" },
     opacity = "0.9 0.8",
+})
+-- The dropdown terminal (super+D, scripts/dropterm.sh): an alacritty started
+-- with --class dropterm. SILENT, so a new one opens hidden on its special
+-- workspace and the script's toggle is what shows it. 80% wide, 45% tall, top
+-- centre: 10% in from the left, and 42 down = the bar (34) plus gaps_out (8).
+hl.window_rule({
+    name  = "dropterm",
+    match = { class = "^(dropterm)$" },
+    workspace = "special:dropterm silent",
+    float = true,
+    -- Tables, as Hyprland's own tests write expressions: a single string is
+    -- not checked when the config loads.
+    size  = { "monitor_w * 0.8", "monitor_h * 0.45" },
+    move  = { "monitor_w * 0.1", "42" },
 })
 hl.window_rule({
     name  = "capture-popup",
@@ -264,6 +278,8 @@ end
 
 hl.bind("SUPER + S",         hl.dsp.workspace.toggle_special("special"))
 hl.bind("SUPER + SHIFT + S", hl.dsp.window.move({ workspace = "special" }))
+-- Dropdown terminal: started on first use, then just shown and hidden.
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/dropterm.sh"))
 
 -- Multimedia taster
 hl.bind("XF86AudioRaiseVolume",  hl.dsp.exec_cmd("swayosd-client --output-volume raise"),       { locked = true, repeating = true })
@@ -294,6 +310,9 @@ hl.bind("SHIFT + Print", hl.dsp.exec_cmd([[grim -g "$(slurp)" ~/Pictures/screens
 hl.bind("CTRL + SHIFT + Print", hl.dsp.exec_cmd([[grim -g "$(slurp)" - | wl-copy]]))
 -- Annotate: the shot opens in satty, which saves to ~/Pictures and copies.
 hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd([[grim -g "$(slurp)" - | satty --filename - --output-filename ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png --early-exit --copy-command wl-copy]]))
+
+-- Notification history (dunst), newest first
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("~/.config/hypr/scripts/notifications.sh"))
 
 -- Clipboard history and colour picker
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd("~/.config/hypr/scripts/clipmenu.sh"))

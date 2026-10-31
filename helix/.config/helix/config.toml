@@ -1,4 +1,7 @@
-theme = "nord"
+# "current" is written by hypr/.config/hypr/scripts/theme.sh (it inherits the
+# built-in helix theme that belongs to the chosen palette). :config-reload
+# picks up a change in a running helix.
+theme = "current"
 
 [editor]
 line-number = "relative"

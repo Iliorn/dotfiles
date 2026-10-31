@@ -24,6 +24,11 @@
 
 "hyprland/workspaces": {
     "show-special": true,
+    // dropterm er rullegardin-terminalen (super+D, scripts/dropterm.sh). Den
+    // er et vaerktoej, ikke et sted man bor, saa den skal ikke have en knap
+    // ved siden af magic-skrivebordet. Moensteret passer baade med og uden
+    // "special:" foran, saa det virker uanset hvordan Waybar navngiver den.
+    "ignore-workspaces": ["(special:)?dropterm"],
     "format": "{icon}",
     "on-click": "activate",
     "format-icons": {
@@ -57,14 +62,15 @@
   "clock": {
     "format": "{:L%H:%M | %A %d. %B}",
     "locale": "da_DK.UTF-8",
-    // Uret er bevidst passivt: ingen tooltip ved hover, ingen handling ved
-    // klik. Waybars indbyggede kalender var et GTK-tooltip, og GTK placerer
-    // tooltips efter musemarkoeren — vinduet landede derfor et nyt sted alt
-    // efter hvor paa uret man holdt musen, og det kan Waybar ikke styre.
-    // gsimplecal blev proevet som erstatning (rigtigt vindue, som Hyprland
-    // kan placere), men det placerede sig selv midt paa skaermen, saa hele
-    // kalenderen er droppet. Dato og klokkeslaet staar i "format" ovenfor.
-    "tooltip": false
+    // Ingen tooltip ved hover. Waybars indbyggede kalender var et GTK-tooltip,
+    // og GTK placerer tooltips efter musemarkoeren — vinduet landede derfor et
+    // nyt sted alt efter hvor paa uret man holdt musen, og det kan Waybar ikke
+    // styre. gsimplecal blev proevet som erstatning (rigtigt vindue, som
+    // Hyprland kan placere), men det placerede sig selv midt paa skaermen.
+    // Et klik aabner i stedet calcurse i en almindelig terminal, som
+    // Hyprland placerer som alt andet. Dato og klokkeslaet staar i "format".
+    "tooltip": false,
+    "on-click": "alacritty -e calcurse"
   },
   "bluetooth": {
     // Tallet er skrevet fast som 0 her: "format" bruges netop naar intet er
@@ -119,7 +125,8 @@
         "󰕾"
       ]
     },
-    "on-click": "pavucontrol",
+    // wiremix i en terminal; pavucontrol til en maskine uden wiremix endnu.
+    "on-click": "if command -v wiremix >/dev/null; then alacritty -e wiremix; else pavucontrol; fi",
     "scroll-step": 5
   }
 }

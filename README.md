@@ -178,16 +178,16 @@ listed under Themes below stay Nord whatever theme is chosen.
 
 ## Themes
 
-Waybar, rofi, dunst, alacritty and the Hyprland window borders follow one
-palette, chosen with `hypr/.config/hypr/scripts/theme.sh`. Nord, Gruvbox Dark,
-Catppuccin Mocha, Tokyo Night and Everforest Dark are included; Nord is the
-default and looks exactly as it did before themes existed.
+Waybar, rofi, dunst, alacritty, helix, btop and the Hyprland window borders
+follow one palette, chosen with `hypr/.config/hypr/scripts/theme.sh`. Nord,
+Gruvbox Dark, Catppuccin Mocha, Tokyo Night and Everforest Dark are included;
+Nord is the default and looks as it did before themes existed.
 
 A palette is a file in `hypr/.config/hypr/themes/`: shell `KEY="#rrggbb"`
 lines for the UI roles (`BG`, `LINE`, `ACCENT`, `RED`, ...) and the 16
-terminal colours (`ANSI0`..`ANSI15`). `theme.sh` renders it into five
-generated, gitignored files, one per program, each of which the tracked config
-imports:
+terminal colours (`ANSI0`..`ANSI15`), plus `HELIX`, which is a name and not a
+colour (see below). `theme.sh` renders it into seven generated, gitignored
+files, one per program, each of which the tracked config reads:
 
 | Program   | Generated file                                    |
 |-----------|---------------------------------------------------|
@@ -196,6 +196,8 @@ imports:
 | dunst     | `~/.config/dunst/dunstrc.d/90-theme.conf`         |
 | alacritty | `~/.config/alacritty/theme.toml`                  |
 | Hyprland  | `~/.config/hypr/state/theme.lua`                  |
+| helix     | `~/.config/helix/themes/current.toml`             |
+| btop      | `~/.config/btop/themes/current.theme`             |
 
 The choice is saved in `~/.local/state/theme/current`, per machine.
 
@@ -211,17 +213,29 @@ theme.sh ensure        render only if a file is missing; no reload
 with no graphical session. alacritty reloads its imports itself, rofi reads
 the theme on every run, and the rest are signalled by `set`/`apply`.
 
+helix and btop are the exceptions: they are not signalled, so a running one
+keeps its old colours until it is restarted (in helix, `:config-reload` is
+enough). helix cannot take a palette, only a theme, so `current.toml` is one
+line, `inherits = "<HELIX>"`, naming the built-in helix theme that suits the
+palette (`nord`, `gruvbox`, `catppuccin_mocha`, `tokyonight`,
+`everforest_dark`). btop's `current.theme` is built from the palette roles.
+The tracked configs say `theme = "current"` and `color_theme = "current"`.
+
 To add a palette, copy a file in `themes/`, give it a new lowercase id as the
 file name, change `NAME` and the colours, and that is all:
 `theme.sh list` and the menu pick it up. `theme.sh` refuses a file with a
-missing key or a value that is not `#rrggbb`.
+missing key or a value that is not `#rrggbb`, and a `HELIX` that is not
+lowercase letters, digits, `_` and `-` (it must also name a theme that helix
+has).
 
 ### The system button
 
 The right-most waybar module still shows the power-profile glyph, but a click
 opens `scripts/systemmenu.sh`: power profile, theme (a second list, current one
-marked), network (`impala`), bluetooth (`bluetui`) and sound (`pavucontrol`).
-The power-off menu on the left is unchanged.
+marked), network (`impala`), bluetooth (`bluetui`) and sound (`wiremix` in a
+terminal, or `pavucontrol` where wiremix is not installed yet). The power-off
+menu on the left is unchanged. The waybar sound module opens the same, and a
+click on the clock opens `calcurse`.
 
 ## Applying the configs with Stow
 
@@ -276,6 +290,8 @@ Until then a change to the config goes into both.
 | `Super + Shift + 1–0`     | Move window to workspace               |
 | `Super + S`               | Toggle scratchpad                      |
 | `Super + Shift + S`       | Move to scratchpad                     |
+| `Super + D`               | Dropdown terminal (started on demand)  |
+| `Super + N`               | Notification history (Rofi, copies)    |
 | `Print`                   | Screenshot (full screen)               |
 | `Shift + Print`           | Screenshot (select area)               |
 | `Ctrl + Shift + Print`    | Screenshot to clipboard                |

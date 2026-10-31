@@ -61,5 +61,12 @@ case "$valgt" in
   ;;
 2) exec alacritty -e impala ;;
 3) exec alacritty -e bluetui ;;
-4) exec pavucontrol ;;
+4)
+  # wiremix is the TUI mixer; pavucontrol stays as the fallback for a machine
+  # that has not got it installed yet.
+  if command -v wiremix >/dev/null; then
+    exec alacritty -e wiremix
+  fi
+  exec pavucontrol
+  ;;
 esac
