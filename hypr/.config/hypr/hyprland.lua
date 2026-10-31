@@ -44,7 +44,9 @@ local browser     = "zen-browser"
 ---- AUTOSTART ----
 -------------------
 hl.on("hyprland.start", function()
-    hl.exec_cmd("waybar")
+    -- theme.sh ensure first: waybar's style.css imports theme.css, which is
+    -- generated, and a bar that starts without it has no colours at all.
+    hl.exec_cmd("~/.config/hypr/scripts/theme.sh ensure; waybar")
     hl.exec_cmd("awww-daemon")
     hl.exec_cmd("sleep 1 && waypaper --restore")
     hl.exec_cmd("dunst")
@@ -117,6 +119,11 @@ hl.config({
         enabled = true,
     },
 })
+
+-- The border colours come from the chosen palette. The values above stay as
+-- the Nord fallback for when state/theme.lua is not there (written by
+-- scripts/theme.sh; loaded here so it wins over them and survives a reload).
+load_optional("state/theme.lua")
 
 -- Nothing moves: windows and layers (bar, launcher, notifications) appear in
 -- place, and only a short fade keeps a change from looking like a glitch.

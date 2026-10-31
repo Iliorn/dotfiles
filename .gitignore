@@ -22,6 +22,16 @@ systemd/.config/systemd/user/*.target.wants/
 # seeds an empty screens.conf instead (roles/dotfiles).
 hypr/.config/hypr/state/
 
+# Colours written by hypr/.config/hypr/scripts/theme.sh from the chosen
+# palette. Generated per machine; stow folds these directories into the repo,
+# so without the rules a theme switch would dirty the working tree and stop
+# Ansible's dotfiles role. (hypr/.config/hypr/state/ is already ignored above.)
+waybar/.config/waybar/theme.css
+rofi/.local/share/rofi/themes/theme-colors.rasi
+dunst/.config/dunst/dunstrc.d/90-theme.conf
+alacritty/.config/alacritty/theme.toml
+hypr/.config/hypr/state/theme.lua
+
 # Backups of host-local files belong on the machine that made them, not on
 # every machine that clones this repo.
 *.bak

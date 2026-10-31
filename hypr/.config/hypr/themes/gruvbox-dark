@@ -1,0 +1,42 @@
+# Palette for scripts/theme.sh. Plain KEY="#rrggbb", sourced by sh: no code.
+# Roles are what the UI asks for; ANSI0..15 are what the terminal asks for.
+# Add a palette by copying a file here and changing the values — every key
+# must be present, theme.sh refuses a file that misses one.
+NAME="Gruvbox Dark"
+
+BG="#282828"
+BG_ALT="#3C3836"
+LINE="#504945"
+FG="#EBDBB2"
+FG_SOFT="#EBDBB2"
+FG_BRIGHT="#FBF1C7"
+MUTED="#928374"
+ACCENT="#8EC07C"
+# Dark text: the bright red is too light for light text.
+CRIT_FG="#282828"
+
+RED="#FB4934"
+ORANGE="#FE8019"
+YELLOW="#FABD2F"
+GREEN="#B8BB26"
+CYAN="#8EC07C"
+BLUE="#83A598"
+PURPLE="#D3869B"
+TEAL="#689D6A"
+
+ANSI0="#282828"
+ANSI1="#CC241D"
+ANSI2="#98971A"
+ANSI3="#D79921"
+ANSI4="#458588"
+ANSI5="#B16286"
+ANSI6="#689D6A"
+ANSI7="#A89984"
+ANSI8="#928374"
+ANSI9="#FB4934"
+ANSI10="#B8BB26"
+ANSI11="#FABD2F"
+ANSI12="#83A598"
+ANSI13="#D3869B"
+ANSI14="#8EC07C"
+ANSI15="#EBDBB2"

@@ -150,10 +150,11 @@ Facts that are easy to trip over when doing a piece by hand:
 
 ## Palette and font
 
-Every program in this repo is themed Nord, set in JetBrainsMono Nerd Font,
-with a corner radius of 8. Anything added later should match these rather
-than bring a new colour scheme. GTK apps get the same colours from
-`gtk/.config/gtk-3.0/gtk.css` and `gtk/.config/gtk-4.0/gtk.css`.
+Nord is the default palette, set in JetBrainsMono Nerd Font, with a corner
+radius of 8. Anything added later should match these rather than bring a new
+colour scheme. GTK apps get the same colours from `gtk/.config/gtk-3.0/gtk.css`
+and `gtk/.config/gtk-4.0/gtk.css`; those, hyprlock and the other programs not
+listed under Themes below stay Nord whatever theme is chosen.
 
 | Role                  | Hex       |
 |-----------------------|-----------|
@@ -174,6 +175,53 @@ than bring a new colour scheme. GTK apps get the same colours from
 | blue                  | `#81A1C1` |
 | deep-blue             | `#5E81AC` |
 | purple                | `#B48EAD` |
+
+## Themes
+
+Waybar, rofi, dunst, alacritty and the Hyprland window borders follow one
+palette, chosen with `hypr/.config/hypr/scripts/theme.sh`. Nord, Gruvbox Dark,
+Catppuccin Mocha, Tokyo Night and Everforest Dark are included; Nord is the
+default and looks exactly as it did before themes existed.
+
+A palette is a file in `hypr/.config/hypr/themes/`: shell `KEY="#rrggbb"`
+lines for the UI roles (`BG`, `LINE`, `ACCENT`, `RED`, ...) and the 16
+terminal colours (`ANSI0`..`ANSI15`). `theme.sh` renders it into five
+generated, gitignored files, one per program, each of which the tracked config
+imports:
+
+| Program   | Generated file                                    |
+|-----------|---------------------------------------------------|
+| Waybar    | `~/.config/waybar/theme.css`                      |
+| rofi      | `~/.local/share/rofi/themes/theme-colors.rasi`    |
+| dunst     | `~/.config/dunst/dunstrc.d/90-theme.conf`         |
+| alacritty | `~/.config/alacritty/theme.toml`                  |
+| Hyprland  | `~/.config/hypr/state/theme.lua`                  |
+
+The choice is saved in `~/.local/state/theme/current`, per machine.
+
+```
+theme.sh list          id and name of every palette
+theme.sh current       the saved id (nord if none)
+theme.sh set <id>      save, render and reload what is running
+theme.sh apply         render the saved choice again and reload
+theme.sh ensure        render only if a file is missing; no reload
+```
+
+`ensure` runs from Hyprland's autostart before waybar, and is safe over SSH
+with no graphical session. alacritty reloads its imports itself, rofi reads
+the theme on every run, and the rest are signalled by `set`/`apply`.
+
+To add a palette, copy a file in `themes/`, give it a new lowercase id as the
+file name, change `NAME` and the colours, and that is all:
+`theme.sh list` and the menu pick it up. `theme.sh` refuses a file with a
+missing key or a value that is not `#rrggbb`.
+
+### The system button
+
+The right-most waybar module still shows the power-profile glyph, but a click
+opens `scripts/systemmenu.sh`: power profile, theme (a second list, current one
+marked), network (`impala`), bluetooth (`bluetui`) and sound (`pavucontrol`).
+The power-off menu on the left is unchanged.
 
 ## Applying the configs with Stow
 

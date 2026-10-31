@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Colours and fonts come from the nord-minimal rofi theme, which config.rasi
+# Colours and fonts come from the minimal rofi theme, which config.rasi
 # loads for every run; -theme-str below carries layout only.
 
 op1="●  Performance"

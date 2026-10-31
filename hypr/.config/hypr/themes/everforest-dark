@@ -1,0 +1,42 @@
+# Palette for scripts/theme.sh. Plain KEY="#rrggbb", sourced by sh: no code.
+# Roles are what the UI asks for; ANSI0..15 are what the terminal asks for.
+# Add a palette by copying a file here and changing the values — every key
+# must be present, theme.sh refuses a file that misses one.
+NAME="Everforest Dark"
+
+BG="#2D353B"
+BG_ALT="#343F44"
+LINE="#475258"
+FG="#D3C6AA"
+FG_SOFT="#D3C6AA"
+FG_BRIGHT="#D3C6AA"
+MUTED="#7A8478"
+ACCENT="#83C092"
+CRIT_FG="#2D353B"
+
+RED="#E67E80"
+ORANGE="#E69875"
+YELLOW="#DBBC7F"
+GREEN="#A7C080"
+CYAN="#83C092"
+BLUE="#7FBBB3"
+PURPLE="#D699B6"
+# Everforest has no teal of its own; its aqua stands in, so TEAL and CYAN match.
+TEAL="#83C092"
+
+ANSI0="#475258"
+ANSI1="#E67E80"
+ANSI2="#A7C080"
+ANSI3="#DBBC7F"
+ANSI4="#7FBBB3"
+ANSI5="#D699B6"
+ANSI6="#83C092"
+ANSI7="#D3C6AA"
+ANSI8="#859289"
+ANSI9="#E67E80"
+ANSI10="#A7C080"
+ANSI11="#DBBC7F"
+ANSI12="#7FBBB3"
+ANSI13="#D699B6"
+ANSI14="#83C092"
+ANSI15="#D3C6AA"

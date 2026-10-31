@@ -1,0 +1,42 @@
+# Palette for scripts/theme.sh. Plain KEY="#rrggbb", sourced by sh: no code.
+# Roles are what the UI asks for; ANSI0..15 are what the terminal asks for.
+# Add a palette by copying a file here and changing the values — every key
+# must be present, theme.sh refuses a file that misses one.
+NAME="Nord"
+
+BG="#2E3440"
+BG_ALT="#3B4252"
+LINE="#4C566A"
+FG="#D8DEE9"
+FG_SOFT="#E5E9F0"
+FG_BRIGHT="#ECEFF4"
+MUTED="#6B7688"
+ACCENT="#88C0D0"
+# Text on a critical notification (dunst): light on Nord red.
+CRIT_FG="#ECEFF4"
+
+RED="#BF616A"
+ORANGE="#D08770"
+YELLOW="#EBCB8B"
+GREEN="#A3BE8C"
+CYAN="#88C0D0"
+BLUE="#81A1C1"
+PURPLE="#B48EAD"
+TEAL="#8FBCBB"
+
+ANSI0="#3B4252"
+ANSI1="#BF616A"
+ANSI2="#A3BE8C"
+ANSI3="#EBCB8B"
+ANSI4="#81A1C1"
+ANSI5="#B48EAD"
+ANSI6="#88C0D0"
+ANSI7="#E5E9F0"
+ANSI8="#4C566A"
+ANSI9="#BF616A"
+ANSI10="#A3BE8C"
+ANSI11="#EBCB8B"
+ANSI12="#81A1C1"
+ANSI13="#B48EAD"
+ANSI14="#8FBCBB"
+ANSI15="#ECEFF4"

@@ -45,7 +45,7 @@
     "format": "{}",
     "return-type": "json",
     "exec": "~/.config/hypr/scripts/waybar_power_status.sh",
-    "on-click": "~/.config/hypr/scripts/power_profile.sh",
+    "on-click": "~/.config/hypr/scripts/systemmenu.sh",
     "interval": 5,
     "tooltip": true
   },
