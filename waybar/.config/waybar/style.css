@@ -170,8 +170,9 @@ window#waybar {
 /* =========================
    Workspaces
    ========================= */
-/* The active workspace is a block cursor: reverse video, square, no fade —
-   the same look as the selected line in rofi. */
+/* The active workspace is a quiet block: one shade lighter than the bar,
+   square, no fade — a highlighted line in a TUI, not a cursor. Reverse video
+   was too loud next to the clock (2026-10-31). */
 #workspaces button {
   padding: 0 4px;
   margin: 0 2px;
@@ -179,8 +180,8 @@ window#waybar {
 }
 
 #workspaces button.active {
-  color: #2E3440;
-  background-color: #88C0D0;
+  color: #88C0D0;
+  background-color: #3B4252;
 }
 
 /* --- MAGIC DESKTOP STYLING --- */
@@ -196,8 +197,8 @@ window#waybar {
 }
 
 #workspaces button.special.active {
-  color: #2E3440;
-  background-color: #EBCB8B;
+  color: #EBCB8B;
+  background-color: #3B4252;
 }
 
 #custom-tjek-status {
