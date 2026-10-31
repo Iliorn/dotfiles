@@ -23,6 +23,7 @@
 #workspaces,
 #clock,
 #pulseaudio,
+#custom-fleet,
 #custom-hoth,
 #custom-tjek-status,
 #cpu,
@@ -90,6 +91,7 @@ window#waybar {
    ingen streger. Derfor mere padding end den gamle boble-stil havde. */
 #pulseaudio,
 #bluetooth,
+#custom-fleet,
 #custom-hoth,
 #custom-tjek-status,
 #cpu,
@@ -220,6 +222,15 @@ window#waybar {
 }
 
 #custom-hoth.broken {
+  color: @red;
+}
+
+/* fleet: only there when something waits, so it may as well be noticed. */
+#custom-fleet.pending {
+  color: @yellow;
+}
+
+#custom-fleet.failed {
   color: @red;
 }
 

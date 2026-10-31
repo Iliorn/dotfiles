@@ -12,6 +12,7 @@
   ],
   "modules-right": [
     "tray",
+    "custom/fleet",
     "custom/hoth",
     "custom/tjek-status",
     "cpu",
@@ -39,6 +40,17 @@
   
   // hoth's health (scripts/hoth-status.sh): green, red with a count, or grey
   // when hoth cannot be reached. Click for the list.
+  // What fleet-push on hoth has waiting for this laptop (scripts/fleet-status.sh):
+  // hidden when nothing, a count when something needs a sudo run, "!" when
+  // the last push failed. Click runs it, asking for the password.
+  "custom/fleet": {
+    "format": "{}",
+    "return-type": "json",
+    "exec": "$HOME/.config/waybar/scripts/fleet-status.sh",
+    "interval": 120,
+    "tooltip": true,
+    "on-click": "alacritty -e $HOME/.config/waybar/scripts/fleet-status.sh run"
+  },
   "custom/hoth": {
     "format": "󰒋 {}",
     "return-type": "json",

@@ -28,13 +28,14 @@ options="󰓅  Strøm     $profile
 󰏘  Tema      $current_name
 󰖩  Netværk
 󰂯  Bluetooth
-󰕾  Lyd"
+󰕾  Lyd
+󰒋  Send til hoth"
 
 # -format i answers with the row number, so a label that happens to appear in a
 # value (a theme called "Lyd") can never pick the wrong entry.
 valgt=$(echo "$options" | rofi -dmenu -i -format i -p "System" \
   -theme-str "window { width: 300px; } \
-                listview { lines: 5; } \
+                listview { lines: 6; } \
                 inputbar { enabled: false; }")
 
 case "$valgt" in
@@ -69,4 +70,5 @@ case "$valgt" in
   fi
   exec pavucontrol
   ;;
+5) exec ~/.config/hypr/scripts/send-to-hoth.sh ;;
 esac
