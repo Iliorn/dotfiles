@@ -1,35 +1,59 @@
-/* Nord, matching the rest of the desktop (see README, "Palette and font"). */
+/* The volume/brightness pop-up in the desktop's TUI flavour: a square pane
+   with a thin rule, monospace, and the level drawn as blocks (▮▮▮▮▯▯▯) whose
+   colour follows the level, green -> yellow -> red. Colours come from
+   theme.css, which hypr/.config/hypr/scripts/theme.sh renders from the
+   chosen palette; swayosd reads this only when it starts (theme.sh restarts
+   it on a theme change). */
+@import url("theme.css");
+
+* {
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  border-radius: 0;
+  box-shadow: none;
+}
 
 window {
-  background: #2E3440;
-  border: 1px solid #4C566A;
-  border-radius: 8px;
+  background: @bg;
+  border: 1px solid @line;
 }
 
 #container {
-  margin: 16px;
+  margin: 10px 14px;
 }
 
-image {
-  color: #D8DEE9;
+image,
+label {
+  color: @fg;
 }
 
 label {
-  color: #D8DEE9;
-  font-family: "JetBrainsMono Nerd Font";
+  font-size: 13px;
 }
 
+/* 240 px wide, so the gradient below maps to the level itself: 70 % is
+   always the same yellow, wherever the bar stops. */
 progressbar {
-  min-height: 6px;
-  border-radius: 8px;
+  min-height: 12px;
+  min-width: 240px;
 }
 
+/* Empty blocks: 9 px of dim colour, 3 px gap. */
 trough {
-  background: #3B4252;
-  border-radius: 8px;
+  min-height: 12px;
+  background-color: transparent;
+  background-image: repeating-linear-gradient(to right,
+      @bg_alt 0px, @bg_alt 9px, transparent 9px, transparent 12px);
 }
 
+/* Filled blocks: the same 9 + 3 px grid cut out of a gradient that spans
+   the whole bar (background-size 240 px), not just the filled part. */
 progress {
-  background: #88C0D0;
-  border-radius: 8px;
+  min-height: 12px;
+  background-color: transparent;
+  background-image:
+    repeating-linear-gradient(to right,
+      transparent 0px, transparent 9px, @bg 9px, @bg 12px),
+    linear-gradient(to right, @green, @yellow 70%, @red);
+  background-size: auto, 240px 100%;
+  background-repeat: repeat, no-repeat;
 }

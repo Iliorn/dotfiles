@@ -43,3 +43,4 @@ gtk/.config/gtk-4.0/theme.css
 *.orig
 *.old-*
 *~
+swayosd/.config/swayosd/theme.css
