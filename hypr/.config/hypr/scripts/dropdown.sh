@@ -22,7 +22,14 @@ shift
 class="drop-$name"
 
 if ! hyprctl clients | grep -q "^[[:space:]]*class: $class\$"; then
-    setsid -f alacritty --class "$class" -e "$@" >/dev/null 2>&1
+    # Esc closes the dropdown (alacritty quits, the TUI with it) instead of
+    # reaching the TUI: btop's Esc menu does not fit a dropdown, and one key
+    # to close them all was Mark's wish. The cost is that a TUI cannot use Esc
+    # itself; q and its own keys still work. super+D's terminal is not opened
+    # through here and keeps Esc.
+    setsid -f alacritty --class "$class" \
+        -o 'keyboard.bindings=[{ key = "Escape", action = "Quit" }]' \
+        -e "$@" >/dev/null 2>&1
     i=0
     while [ "$i" -lt 20 ]; do
         hyprctl clients | grep -q "^[[:space:]]*class: $class\$" && break
