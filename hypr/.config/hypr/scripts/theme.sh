@@ -214,8 +214,8 @@ hl.config({
     },
 })
 hl.window_rule({
-    name  = "dropterm-border",
-    match = { class = "^(dropterm)$" },
+    name  = "dropdown-border",
+    match = { class = "^(dropterm|drop-.+)$" },
     border_color = "rgb($(bare "$YELLOW"))",
 })
 EOT

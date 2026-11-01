@@ -23,7 +23,9 @@ local function load_optional(name)
     if f then
         f:close()
         dofile(path)
+        return true
     end
+    return false
 end
 
 load_optional("host.lua")
@@ -127,7 +129,18 @@ hl.config({
 -- The border colours come from the chosen palette. The values above stay as
 -- the Nord fallback for when state/theme.lua is not there (written by
 -- scripts/theme.sh; loaded here so it wins over them and survives a reload).
-load_optional("state/theme.lua")
+local theme_loaded = load_optional("state/theme.lua")
+-- The dropdowns' frame (super+D and the TUIs, see WINDOWS below) has its own
+-- colour, so it reads as laid over the panes, not as one of them. The theme
+-- file brings it in the palette's yellow; this is Nord's, for when it is not
+-- there. Only one of the two ever exists, so no rule order decides.
+if not theme_loaded then
+    hl.window_rule({
+        name  = "dropdown-border",
+        match = { class = "^(dropterm|drop-.+)$" },
+        border_color = "rgb(ebcb8b)",
+    })
+end
 
 -- Nothing moves: windows and layers (bar, launcher, notifications) appear in
 -- place, and only a short fade keeps a change from looking like a glitch.
@@ -145,7 +158,7 @@ hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 2, bezier = "e
 --------------------------------
 hl.window_rule({
     name  = "alacritty-opacity",
-    match = { class = "^(Alacritty|dropterm)$" },
+    match = { class = "^(Alacritty|dropterm|drop-.+)$" },
     opacity = "0.9 0.8",
 })
 -- The dropdown terminal (super+D, scripts/dropterm.sh): an alacritty started
@@ -157,14 +170,29 @@ hl.window_rule({
     match = { class = "^(dropterm)$" },
     workspace = "special:dropterm silent",
     float = true,
-    -- Its own colour, so the dropdown reads as something laid over the
-    -- panes, not as one of them. Nord yellow; theme.sh overrides it.
-    border_color = "rgb(ebcb8b)",
     -- Tables, as Hyprland's own tests write expressions: a single string is
     -- not checked when the config loads.
     size  = { "monitor_w * 0.8", "monitor_h * 0.45" },
     move  = { "monitor_w * 0.1", "42" },
 })
+-- The TUIs that waybar and the system menu open (scripts/dropdown.sh) drop
+-- down the same way, each on its own special workspace, so two of them never
+-- land on top of each other. A name here is what dropdown.sh's first argument
+-- must be; the window's class is drop-<name>.
+local dropdowns = {
+    "tsui", "impala", "bluetui", "wiremix", "btop", "tjek", "tjek-add",
+    "calcurse", "fleet", "hoth", "upower",
+}
+for _, name in ipairs(dropdowns) do
+    hl.window_rule({
+        name  = "drop-" .. name,
+        match = { class = "^(drop-" .. name .. ")$" },
+        workspace = "special:drop-" .. name .. " silent",
+        float = true,
+        size  = { "monitor_w * 0.8", "monitor_h * 0.45" },
+        move  = { "monitor_w * 0.1", "42" },
+    })
+end
 hl.window_rule({
     name  = "capture-popup",
     match = { title = "^(capture)$" },

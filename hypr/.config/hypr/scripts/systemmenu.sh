@@ -60,13 +60,13 @@ case "$valgt" in
   [ -n "$pick" ] || exit 0
   exec "$theme_sh" set "$(echo "$ids" | sed -n "$(( pick + 1 ))p")"
   ;;
-2) exec alacritty -e impala ;;
-3) exec alacritty -e bluetui ;;
+2) exec ~/.config/hypr/scripts/dropdown.sh impala impala ;;
+3) exec ~/.config/hypr/scripts/dropdown.sh bluetui bluetui ;;
 4)
   # wiremix is the TUI mixer; pavucontrol stays as the fallback for a machine
   # that has not got it installed yet.
   if command -v wiremix >/dev/null; then
-    exec alacritty -e wiremix
+    exec ~/.config/hypr/scripts/dropdown.sh wiremix wiremix
   fi
   exec pavucontrol
   ;;

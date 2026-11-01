@@ -14,6 +14,7 @@
     "tray",
     "custom/fleet",
     "custom/hoth",
+    "custom/exitnode",
     "custom/tjek-status",
     "cpu",
     "memory",
@@ -30,7 +31,7 @@
     // er et vaerktoej, ikke et sted man bor, saa den skal ikke have en knap
     // ved siden af magic-skrivebordet. Moensteret passer baade med og uden
     // "special:" foran, saa det virker uanset hvordan Waybar navngiver den.
-    "ignore-workspaces": ["(special:)?dropterm"],
+    "ignore-workspaces": ["(special:)?(dropterm|drop-.+)"],
     "format": "{icon}",
     "on-click": "activate",
     "format-icons": {
@@ -49,7 +50,7 @@
     "exec": "$HOME/.config/waybar/scripts/fleet-status.sh",
     "interval": 120,
     "tooltip": true,
-    "on-click": "alacritty -e $HOME/.config/waybar/scripts/fleet-status.sh run"
+    "on-click": "~/.config/hypr/scripts/dropdown.sh fleet $HOME/.config/waybar/scripts/fleet-status.sh run"
   },
   "custom/hoth": {
     "format": "󰒋{}",
@@ -57,7 +58,17 @@
     "exec": "$HOME/.config/waybar/scripts/hoth-status.sh",
     "interval": 60,
     "tooltip": true,
-    "on-click": "alacritty -e $HOME/.config/waybar/scripts/hoth-status.sh view"
+    "on-click": "~/.config/hypr/scripts/dropdown.sh hoth $HOME/.config/waybar/scripts/hoth-status.sh view"
+  },
+  "custom/exitnode": {
+    // Where the internet goes: via hoth (green), direct at home (grey),
+    // direct elsewhere (red). Click: tsui, Tailscale's TUI, as a dropdown.
+    "format": "󰖂{}",
+    "return-type": "json",
+    "exec": "$HOME/.config/waybar/scripts/exitnode-status.sh",
+    "interval": 5,
+    "tooltip": true,
+    "on-click": "~/.config/hypr/scripts/dropdown.sh tsui tsui"
   },
   "custom/tjek-status": {
     "format": " {}",
@@ -66,8 +77,8 @@
     "interval": 300,
     "signal": 8,
     "tooltip": true,
-    "on-click": "alacritty -e tjek",
-    "on-click-right": "alacritty -e bash -c '$HOME/.config/waybar/scripts/tjek-add.sh'"
+    "on-click": "~/.config/hypr/scripts/dropdown.sh tjek tjek",
+    "on-click-right": "~/.config/hypr/scripts/dropdown.sh tjek-add $HOME/.config/waybar/scripts/tjek-add.sh"
   },
   "custom/power_profile": {
     "format": "{}",
@@ -93,7 +104,7 @@
     // Et klik aabner i stedet calcurse i en almindelig terminal, som
     // Hyprland placerer som alt andet. Dato og klokkeslaet staar i "format".
     "tooltip": false,
-    "on-click": "alacritty -e calcurse"
+    "on-click": "~/.config/hypr/scripts/dropdown.sh calcurse calcurse"
   },
   "bluetooth": {
     // Tallet er skrevet fast som 0 her: "format" bruges netop naar intet er
@@ -102,7 +113,7 @@
     "format": "<span size='large'></span> 0",
     "format-connected": "<span size='large'>󰂱</span> {num_connections}",
     "format-disabled": "󰂲",
-    "on-click": "alacritty -e bluetui",
+    "on-click": "~/.config/hypr/scripts/dropdown.sh bluetui bluetui",
     "tooltip-format": "{controller_alias}\t{controller_address}",
     "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
@@ -114,25 +125,25 @@
     "restart-interval": 5,
     "format": "{}",
     "markup": "none",
-    "on-click": "alacritty -e sh -c 'upower -d; read'"
+    "on-click": "~/.config/hypr/scripts/dropdown.sh upower sh -c 'upower -d; read'"
   },
   "cpu": {
     "format": "󰻠 {usage}%",
     "interval": 5,
     "tooltip-format": "CPU {usage}%\nGennemsnit {avg_frequency} GHz",
-    "on-click": "alacritty -e btop"
+    "on-click": "~/.config/hypr/scripts/dropdown.sh btop btop"
   },
   "memory": {
     "format": "󰍛 {percentage}%",
     "interval": 5,
     "tooltip-format": "{used:0.1f} GiB af {total:0.1f} GiB\nSwap {swapUsed:0.1f} GiB",
-    "on-click": "alacritty -e btop"
+    "on-click": "~/.config/hypr/scripts/dropdown.sh btop btop"
   },
   "network": {
     "format-wifi": "  {signalStrength}%",
     "format-ethernet": "󰈀",
     "format-disconnected": "󰖪",
-    "on-click": "alacritty -e sh -c 'impala'"
+    "on-click": "~/.config/hypr/scripts/dropdown.sh impala impala"
   },
   "tray": {
     "icon-size": 18,
@@ -149,7 +160,7 @@
       ]
     },
     // wiremix i en terminal; pavucontrol til en maskine uden wiremix endnu.
-    "on-click": "if command -v wiremix >/dev/null; then alacritty -e wiremix; else pavucontrol; fi",
+    "on-click": "if command -v wiremix >/dev/null; then ~/.config/hypr/scripts/dropdown.sh wiremix wiremix; else pavucontrol; fi",
     "scroll-step": 5
   }
 }

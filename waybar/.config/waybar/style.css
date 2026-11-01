@@ -25,6 +25,7 @@
 #pulseaudio,
 #custom-fleet,
 #custom-hoth,
+#custom-exitnode,
 #custom-tjek-status,
 #cpu,
 #memory,
@@ -93,6 +94,7 @@ window#waybar {
 #bluetooth,
 #custom-fleet,
 #custom-hoth,
+#custom-exitnode,
 #custom-tjek-status,
 #cpu,
 #memory,
@@ -227,6 +229,20 @@ window#waybar {
 
 #custom-hoth.offline {
   color: @yellow;
+}
+
+/* exitnode: where the internet goes, like hoth's status light. */
+#custom-exitnode {
+  color: @muted;
+}
+
+#custom-exitnode.exit {
+  color: @green;
+}
+
+#custom-exitnode.direct,
+#custom-exitnode.down {
+  color: @red;
 }
 
 /* fleet: only there when something waits, so it may as well be noticed. */
