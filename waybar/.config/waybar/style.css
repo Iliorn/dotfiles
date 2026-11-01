@@ -247,7 +247,12 @@ window#waybar {
   color: @red;
 }
 
-/* fleet: only there when something waits, so it may as well be noticed. */
+/* fleet: green when the laptop is up to date, yellow when something waits
+   for a sudo run, red when the last push failed. Same lights as hoth's. */
+#custom-fleet.ok {
+  color: @ok;
+}
+
 #custom-fleet.pending {
   color: @yellow;
 }

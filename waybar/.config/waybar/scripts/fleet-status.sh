@@ -1,6 +1,6 @@
 #!/bin/sh
-# What hoth's fleet-push has waiting for this laptop: nothing (the module is
-# hidden), a count of things that need a sudo run, or a failed last push.
+# What hoth's fleet-push has waiting for this laptop: nothing (a green icon),
+# a count of things that need a sudo run, or a failed last push.
 # Asked over Tailscale SSH (fleet-status, from the ansible repo's
 # roles/fleet_push), like hoth-status.sh.
 #
