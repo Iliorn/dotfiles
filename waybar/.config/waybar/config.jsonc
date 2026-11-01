@@ -140,6 +140,10 @@
     "format-wifi": "  {signalStrength}%",
     "format-ethernet": "󰈀",
     "format-disconnected": "󰖪",
+    // The hover says something, not just the icon again (Mark, 2026-11-01).
+    "tooltip-format-ethernet": "{ifname}  {ipaddr}/{cidr}\nvia {gwaddr}",
+    "tooltip-format-wifi": "{essid}  {signalStrength}%\n{ipaddr}/{cidr} via {gwaddr}",
+    "tooltip-format-disconnected": "Ingen forbindelse",
     "on-click": "~/.config/hypr/scripts/dropdown.sh impala impala"
   },
   "tray": {

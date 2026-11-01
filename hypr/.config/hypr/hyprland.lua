@@ -82,6 +82,15 @@ hl.env("XCURSOR_SIZE", "24")
 hl.env("XCURSOR_THEME", "Adwaita")
 hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 hl.env("EDITOR", "helix")
+-- ~/.local/bin (tjek, claude, the machine's own scripts) first on the PATH of
+-- everything this session starts: a greetd session does not put it there,
+-- so on x220-2 waybar's tjek module vanished and its dropdown could not run
+-- tjek (2026-11-01). Read when Hyprland starts.
+local home = os.getenv("HOME") or ""
+local path = os.getenv("PATH") or "/usr/local/bin:/usr/bin"
+if home ~= "" and not path:find(home .. "/.local/bin", 1, true) then
+    hl.env("PATH", home .. "/.local/bin:" .. path)
+end
 
 -----------------------
 ---- LOOK AND FEEL ----

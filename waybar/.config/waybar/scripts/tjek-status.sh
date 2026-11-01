@@ -9,6 +9,12 @@
 # active" becomes "44 · 1", with the overdue count in the theme's red
 # (Pango markup; red read from the theme.css theme.sh renders, Nord's as the
 # fallback). The full words stay in the tooltip.
+# tjek lives in ~/.local/bin, which a session started by greetd does not put
+# on waybar's PATH (x220-2, 2026-11-01: the module was simply missing, since
+# a script that fails prints nothing). Prepended here, so it never depends
+# on how the session began.
+export PATH="$HOME/.local/bin:$PATH"
+
 red=$(sed -n 's/^@define-color red \(#[0-9A-Fa-f]\{6\}\);$/\1/p' "$HOME/.config/waybar/theme.css" 2>/dev/null)
 tjek stats --format=waybar | jq -c --arg red "${red:-#BF616A}" '.text |= (split(" · ")
   | map(if test(" active$") then sub(" active$"; "")
