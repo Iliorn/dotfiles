@@ -156,9 +156,11 @@ hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 2, bezier = "e
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
 --------------------------------
+-- Ordinary terminals only: the dropdowns (super+D and the TUIs) stay opaque,
+-- so they read as something laid over the panes and not as part of them.
 hl.window_rule({
     name  = "alacritty-opacity",
-    match = { class = "^(Alacritty|dropterm|drop-.+)$" },
+    match = { class = "^(Alacritty)$" },
     opacity = "0.9 0.8",
 })
 -- The dropdown terminal (super+D, scripts/dropterm.sh): an alacritty started

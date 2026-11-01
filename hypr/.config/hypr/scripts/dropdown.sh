@@ -31,5 +31,13 @@ if ! hyprctl clients | grep -q "^[[:space:]]*class: $class\$"; then
     done
 fi
 
-exec "$(dirname "$0")/dispatch.sh" "hl.dsp.workspace.toggle_special(\"$class\")" \
+"$(dirname "$0")/dispatch.sh" "hl.dsp.workspace.toggle_special(\"$class\")" \
     togglespecialworkspace "$class"
+
+# Opened from a click, the mouse is on the bar, not over the dropdown, so
+# focus would wait for it to move there (follow_mouse). If the toggle just
+# showed it, hand it the keyboard at once.
+if hyprctl monitors | grep -q "special workspace: .*[(:]$class)"; then
+    "$(dirname "$0")/dispatch.sh" "hl.dsp.focus({ window = \"class:^($class)\$\" })" \
+        focuswindow "class:^($class)\$"
+fi
