@@ -243,6 +243,11 @@ hl.config({
         force_default_wallpaper = 0,
         disable_hyprland_logo = true,
         vrr = 2,
+        -- No reload on every file change: a dotfiles update replaces this
+        -- file, and in the moment it was gone Hyprland wrote a STUB config
+        -- into the clone and broke the update (x220-1, 2026-11-01). The
+        -- ansible repo's dotfiles role reloads Hyprland itself afterwards.
+        disable_autoreload = true,
     },
 })
 
