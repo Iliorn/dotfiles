@@ -249,6 +249,17 @@ hl.config({
         -- ansible repo's dotfiles role reloads Hyprland itself afterwards.
         disable_autoreload = true,
     },
+
+    -- 0.57.0 turned this on by default: clients are only offered dmabuf
+    -- formats the screen's KMS planes can scan out. On the x220s (Sandy
+    -- Bridge, Gen6) the primary plane takes no format with alpha, so EGL
+    -- clients got no config with alpha and alacritty would not start:
+    -- "failed to find suitable GL configuration" (x220-1, 2026-11-01).
+    -- Upstream's default is false again after 0.57.0; false is 0.56's
+    -- behaviour. Read when Hyprland starts: a reload does not apply it.
+    quirks = {
+        skip_non_kms_dmabuf_formats = false,
+    },
 })
 
 hl.config({
