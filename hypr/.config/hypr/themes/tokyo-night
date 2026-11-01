@@ -23,6 +23,10 @@ RED="#F7768E"
 ORANGE="#FF9E64"
 YELLOW="#E0AF68"
 GREEN="#9ECE6A"
+# "All is well" on the bar's status lights (hoth, exit node): a green with
+# no yellow in it, so it never reads as a warning. Not the palette's GREEN,
+# which leans yellow in most of them.
+OK="#73D68A"
 CYAN="#7DCFFF"
 BLUE="#7AA2F7"
 PURPLE="#BB9AF7"

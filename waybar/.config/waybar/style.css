@@ -220,7 +220,7 @@ window#waybar {
 }
 
 #custom-hoth.ok {
-  color: @green;
+  color: @ok;
 }
 
 #custom-hoth.broken {
@@ -237,7 +237,7 @@ window#waybar {
 }
 
 #custom-exitnode.exit {
-  color: @green;
+  color: @ok;
 }
 
 #custom-exitnode.direct,

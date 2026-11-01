@@ -7,7 +7,7 @@
 #   theme.sh current       id of the saved choice (nord if none or invalid)
 #   theme.sh set <id>      save the choice, render, reload
 #   theme.sh apply         render the saved choice, reload
-#   theme.sh ensure        render only if a generated file is missing; reload
+#   theme.sh ensure        render only if a generated file is missing or stale; reload
 #                          nothing. Hyprland's autostart runs it before waybar,
 #                          and Ansible may run it over SSH, so it must work
 #                          with no graphical session at all.
@@ -46,7 +46,7 @@ out_gtk3="$config_home/gtk-3.0/theme.css"
 out_gtk4="$config_home/gtk-4.0/theme.css"
 
 colour_keys="BG BG_ALT BG_SEL LINE FG FG_SOFT FG_BRIGHT MUTED ACCENT CRIT_FG
-RED ORANGE YELLOW GREEN CYAN BLUE PURPLE TEAL
+RED ORANGE YELLOW GREEN OK CYAN BLUE PURPLE TEAL
 ANSI0 ANSI1 ANSI2 ANSI3 ANSI4 ANSI5 ANSI6 ANSI7
 ANSI8 ANSI9 ANSI10 ANSI11 ANSI12 ANSI13 ANSI14 ANSI15"
 
@@ -125,6 +125,7 @@ render_waybar() {
 @define-color orange $ORANGE;
 @define-color yellow $YELLOW;
 @define-color green $GREEN;
+@define-color ok $OK;
 @define-color cyan $CYAN;
 @define-color blue $BLUE;
 @define-color purple $PURPLE;
@@ -411,10 +412,18 @@ reload() {
     fi
 }
 
-missing() {
+# A generated file is stale when it is missing, or older than this script or
+# the chosen palette: a new colour or a new rule (an OK green, a dropdown
+# frame) reaches a machine only by re-rendering, and a config that names a
+# colour the old file lacks (waybar's @ok) breaks. Re-rendering keeps the
+# saved choice, so it never changes a theme someone picked.
+stale() {
+    palette="$themes_dir/$(saved_id)"
     for f in "$out_waybar" "$out_rofi" "$out_dunst" "$out_alacritty" "$out_hypr" \
         "$out_helix" "$out_btop" "$out_hyprlock" "$out_gtk3" "$out_gtk4"; do
         [ -f "$f" ] || return 0
+        [ "$0" -nt "$f" ] && return 0
+        [ "$palette" -nt "$f" ] && return 0
     done
     return 1
 }
@@ -442,7 +451,7 @@ apply)
     ;;
 ensure)
     # Says what it did, so a caller (Ansible) can tell rendering from a no-op.
-    if missing; then
+    if stale; then
         render "$(saved_id)"
         printf 'rendered %s\n' "$(saved_id)"
     fi
