@@ -131,13 +131,13 @@
     "format": "󰻠 {usage}%",
     "interval": 5,
     "tooltip-format": "CPU {usage}%\nGennemsnit {avg_frequency} GHz",
-    "on-click": "~/.config/hypr/scripts/dropdown.sh btop btop"
+    "on-click": "~/.config/hypr/scripts/dropdown.sh btop-cpu btop -p 4"
   },
   "memory": {
     "format": "󰍛 {percentage}%",
     "interval": 5,
     "tooltip-format": "{used:0.1f} GiB af {total:0.1f} GiB\nSwap {swapUsed:0.1f} GiB",
-    "on-click": "~/.config/hypr/scripts/dropdown.sh btop btop"
+    "on-click": "~/.config/hypr/scripts/dropdown.sh btop-mem btop -p 5"
   },
   "network": {
     "format-wifi": "  {signalStrength}%",

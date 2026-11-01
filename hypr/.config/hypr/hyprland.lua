@@ -182,7 +182,7 @@ hl.window_rule({
 -- land on top of each other. A name here is what dropdown.sh's first argument
 -- must be; the window's class is drop-<name>.
 local dropdowns = {
-    "tsui", "impala", "bluetui", "wiremix", "btop", "tjek", "tjek-add",
+    "tsui", "impala", "bluetui", "wiremix", "btop-cpu", "btop-mem", "tjek", "tjek-add",
     "calcurse", "fleet", "hoth", "upower",
 }
 for _, name in ipairs(dropdowns) do
