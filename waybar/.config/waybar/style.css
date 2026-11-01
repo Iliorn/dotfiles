@@ -212,7 +212,7 @@ window#waybar {
   color: @fg;
 }
 
-/* hoth: the whole module takes the state colour, like a status light. */
+/* hoth: the server icon takes the state colour, like a status light. */
 #custom-hoth {
   color: @muted;
 }
@@ -223,6 +223,10 @@ window#waybar {
 
 #custom-hoth.broken {
   color: @red;
+}
+
+#custom-hoth.offline {
+  color: @yellow;
 }
 
 /* fleet: only there when something waits, so it may as well be noticed. */
