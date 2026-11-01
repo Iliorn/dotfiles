@@ -68,7 +68,12 @@ fi
 
 keys=$(for f in "${new[@]}"; do printf '%s\t%s\n' "$(basename "$f")" "$(stat -c %s "$f")"; done)
 ssh -o BatchMode=yes "$hoth" "cat >> $seen" <<<"$keys"
-printf '\n  %d filer importeret og kontrolleret: hoth:~/%s\n' "${#new[@]}" "$inbox"
+# Hand over: .done marks the batch complete and checked, and foto-sort
+# (the ansible repo's roles/foto_sort) files it into ~/Billeder and develops
+# any negatives; a push says when it is done.
+ssh -o BatchMode=yes "$hoth" "touch ~/$q_inbox/.done && systemctl --user start --no-block foto-sort.service"
+printf '\n  %d filer importeret og kontrolleret.\n' "${#new[@]}"
+printf '  hoth sorterer dem nu og fremkalder eventuelle negativer; der kommer en push, når det er færdigt.\n'
 
 read -rp "  Slet de importerede filer fra kortet? [j/N] " answer || exit 0
 case "$answer" in
