@@ -15,6 +15,9 @@ host=$(tailscale status --json 2>/dev/null |
 [ -n "$host" ] || host=$(uname -n)
 
 if [ "${1:-}" = run ]; then
+    # The icon turns white while the run is on: ask the bar a few seconds
+    # in, once hoth has set its marker.
+    ( sleep 3; pkill -RTMIN+9 -x waybar 2>/dev/null ) &
     ssh -t -o ConnectTimeout=5 hoth ".local/bin/fleet-status $host --run" || echo "hoth svarer ikke over SSH."
     # Ask the bar to look again now (custom/fleet's "signal": 9), so a run
     # that cleared everything shows green at once.

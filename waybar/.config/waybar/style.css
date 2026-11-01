@@ -253,6 +253,11 @@ window#waybar {
   color: @ok;
 }
 
+/* A run going on right now, automatic or supervised. */
+#custom-fleet.running {
+  color: @fg_bright;
+}
+
 #custom-fleet.pending {
   color: @yellow;
 }
