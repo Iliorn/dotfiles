@@ -4,7 +4,6 @@
   "locale": "da_DK",
   "height": 34,
   "modules-left": [
-    "custom/power",
     "hyprland/workspaces"
   ],
   "modules-center": [
@@ -90,11 +89,6 @@
     "on-click": "~/.config/hypr/scripts/systemmenu.sh",
     "interval": 5,
     "tooltip": true
-  },
-  "custom/power": {
-    "format": "",
-    "tooltip": false,
-    "on-click": "~/.config/hypr/scripts/powermenu.sh"
   },
   "clock": {
     "format": "{:L%H:%M · %a %d. %b}",

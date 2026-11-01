@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 #
 # The system button: the right-most waybar module opens this. One list of the
-# things that are not apps — power profile, theme, network, bluetooth, sound —
+# things that are not apps — power profile, theme, network, bluetooth, sound,
+# sending to hoth, and the power menu —
 # each with its current value where it has one.
 #
 # Fonts come from rofi/.local/share/rofi/themes/minimal.rasi, colours from the
@@ -29,13 +30,14 @@ options="󰓅  Strøm     $profile
 󰖩  Netværk
 󰂯  Bluetooth
 󰕾  Lyd
-󰒋  Send til hoth"
+󰒋  Send til hoth
+󰐥  Sluk / genstart"
 
 # -format i answers with the row number, so a label that happens to appear in a
 # value (a theme called "Lyd") can never pick the wrong entry.
 valgt=$(echo "$options" | rofi -dmenu -i -format i -p "System" \
   -theme-str "window { width: 300px; } \
-                listview { lines: 6; } \
+                listview { lines: 7; } \
                 inputbar { enabled: false; }")
 
 case "$valgt" in
@@ -71,4 +73,8 @@ case "$valgt" in
   exec pavucontrol
   ;;
 5) exec ~/.config/hypr/scripts/send-to-hoth.sh ;;
+# The power menu (suspend, log out, restart, shut down) lives here now, not
+# as its own button at the left of the bar, which keeps only the workspaces
+# (Mark, 2026-11-01).
+6) exec ~/.config/hypr/scripts/powermenu.sh ;;
 esac
