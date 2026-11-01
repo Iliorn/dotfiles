@@ -1,0 +1,11 @@
+[Unit]
+Description=Sync tjek with hoth, so the bar sees changes made elsewhere
+# tjek's own auto-sync only runs while tjek itself is open, and the waybar
+# module only reads the local database. Without this, a task added on hoth or
+# the phone showed up in the bar only after a click on it opened tjek.
+# A sync that changes the database wakes tjek-waybar-refresh.path, which
+# redraws the module; one that changes nothing costs one small request.
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/tjek sync
