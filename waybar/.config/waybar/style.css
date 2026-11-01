@@ -84,8 +84,8 @@ window#waybar {
 
 /* Uret står uden boble — kun afstand, ingen baggrund. */
 #clock {
-  padding: 0 10px;
-  margin: 4px 6px;
+  padding: 0 6px;
+  margin: 4px 3px;
 }
 
 /* Afstand er det eneste der adskiller modulerne nu — ingen bobler,
@@ -101,8 +101,10 @@ window#waybar {
 #network,
 #custom-battery-t480,
 #custom-power_profile {
-  padding: 0 10px;
-  margin: 4px 6px;
+  /* 18 px between two modules (was 32): still air, but the clock in the
+     middle kept running out of room (2026-11-01). */
+  padding: 0 6px;
+  margin: 4px 3px;
 }
 
 /* Same spacing as every other module on the right; bluetooth and tjek used
@@ -144,7 +146,7 @@ window#waybar {
    den op ad naboen til højre — 'spacing' i config.jsonc gælder kun mellem
    bakkens egne ikoner, ikke omkring selve blokken. */
 #tray {
-  margin: 4px 6px;
+  margin: 4px 3px;
   background: none;
 }
 

@@ -94,7 +94,7 @@
     "on-click": "~/.config/hypr/scripts/powermenu.sh"
   },
   "clock": {
-    "format": "{:L%H:%M | %A %d. %B}",
+    "format": "{:L%H:%M · %a %d. %b}",
     "locale": "da_DK.UTF-8",
     // Ingen tooltip ved hover. Waybars indbyggede kalender var et GTK-tooltip,
     // og GTK placerer tooltips efter musemarkoeren — vinduet landede derfor et
