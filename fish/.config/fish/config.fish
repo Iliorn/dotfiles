@@ -29,33 +29,35 @@ if status is-interactive
         atuin init fish | source
     end
 
-    # Shell colours: Nord
-    set -g fish_color_normal D8DEE9
-    set -g fish_color_command 88C0D0
-    set -g fish_color_param D8DEE9
-    set -g fish_color_keyword 81A1C1
-    set -g fish_color_error BF616A
-    set -g fish_color_comment 6B7688
-    set -g fish_color_quote A3BE8C
-    set -g fish_color_autosuggestion 4C566A
-    set -g fish_color_operator 8FBCBB
-    set -g fish_color_redirection B48EAD
-    set -g fish_color_escape EBCB8B
-    set -g fish_color_end 81A1C1
-    set -g fish_color_option D8DEE9
-    set -g fish_color_cwd 88C0D0
-    set -g fish_color_user A3BE8C
-    set -g fish_color_host 81A1C1
+    # Shell colours: the terminal's own 16, so they follow theme.sh through
+    # alacritty's theme.toml, live, and over SSH too. Highlights are reversed,
+    # not a grey background: some palettes' grey is too light to read text on.
+    set -g fish_color_normal normal
+    set -g fish_color_command cyan
+    set -g fish_color_param normal
+    set -g fish_color_keyword blue
+    set -g fish_color_error red
+    set -g fish_color_comment brblack
+    set -g fish_color_quote green
+    set -g fish_color_autosuggestion brblack
+    set -g fish_color_operator brcyan
+    set -g fish_color_redirection magenta
+    set -g fish_color_escape yellow
+    set -g fish_color_end blue
+    set -g fish_color_option normal
+    set -g fish_color_cwd cyan
+    set -g fish_color_user green
+    set -g fish_color_host blue
     set -g fish_color_valid_path --underline
-    set -g fish_color_match --background=434C5E
-    set -g fish_color_search_match --background=434C5E
-    set -g fish_color_selection --background=434C5E
-    set -g fish_pager_color_prefix 88C0D0 --bold
-    set -g fish_pager_color_completion D8DEE9
-    set -g fish_pager_color_description 6B7688
-    set -g fish_pager_color_progress 6B7688
-    set -g fish_pager_color_selected_background --background=434C5E
-    set -g fish_pager_color_selected_prefix 88C0D0 --bold
+    set -g fish_color_match --reverse
+    set -g fish_color_search_match --reverse
+    set -g fish_color_selection --reverse
+    set -g fish_pager_color_prefix cyan --bold
+    set -g fish_pager_color_completion normal
+    set -g fish_pager_color_description brblack
+    set -g fish_pager_color_progress brblack
+    set -g fish_pager_color_selected_background --reverse
+    set -g fish_pager_color_selected_prefix cyan --bold
     set -g fish_pager_color_selected_completion ECEFF4
     set -g fish_pager_color_selected_description D8DEE9
 

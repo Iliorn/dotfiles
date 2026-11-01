@@ -1,30 +1,11 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-palette = "nord"
-
 format = """
 $directory$git_branch$git_status$python$nodejs$rust$golang$lua$cmd_duration
 $character"""
 
-[palettes.nord]
-bg = "#2E3440"
-bg-alt = "#3B4252"
-bg-sel = "#434C5E"
-muted = "#4C566A"
-dim = "#6B7688"
-fg = "#D8DEE9"
-fg-bright = "#ECEFF4"
-fg-soft = "#E5E9F0"
-red = "#BF616A"
-orange = "#D08770"
-yellow = "#EBCB8B"
-green = "#A3BE8C"
-teal = "#8FBCBB"
-cyan = "#88C0D0"
-blue = "#81A1C1"
-deep-blue = "#5E81AC"
-purple = "#B48EAD"
-
+# No palette: the styles below are ANSI names, so the prompt takes the
+# terminal's colours and follows theme.sh through alacritty's theme.toml.
 [directory]
 style = "bold cyan"
 truncation_length = 3
@@ -53,7 +34,7 @@ format = "[$symbol$version]($style) "
 
 [rust]
 symbol = " "
-style = "orange"
+style = "red"
 format = "[$symbol$version]($style) "
 
 [golang]
