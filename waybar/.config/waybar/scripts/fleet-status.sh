@@ -16,6 +16,9 @@ host=$(tailscale status --json 2>/dev/null |
 
 if [ "${1:-}" = run ]; then
     ssh -t -o ConnectTimeout=5 hoth ".local/bin/fleet-status $host --run" || echo "hoth svarer ikke over SSH."
+    # Ask the bar to look again now (custom/fleet's "signal": 9), so a run
+    # that cleared everything shows green at once.
+    pkill -RTMIN+9 -x waybar 2>/dev/null
     printf '\nEnter lukker. '
     read -r _
     exit 0

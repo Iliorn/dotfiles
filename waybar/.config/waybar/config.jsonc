@@ -49,6 +49,9 @@
     "return-type": "json",
     "exec": "$HOME/.config/waybar/scripts/fleet-status.sh",
     "interval": 120,
+    // fleet-status.sh and the sudo window send RTMIN+9 when a run ends, so
+    // the icon turns green at once instead of at the next interval.
+    "signal": 9,
     "tooltip": true,
     "on-click": "~/.config/hypr/scripts/dropdown.sh fleet $HOME/.config/waybar/scripts/fleet-status.sh run"
   },
