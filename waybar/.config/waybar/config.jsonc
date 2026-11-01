@@ -4,6 +4,7 @@
   "locale": "da_DK",
   "height": 34,
   "modules-left": [
+    "custom/power_profile",
     "hyprland/workspaces"
   ],
   "modules-center": [
@@ -20,8 +21,7 @@
     "pulseaudio",
     "bluetooth",
     "network",
-    "custom/battery-t480",
-    "custom/power_profile"
+    "custom/battery-t480"
   ],
 
 "hyprland/workspaces": {

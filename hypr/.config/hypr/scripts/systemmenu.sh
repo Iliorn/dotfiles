@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #
-# The system button: the right-most waybar module opens this. One list of the
+# The system button: the left-most waybar module (before the workspaces)
+# opens this. One list of the
 # things that are not apps — power profile, theme, network, bluetooth, sound,
 # sending to hoth, and the power menu —
 # each with its current value where it has one.
