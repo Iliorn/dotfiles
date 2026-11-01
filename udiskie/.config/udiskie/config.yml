@@ -1,0 +1,12 @@
+# udiskie: mounts SD cards and USB drives as they are inserted (under
+# /run/media/$USER/<label>), started by Hyprland's autostart. Installed and
+# stowed on every laptop by the ansible repo (2026-11-01).
+#
+# event_hook runs on every device event; sd-detect.sh does nothing unless a
+# camera card (a DCIM folder) was just mounted, and then opens the import
+# window at once (Mark's choice: no notification to click first).
+program_options:
+  automount: true
+  tray: false
+  notify: false
+  event_hook: "~/.config/hypr/scripts/sd-detect.sh '{event}' '{mount_path}'"

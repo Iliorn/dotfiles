@@ -58,6 +58,9 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
     -- On-screen display for the volume and brightness keys below.
     hl.exec_cmd("swayosd-server")
+    -- Mounts SD cards and USB drives as they go in; a camera card opens the
+    -- import window (udiskie/.config/udiskie/config.yml, scripts/sd-detect.sh).
+    hl.exec_cmd("udiskie")
     -- Adwaita is an XCursor theme, so force Hyprland to select it explicitly.
     -- This prevents an installed Hyprcursor theme from becoming the fallback.
     hl.exec_cmd("hyprctl setcursor Adwaita 24")
@@ -191,7 +194,7 @@ hl.window_rule({
 -- land on top of each other. A name here is what dropdown.sh's first argument
 -- must be; the window's class is drop-<name>.
 local dropdowns = {
-    "tsui", "impala", "bluetui", "wiremix", "btop-cpu", "btop-mem", "tjek", "tjek-add",
+    "tsui", "impala", "bluetui", "wiremix", "btop-cpu", "btop-mem", "tjek", "tjek-add", "sd-import",
     "calcurse", "fleet", "hoth", "upower",
 }
 for _, name in ipairs(dropdowns) do
