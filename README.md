@@ -245,8 +245,11 @@ has).
 The right-most waybar module still shows the power-profile glyph, but a click
 opens `scripts/systemmenu.sh`: power profile, theme (a second list, current one
 marked), network (`impala`), bluetooth (`bluetui`) and sound (`wiremix` in a
-terminal, or `pavucontrol` where wiremix is not installed yet). The power-off
-menu on the left is unchanged. The waybar sound module opens the same, and a
+terminal, or `pavucontrol` where wiremix is not installed yet), Foto
+(`scripts/foto-menu.sh`: pick a developed film roll on hoth, then a frame by
+its preview, and make it lighter/darker/warmer/colder or turn it; hoth's
+`foto-juster` writes the roll's `justering.txt` and develops the frame
+again), sending to hoth, and the power menu. The waybar sound module opens the same, and a
 click on the clock opens `calcurse`.
 
 ## Applying the configs with Stow
