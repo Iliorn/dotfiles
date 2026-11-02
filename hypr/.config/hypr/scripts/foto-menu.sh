@@ -2,7 +2,8 @@
 # System -> Foto: correct a developed negative from the menu (2026-11-02).
 #
 #   rolls (newest first) -> frames with previews -> lysere / mørkere /
-#   varmere / koldere / drej / tilbage til automatisk / åbn filen i hx
+#   varmere / koldere / drej / fuld kvalitet (screen size is the default) /
+#   tilbage til automatisk / åbn filen i hx
 #
 # Every choice writes the frame's line in the roll's justering.txt on hoth
 # (foto-juster, from ansible's roles/foto_sort) and starts foto-sort there,
@@ -36,16 +37,17 @@ actions="󰃠  Lysere ⅓
 󰖨  Varmere
 󰜗  Koldere
 󰑧  Drej 90° med uret
+󰄀  Fuld kvalitet til/fra (til at sende)
 󰦛  Tilbage til automatisk
 󰏫  Åbn justering.txt i hx"
-ops=(lysere mørkere varmere koldere drej auto fil)
+ops=(lysere mørkere varmere koldere drej fuld auto fil)
 
 # One frame: the actions, again and again until Esc (back to the frames).
 adjust() {
     local name=$1 cur=$2 a op
     while :; do
         a=$(rofi -dmenu -format i -p "$name" -mesg "Nu: ${cur:-automatisk}" \
-            -theme-str "window { width: 380px; } listview { lines: 7; } inputbar { enabled: false; }" \
+            -theme-str "window { width: 380px; } listview { lines: 8; } inputbar { enabled: false; }" \
             <<<"$actions") || return 0
         [ -n "$a" ] || return 0
         op=${ops[$a]}
