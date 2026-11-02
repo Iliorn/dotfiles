@@ -9,4 +9,8 @@ program_options:
   automount: true
   tray: false
   notify: false
-  event_hook: "~/.config/hypr/scripts/sd-detect.sh '{event}' '{mount_path}'"
+  # udiskie runs this without a shell (shlex.split, then each word filled
+  # in): "~" was never expanded and the hook silently never ran (first real
+  # card, 2026-11-02). sh gives $HOME; the placeholders stay one word each,
+  # so a mount path with spaces is still one argument.
+  event_hook: "sh -c 'exec \"$HOME/.config/hypr/scripts/sd-detect.sh\" \"$1\" \"$2\"' sd-detect {event} {mount_path}"
