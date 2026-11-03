@@ -26,6 +26,24 @@ seen=".local/state/foto-import/seen.tsv"
 
 pause() { read -rp "  Enter lukker. " _; exit "${1:-0}"; }
 
+# Done with the card: Enter unmounts it (and powers it off where the reader
+# allows), so it can be pulled straight out (Mark, 2026-11-03). Unmounted,
+# udiskie does not mount it again until it is put back in.
+eject() {
+    read -rp "  Enter skubber kortet ud · Esc lader det sidde " _ || exit 0
+    dev=$(findmnt -n -o SOURCE --target "$mp")
+    cd / || exit 1
+    sync
+    if udisksctl unmount -b "$dev" >/dev/null 2>&1; then
+        udisksctl power-off -b "$dev" >/dev/null 2>&1 || true
+        printf '  Kortet er skubbet ud og kan tages ud.\n'
+        sleep 2
+        exit 0
+    fi
+    printf '  Kunne ikke skubbe kortet ud (er en fil på det åben?).\n'
+    pause 1
+}
+
 cd "$mp" || { echo "  Kortet ($mp) er ikke tilgængeligt."; pause 1; }
 
 # Photos and videos only, relative paths, NUL-separated (names may hold spaces).
@@ -48,7 +66,7 @@ done
 printf '  %d filer på kortet, %d nye\n\n' "${#all[@]}" "${#new[@]}"
 if [ "${#new[@]}" -eq 0 ]; then
     printf '  Intet nyt at importere.\n'
-    pause 0
+    eject
 fi
 read -rp "  Enter = importér til hoth · Esc = ikke nu " _ || exit 0
 
@@ -83,4 +101,4 @@ j|J)
     printf '  Slettet fra kortet.\n' ;;
 *)  printf '  Kortet er urørt.\n' ;;
 esac
-pause 0
+eject
