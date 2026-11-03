@@ -4,9 +4,10 @@
 #   sd-import.sh <mount path>
 #
 # Finds the files on the card hoth has not had yet, copies them to hoth's
-# inbox (~/foto-indbakke/<time>-<card>/), checks every one with sha256 on
-# hoth, records them as imported, and only then offers to delete them from
-# the card. Hoth sorts and develops from the inbox (the photo chain's next
+# inbox in parts of 20 (~/foto-indbakke/<time>-<card>-001/, -002/ ...),
+# checks every one with sha256 on hoth, records them as imported and hands
+# each part over as it is done; only then offers to delete them from the
+# card, and Enter ejects it. Hoth sorts and develops from the inbox (the photo chain's next
 # steps). Step 1 of the SD -> Immich workflow, 2026-11-01.
 #
 # "New" = name + size not in hoth's ~/.local/state/foto-import/seen.tsv, so
@@ -21,7 +22,6 @@ stamp=$(date +%Y%m%d-%H%M%S)
 # The card's label goes into a path on hoth: only safe characters (a Nikon
 # card is "NIKON Z6II", and the space broke the remote commands in testing).
 inbox="foto-indbakke/$stamp-$(printf '%s' "$label" | tr -c 'A-Za-z0-9._-' '_')"
-q_inbox=$(printf '%q' "$inbox")
 seen=".local/state/foto-import/seen.tsv"
 
 pause() { read -rp "  Enter lukker. " _; exit "${1:-0}"; }
@@ -70,28 +70,48 @@ if [ "${#new[@]}" -eq 0 ]; then
 fi
 read -rp "  Enter = importér til hoth · Esc = ikke nu " _ || exit 0
 
-ssh -o BatchMode=yes "$hoth" "mkdir -p ~/$q_inbox ~/.local/state/foto-import" || { echo "  Kunne ikke oprette indbakken på hoth."; pause 1; }
-printf '\n  Kopierer %d filer ...\n' "${#new[@]}"
-if ! printf '%s\0' "${new[@]}" | rsync -a --from0 --files-from=- --info=progress2 ./ "$hoth:$inbox/"; then
-    printf '\n  Kopieringen fejlede. Intet er slettet fra kortet; prøv igen.\n'
+# In parts of $chunk files (Mark, 2026-11-03: a big card should not wait for
+# its last file before hoth starts): each part is copied, checked and handed
+# over on its own, so hoth sorts and develops while the rest is copied, and
+# Immich shows them as they come. A failed part stops there; the parts before
+# it are imported and recorded, the rest stays on the card for next time.
+chunk=${FOTO_IMPORT_CHUNK:-20}
+total=${#new[@]}
+parts=$(( (total + chunk - 1) / chunk ))
+imported=()
+printf '\n  Kopierer %d filer i %d dele ...\n' "$total" "$parts"
+for ((i = 0; i < total; i += chunk)); do
+    part=("${new[@]:i:chunk}")
+    n=$(( i / chunk + 1 ))
+    dir="$inbox-$(printf '%03d' "$n")"
+    q_dir=$(printf '%q' "$dir")
+    printf '\n  Del %d/%d (%d filer)\n' "$n" "$parts" "${#part[@]}"
+    ssh -o BatchMode=yes "$hoth" "mkdir -p ~/$q_dir ~/.local/state/foto-import" || { echo "  Kunne ikke oprette indbakken på hoth."; break; }
+    if ! printf '%s\0' "${part[@]}" | rsync -a --from0 --files-from=- --info=progress2 ./ "$hoth:$dir/"; then
+        printf '\n  Kopieringen fejlede i del %d. Resten er urørt på kortet; prøv igen.\n' "$n"
+        break
+    fi
+    sums=$(printf '%s\0' "${part[@]}" | xargs -0 sha256sum)
+    if ! ssh -o BatchMode=yes "$hoth" "cd ~/$q_dir && sha256sum --quiet -c -" <<<"$sums"; then
+        printf '\n  Kontrollen fejlede i del %d (filerne ovenfor). Intet er slettet fra kortet.\n' "$n"
+        break
+    fi
+    keys=$(for f in "${part[@]}"; do printf '%s\t%s\n' "$(basename "$f")" "$(stat -c %s "$f")"; done)
+    ssh -o BatchMode=yes "$hoth" "cat >> $seen" <<<"$keys"
+    # Hand over: .done marks the part complete and checked, and foto-sort
+    # (the ansible repo's roles/foto_sort) files it into ~/Billeder and
+    # develops any negatives. If foto-sort is already busy with an earlier
+    # part, the start does nothing; the pending file makes it go round once
+    # more when it finishes, so this part is not left for the timer.
+    ssh -o BatchMode=yes "$hoth" "touch ~/$q_dir/.done ~/.local/state/foto-import/juster-pending && systemctl --user start --no-block foto-sort.service"
+    imported+=("${part[@]}")
+done
+if [ "${#imported[@]}" -eq 0 ]; then
     pause 1
 fi
-
-printf '\n  Kontrollerer på hoth (sha256) ...\n'
-sums=$(printf '%s\0' "${new[@]}" | xargs -0 sha256sum)
-if ! ssh -o BatchMode=yes "$hoth" "cd ~/$q_inbox && sha256sum --quiet -c -" <<<"$sums"; then
-    printf '\n  Kontrollen fejlede for filerne ovenfor. Intet er slettet fra kortet.\n'
-    pause 1
-fi
-
-keys=$(for f in "${new[@]}"; do printf '%s\t%s\n' "$(basename "$f")" "$(stat -c %s "$f")"; done)
-ssh -o BatchMode=yes "$hoth" "cat >> $seen" <<<"$keys"
-# Hand over: .done marks the batch complete and checked, and foto-sort
-# (the ansible repo's roles/foto_sort) files it into ~/Billeder and develops
-# any negatives; a push says when it is done.
-ssh -o BatchMode=yes "$hoth" "touch ~/$q_inbox/.done && systemctl --user start --no-block foto-sort.service"
-printf '\n  %d filer importeret og kontrolleret.\n' "${#new[@]}"
-printf '  hoth sorterer dem nu og fremkalder eventuelle negativer; der kommer en push, når det er færdigt.\n'
+new=("${imported[@]}")
+printf '\n  %d af %d filer importeret og kontrolleret.\n' "${#new[@]}" "$total"
+printf '  hoth sorterer og fremkalder dem løbende; der kommer en push, når det er færdigt.\n\n'
 
 read -rp "  Slet de importerede filer fra kortet? [j/N] " answer || exit 0
 case "$answer" in
